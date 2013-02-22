@@ -4,6 +4,6 @@ AVA-Panel - это комплексный продукт включающий в
 
 По вопросам адаптации обращайтесь в [тикеты](https://github.com/Delta-Zet/ava-panel/issues).
 
-Вы можете скачать самый свежий релиз [тут](https://github.com/Delta-Zet/ava-panel/tree/v3.0.1.16).
+Вы можете скачать самый свежий релиз [тут](https://github.com/Delta-Zet/ava-panel/tags).
 
 AVA-Panel распространяется под [свободной лицензией GNU](http://ava-panel.ru/content/license/), за пользования продуктом в плата не взымается.
