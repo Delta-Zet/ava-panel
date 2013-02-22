@@ -1,3 +1,4 @@
+install/development.env
 tmp/
 install_complete.php
 settings.php
