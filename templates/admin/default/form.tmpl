@@ -1,0 +1,397 @@
+<template>
+
+<item name="form" type="cover" descript="{Call:Lang:templates:admin/default:standartnaia}">
+	<div class="form">
+		<form action="{action}" method="{method}" name="{name}" id="{name}" {extras}>
+		<? if($caption){ ?><h3 class="block"><span>{caption}</span></h3><? } ?>
+		<? if(!empty($comment)){ ?><p class="comment">{comment}</p><? } ?>
+			{hiddens}
+			{form}
+		<p class="rig submit"><input type="submit" value="{Call:Lang:templates:admin/default:vpered}" class="b" onClick="return Submit('{name}', {js}, '{id_prefix}');" /></p>
+		</form>
+	</div>
+</item>
+
+<item name="form" template="big" type="cover" descript="{Call:Lang:templates:admin/default:bolshaiaform}">
+	<div class="form bigform">
+		<form action="{action}" method="{method}" name="{name}" id="{name}" {extras}>
+		<? if($caption){ ?><h3 class="block"><span>{caption}</span></h3><? } ?>
+		<? if(!empty($comment)){ ?><p class="comment">{comment}</p><? } ?>
+			{hiddens}
+			{form}
+		<p class="rig submit"><input type="submit" value="{Call:Lang:templates:admin/default:vpered}" class="b" onClick="return Submit('{name}', {js}, '{id_prefix}');" /></p>
+		</form>
+	</div>
+</item>
+
+<item name="form" template="big100" type="cover" descript="{Call:Lang:templates:admin/default:bolshaiaform1}">
+	<div class="form bigform big100" style="border: 0px none;">
+		<form action="{action}" method="{method}" name="{name}" id="{name}" {extras}>
+		<? if($caption){ ?><h3 class="block"><span>{caption}</span></h3><? } ?>
+		<? if(!empty($comment)){ ?><p class="comment">{comment}</p><? } ?>
+			{hiddens}
+			{form}
+		<p class="rig submit"><input type="submit" value="{Call:Lang:templates:admin/default:vpered}" class="b" onClick="return Submit('{name}', {js}, '{id_prefix}');" /></p>
+		</form>
+	</div>
+</item>
+
+<item name="form" template="multiblock" type="cover" descript="{Call:Lang:templates:admin/default:mnogoblochna}">
+	<?
+		$intBlocks = '';
+		$intCaps = '';
+		$y = 0;
+		$j = 0;
+
+		do{
+			$capname = 'caption'.$y;
+			$blname = 'block'.$y;
+			$y ++;
+
+			if($$blname){
+				$intCaps .= '<a href="javascript:formBlocksSwitch('.$j.')" id="caption'.$j.'"><span>'.$$capname.'</span></a>';
+				$intBlocks .= '<div class="pages_form_tech_block" id="block'.$j.'"'.(!empty($errors) ? ' style="display: block;"' : '').'>'.$$blname.'</div>';
+				$j ++;
+			}
+		}
+		while(isset($$capname));
+	?>
+	<div class="form bigform big100">
+		<form action="{action}" method="{method}" name="{name}" id="{name}" {extras}>
+			<h3 class="block">
+				<span>{caption}</span>
+				<a href="javascript:SubmitMultiblock('{name}', {js}, '{id_prefix}');"><? echo isset($saveText) ? $saveText : '{Call:Lang:templates:admin/default:sokhranit}'; ?></a>
+			</h3>
+			<div class="subcaptions">{intCaps}</div>
+			{hiddens}
+			{intBlocks}
+		</form>
+		<script language="javascript" type="text/javascript">
+			formBlocksSwitch(0);
+		</script>
+	</div>
+</item>
+
+<item name="form" template="multiblock2" type="cover" descript="{Call:Lang:templates:admin/default:mnogoblochna1}">
+	<div class="form multiblock2">
+		<form action="{action}" method="{method}" name="{name}" id="{name}" {extras}>
+		<h3 class="block">
+			<span>{caption}</span>
+			<a href="javascript:SubmitMultiblock('{name}', {js}, '{id_prefix}');">{Call:Lang:templates:admin/default:sokhranit}</a>
+		</h3>
+			{hiddens}
+			<? $y = 0; $blname = 'block0'; $capname = 'caption0'; ?>
+ 			<? while (isset($$blname)){ ?>
+				<? if(!empty($$blname)){ ?>
+					<div class="multiblock2_caption" onClick="showTechBlock('<?=$y?>');">
+						<div class="multiblock2_intro"><span id="<?=$capname?>">+</span> <? echo $$capname; ?></div>
+					</div>
+					<div class="multiblock2_block" id="<? echo $blname; ?>" <? if(!empty($errors)){ ?> style="display: block;" <? }else{ ?> style="display: none;" <? } ?>>
+						<div class="multiblock2_intro"><? echo $$blname; ?></div>
+					</div>
+
+				<? } ?>
+				<? $y ++; $blname = 'block'.$y; $capname = 'caption'.$y; ?>
+			<? } ?>
+			<? if($form){ ?><div class="multiblock2_content_block">{form}</div><? } ?>
+		</form>
+	</div>
+</item>
+
+<item name="form" template="simple" type="cover" descript="{Call:Lang:templates:admin/default:uproshchenna}">
+	<form action="{action}" method="{method}" name="{name}" id="{name}" {extras}>
+		{hiddens}
+		{form}
+	</form>
+</item>
+
+<item name="form" template="install" type="cover" descript="{Call:Lang:templates:admin/default:formainstall}">
+	<div class="form bigform big100">
+		<form action="{action}" method="{method}" name="{name}" id="{name}" {extras}>
+			<h3 class="block">
+				<span>{caption}</span>
+			</h3>
+			{hiddens}
+			{form}
+			<input type="submit" class="install_submit" value="{Call:Lang:templates:admin/default:dalee}" />
+		</form>
+	</div>
+</item>
+
+<item name="form" template="search" type="cover" descript="{Call:Lang:templates:admin/default:formapoiska}">
+	<div class="list_search_form">
+		<form action="{action}" method="{method}" name="{name}" {extras}>
+			{hiddens}
+			{form}
+		<div class="list_search_form_cap"><input type="submit" value="{Call:Lang:templates:admin/default:najti}" class="b" onClick="return Submit('{name}', {js}, '{id_prefix}');" /></div>
+		</form>
+	</div>
+</item>
+
+<item name="form" template="auth_admin" type="cover" descript="{Call:Lang:templates:admin/default:formaavtoriz}">
+
+	<div class="form"><div class="form2">
+		<form action="{action}" method="{method}" {extras}>
+			{hiddens}
+			{form}
+			<p class="submit"><input type="image" src="<? echo $GLOBALS['Core']->getTemplateUrl('admin'); ?>images/button_login.gif" value="" id="" class="s" /></p>
+		</form>
+	</div></div>
+
+</item>
+
+<item name="text" type="entry" descript="{Call:Lang:templates:admin/default:tekstovoepol}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p><label><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<input type="text" name="{name}" value="{value}" id="{id_prefix}{name}" class="t" {additional_style} /></label>{additional_text}</p>
+	</div>{post_text}
+</item>
+
+<item name="calendar" type="entry" descript="{Call:Lang:templates:admin/default:promezhutokd}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p class="calendar"><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			{Call:Lang:templates:admin/default:s} <input type="text" name="{name}" value="{value}" id="{id_prefix}{name}" class="t calendar" {additional_style} onClick="calendar.openCalendar('{id_prefix}{name}', '{id_prefix}{name}calendar_block', '00:00:00');" />
+			<img src="{CURRENT_TMPL_URL}images/icon_calendar.gif" class="calendar" onClick="calendar.openCalendar('{id_prefix}{name}', '{id_prefix}{name}calendar_block', '00:00:00');" />
+			{Call:Lang:templates:admin/default:po} <input type="text" name="{name_to}" value="{value_to}" id="{id_prefix}{name_to}" class="t calendar" {additional_style} onClick="calendar.openCalendar('{id_prefix}{name_to}', '{id_prefix}{name}calendar_block', '23:59:59');" />
+			<img src="{CURRENT_TMPL_URL}images/icon_calendar.gif" class="calendar" onClick="calendar.openCalendar('{id_prefix}{name_to}', '{id_prefix}{name}calendar_block', '23:59:59');" />
+			{additional_text}
+		</p>
+	</div>
+	<div style="display: none" id="{id_prefix}{name}calendar_block" class="calendar_block"></div>
+	<script type="text/javascript" src="<?=_D?>js/calendar.js"></script>
+	<script type="text/javascript">
+		calendar.iconL = '<img src="{CURRENT_TMPL_URL}images/icon_calendar_l.gif" />';
+		calendar.iconR = '<img src="{CURRENT_TMPL_URL}images/icon_calendar_r.gif" />';
+		calendar.iconUp = '<img src="{CURRENT_TMPL_URL}images/icon_calendar_up.gif" />';
+		calendar.iconDn = '<img src="{CURRENT_TMPL_URL}images/icon_calendar_dn.gif" />';
+	</script>
+	{post_text}
+</item>
+
+<item name="calendar2" type="entry" descript="{Call:Lang:templates:admin/default:data}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p class="calendar calendar2"><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<input type="text" name="{name}" value="{value}" id="{id_prefix}{name}" class="t calendar calendar2" {additional_style} onClick="calendar.openCalendar('{id_prefix}{name}', '{id_prefix}{name}calendar_block', '00:00:00');" />
+			<img src="{CURRENT_TMPL_URL}images/icon_calendar.gif" class="calendar calendar2" onClick="calendar.openCalendar('{id_prefix}{name}', '{id_prefix}{name}calendar_block', '00:00:00');"  />
+			{additional_text}
+		</p>
+	</div>
+	<div style="display: none" id="{id_prefix}{name}calendar_block" class="calendar_block"></div>
+	<script type="text/javascript" src="<?=_D?>js/calendar.js"></script>
+	<script type="text/javascript">
+		calendar.iconL = '<img src="{CURRENT_TMPL_URL}images/icon_calendar_l.gif" />';
+		calendar.iconR = '<img src="{CURRENT_TMPL_URL}images/icon_calendar_r.gif" />';
+		calendar.iconUp = '<img src="{CURRENT_TMPL_URL}images/icon_calendar_up.gif" />';
+		calendar.iconDn = '<img src="{CURRENT_TMPL_URL}images/icon_calendar_dn.gif" />';
+	</script>
+	{post_text}
+</item>
+
+<item name="gap" type="entry" descript="{Call:Lang:templates:admin/default:promezhutokc}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p class="calendar gap"><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			{Call:Lang:templates:admin/default:ot} <input type="text" name="{name}" value="{value}" id="{id_prefix}{name}" class="t calendar" {additional_style} />
+			{Call:Lang:templates:admin/default:do} <input type="text" name="{name_to}" value="{value_to}" id="{id_prefix}{name_to}" class="t calendar" {additional_style} />
+			{additional_text}
+		</p>
+	</div>
+	{post_text}
+</item>
+
+<item name="captcha" type="entry" descript="CAPTCHA">
+	{pre_text}<div class="formentry captcha"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<img src="<?=_D?>index.php?mod=main&func=captcha&id={id}" />
+		<p><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<input type="hidden" name="{name}_id" value="{id}" />
+			<input type="text" name="{name}" value="" id="{id_prefix}{name}" class="t" {additional_style} />
+			{additional_text}
+		</p>
+	</div>{post_text}
+</item>
+
+<item name="textarea" type="entry" descript="{Call:Lang:templates:admin/default:tekstovaiaob}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p><label><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<textarea name="{name}" id="{id_prefix}{name}" {additional_style} />{value}</textarea></label>{additional_text}</p>
+	</div>{post_text}
+</item>
+
+<item name="textarea" template="content" type="entry" descript="{Call:Lang:templates:admin/default:tekstovaiaob1}">
+	{pre_text}<div class="pages_form_content_mainentry">
+		{additional_text}<textarea name="{name}" id="{id_prefix}{name}" {additional_style} class="maintextarea" />{value}</textarea>
+	</div>{post_text}
+</item>
+
+<item name="textarea" template="big" type="entry" descript="{Call:Lang:templates:admin/default:tekstovaiaob2}">
+	{pre_text}<div class="formentry bigformentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p><label><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<textarea name="{name}" id="{id_prefix}{name}" {additional_style} />{value}</textarea></label>{additional_text}</p>
+	</div>{post_text}
+</item>
+
+<item name="pwd" type="entry" descript="{Call:Lang:templates:admin/default:polevvodapar}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p><label><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<input type="password" name="{name}" value="{value}" id="{id_prefix}{name}" class="t" {additional_style} /></label>{additional_text}</p>
+	</div>{post_text}
+</item>
+
+<item name="checkbox" type="entry" descript="{Call:Lang:templates:admin/default:galochka}">
+	{pre_text}<div class="formentry chb"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p>{additional_text}<label><input type="checkbox" name="{name}" value="1" id="{id_prefix}{name}" class="ch" {additional_style} {mark} />
+			{text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?>
+			<? if($warn){ ?><span class="warn">*</span><? } ?>
+			</label></p>
+	</div>{post_text}
+</item>
+
+<item name="checkbox" type="entry" template="center" descript="{Call:Lang:templates:admin/default:galochkaotse}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p class="center"><label><input type="checkbox" name="{name}" value="1" id="{id_prefix}{name}" class="ch" {additional_style} {mark} />
+			{text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?></label>
+			<? if($warn){ ?><span class="warn">*</span><? } ?>
+			</p>
+	</div>{post_text}
+</item>
+
+<item name="file" type="entry" descript="{Call:Lang:templates:admin/default:polezagruzki}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p><label><? if($value){ ?><img src="<?=_D.$additional['dstFolder'].'.thumbs/'.$value?>" class="img_preview" alt="{text}" /><input type="hidden" name="{name}_hidden" id="{id_prefix}{name}_hidden" value="{value}" /><? } ?>
+			<? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<? if($max){ ?><input type="hidden" name="MAX_FILE_SIZE" value="{max}" /><? } ?>
+			<input type="file" name="{name}" id="{id_prefix}{name}" class="t" {additional_style} /></label>{additional_text}</p>
+	</div>{post_text}
+</item>
+
+<item name="caption" type="entry" descript="{Call:Lang:templates:admin/default:zagolovok}">
+	{pre_text}<h4 id="{id_prefix}{name}" {additional_style}>{text}</h4>{post_text}
+</item>
+
+<item name="multiselect" type="entry" descript="{Call:Lang:templates:admin/default:vypadaiushch}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p><label><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<select name="{name}" id="{id_prefix}{name}" {additional_style} multiple="multiple">{data}</select></label>{additional_text}</p>
+	</div>{post_text}
+</item>
+
+<item name="multiselect" type="additentry" descript="{Call:Lang:templates:admin/default:vypadaiushch}">
+	<option value="{id}" {mark}>{text}</option>
+</item>
+
+<item name="select" type="entry" descript="{Call:Lang:templates:admin/default:vypadaiushch1}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p><label><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<select name="{name}" id="{id_prefix}{name}" {additional_style}>{data}</select></label>{additional_text}</p>
+	</div>{post_text}
+</item>
+
+<item name="select" template="list" type="entry" descript="{Call:Lang:templates:admin/default:vypadaiushch1}">
+	{pre_text}<? if($warn){ ?><span class="warn">*</span><? } ?> {text}: <select name="{name}" id="{id_prefix}{name}" {additional_style}>{data}</select>{additional_text}{post_text}
+</item>
+
+<item name="select" type="additentry" descript="{Call:Lang:templates:admin/default:vypadaiushch1}">
+	<option value="{id}" {mark}>{text}</option>
+</item>
+
+<item name="radio" type="entry" descript="{Call:Lang:templates:admin/default:radioknopki}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?><p><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?></p><? } ?>{data}
+		{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="radio" template="line" type="entry" descript="{Call:Lang:templates:admin/default:radioknopki}">
+	{pre_text}<div class="formentry entryline"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?><p class="rz_cap"><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?></p><? } ?>{data}
+		{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="radio" template="width100" type="entry" descript="{Call:Lang:templates:admin/default:radioknopki}">
+	{pre_text}<div class="formentry width100"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?>
+			<p class="rz_cap"><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?></p>
+		<? } ?>{data}{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="radio" template="listsorter" type="entry" descript="{Call:Lang:templates:admin/default:radioknopkis}">
+	{pre_text}<div class="listsorter"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?>
+			<p class="rz_cap"><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?></p>
+		<? } ?>{data}{additional_text}
+	</div>{post_text}
+	<div class="listsorterdlm">&#160;</div>
+</item>
+
+<item name="radio" type="additentry" descript="{Call:Lang:templates:admin/default:radioknopki}">
+	<p class="rz"><label><input type="radio" name="{name}" value="{id}" id="{name}_{id}" {mark} {additional_style} />{text}</label></p>
+</item>
+
+<item name="checkbox_array" type="entry" descript="{Call:Lang:templates:admin/default:spisokgaloch}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?>
+			<p><? if($warn){ ?><span class="warn">*</span><? } ?> {text}
+			<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?></p>
+		<? } ?>{data}{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="checkbox_array" template="list" type="entry" descript="{Call:Lang:templates:admin/default:spisokgaloch}">
+	{pre_text}<div class="formentry width100"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?>
+			<p class="rz"><? if($warn){ ?><span class="warn">*</span><? } ?> {text}
+			<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?>&#160;&#160;:</p>
+		<? } ?>{data}{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="checkbox_array" template="listsorter" type="entry" descript="{Call:Lang:templates:admin/default:spisokgaloch1}">
+	{pre_text}<div class="listsorter"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?>
+			<p><? if($warn){ ?><span class="warn">*</span><? } ?> {text}
+			<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?></p>
+		<? } ?>{data}{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="checkbox_array" type="additentry" descript="{Call:Lang:templates:admin/default:spisokgaloch}">
+	<p class="rz"><label><input type="checkbox" name="{name}[{id}]" value="1" id="{name}_{id}" {mark} {additional_style} />{text}</label></p>
+</item>
+
+<item name="hidden_entry" type="extra" descript="{Call:Lang:templates:admin/default:skrytoepole}">
+	<?
+	if(is_array($value)){
+		foreach($value as $i => $e){
+			?><input type="hidden" name="{name}[{i}]" value="{e}" id="{name}_{i}" /><?
+		}
+	}
+	else{ ?><input type="hidden" name="{name}" value="{value}" id="{name}" /><? }
+	?>
+</item>
+
+<item name="error_entry" type="extra" descript="{Call:Lang:templates:admin/default:soobshchenie}">
+	<p class="rz"><label><input type="checkbox" name="{name}[{id}]" value="1" id="{name}_{id}" {mark} {additional_style} />{text}</label></p>
+</item>
+
+</template>

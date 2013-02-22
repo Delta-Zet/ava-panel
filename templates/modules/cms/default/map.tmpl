@@ -1,0 +1,25 @@
+<template>
+
+<item name="list" template="simple" type="cover" descript="Обычная карта сайта">
+	<ul class="map">{list}</ul>
+</item>
+
+<item name="simple" type="entry" descript="Обычная карта сайта">
+	<? if($link) $name = '<a href="'.$link.'">'.$name.'</a>'; ?>
+	<li>{name}<? if($subblock){ ?><ul>{subblock}</ul><? } ?></li>
+</item>
+
+<item name="list" template="xml" type="cover" descript="Обычная карта сайта">
+	[nocall]<?xml[/nocall] version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.google.com/schemas/sitemap/0.84">{list}</urlset>
+</item>
+
+<item name="xml" type="entry" descript="Обычная карта сайта">
+	<? if($link){ ?><url>
+		<loc><? echo regExp::replace("&", "&amp;", $link); ?></loc>
+		<lastmod><? echo !$lastmod ? Dates::date("Y-m-d") : $lastmod ?></lastmod>
+		<changefreq><? echo !$changefreq ? 'weekly' : $changefreq ?></changefreq>
+		<priority><? echo !$priority ? '0.0' : $priority ?></priority>
+	</url><? } ?>{subblock}
+</item>
+
+</template>

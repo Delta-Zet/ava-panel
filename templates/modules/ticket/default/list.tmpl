@@ -1,0 +1,102 @@
+<template>
+
+<item name="departments_list" type="entry" descript="{Call:Lang:templates:modules/ticket/default:razdely}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr><strong>{text}</strong><br/>{Call:Lang:templates:modules/ticket/default:identifikato} <strong>{name}</strong></nobr></td>
+		<td><nobr><strong><?
+			switch($access_type){				case '0': echo '{Call:Lang:templates:modules/ticket/default:dostupimeiut}'; break;
+				case '1': echo '{Call:Lang:templates:modules/ticket/default:dostupimeiut1}'; break;
+				case '2': echo '{Call:Lang:templates:modules/ticket/default:spetsialnyen}'; break;
+			}
+		?><br/><?
+			switch($transmit_type){
+				case '0': echo '{Call:Lang:templates:modules/ticket/default:posleotvetas}'; break;
+				case '1': echo '{Call:Lang:templates:modules/ticket/default:natiketmozhe}'; break;
+			}
+		?><br/><?
+			if($show){ ?>{Call:Lang:templates:modules/ticket/default:otkryt}<? } else{ ?>{Call:Lang:templates:modules/ticket/default:zakryt}<? }
+		?></strong></nobr></td>
+		<td class="list_right"><strong><a href="{specialAccess_url}">{Call:Lang:templates:modules/ticket/default:nastrojkidos}</a></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="supports_list" type="entry" descript="{Call:Lang:templates:modules/ticket/default:sotrudnikipo}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><strong>{name}</strong><br/>{Call:Lang:templates:modules/ticket/default:administrato} <strong>{admin_login}</strong></td>
+		<td><? echo Dates::dateTime($date); ?></td>
+		<td class="list_right"><strong><?
+			switch($status){				case '0': echo '{Call:Lang:templates:modules/ticket/default:nerabotaet}'; break;
+				case '1': echo '{Call:Lang:templates:modules/ticket/default:rabotaet}'; break;
+				case '2': echo '{Call:Lang:templates:modules/ticket/default:votpuske}'; break;
+			}
+			if($auto_status_change) echo '{Call:Lang:templates:modules/ticket/default:mozhetsamseb}';
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="message_status_list" type="entry" descript="{Call:Lang:templates:modules/ticket/default:statusysoobs}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}<br/>{name}</td>
+		<td>Автоматически выставляется при:<br/><strong><?
+			if($auto_set_open) echo 'открытии тикета<br/>';
+			if($auto_set_show_user) echo 'просмотре пользователем<br/>';
+			if($auto_set_show_support) echo 'просмотре администратором<br/>';
+			if($auto_set_answer_user) echo 'ответе пользователя<br/>';
+			if($auto_set_answer_support) echo 'ответе администратора<br/>';
+		?></strong></td>
+		<td class="list_right">Вручную может выставить:<br/><strong><?
+			if($use_user) echo 'пользователь<br/>';
+			if($use_support) echo 'администратор<br/>';
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="tickets_list" type="entry" descript="{Call:Lang:templates:modules/ticket/default:spisokvopros}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr><strong><? echo Dates::dateTime($date); ?><br/>{name}</strong></nobr></td>
+		<td><nobr><? if($user_name){ ?>
+			{Call:Lang:templates:modules/ticket/default:polzovatel} <strong>{user_name}</strong><br/>
+			{Call:Lang:templates:modules/ticket/default:login} <strong>{user_login}</strong>
+		<? }else{ echo '{Call:Lang:templates:modules/ticket/default:zadananonimn}'; } ?><br/>
+		E-mail: <strong><a href="mailto:{eml}">{eml}</a></strong><br/>
+		{Call:Lang:templates:modules/ticket/default:kodtiketa} <strong>{code}</strong><br/>
+		</nobr></td>
+		<td class="list_right"><strong>{status_name}</strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="user_tickets_list" type="entry" descript="Список тикетов">
+	<tr>
+		<td><? echo Dates::dateTime($date); ?></td>
+		<td>{name}</td>
+		<td>{dep_name}</td>
+		<td>{status_name}</td>
+		<td>Сотрудник поддержки:<br/><?=(($supName = $CURRENT_PARENT_OBJ->getSupportName($support_id)) ? $supName : 'не назначен')?></td>
+	</tr>
+</item>
+
+</template>

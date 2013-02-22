@@ -1,0 +1,21 @@
+<descript>
+	<installator>bill_lease</installator>
+	<type>modules</type>
+	<name>bill_lease</name>
+	<text>Аренда оборудования</text>
+	<version>0.0.1.16</version>
+	<requirements>
+		<requiredModules>
+			<billing>
+				<minVersion>0.0.0.0</minVersion>
+			</billing>
+		</requiredModules>
+	</requirements>
+
+	<defaults>
+		<db></db>
+		<show>1</show>
+		<text_bill_lease>Аренда оборудования</text_bill_lease>
+		<name_bill_lease>lease</name_bill_lease>
+	</defaults>
+</descript>

@@ -1,0 +1,62 @@
+<descript>
+	<installator>SystemDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>system</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<url>close.tmpl</url>
+		<name>Шаблон закрытого сайта</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>401.tmpl</url>
+		<name>Ошибка 401</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>403.tmpl</url>
+		<name>Ошибка 403</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>404.tmpl</url>
+		<name>Ошибка 404</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>error.tmpl</url>
+		<name>Сообщение об исключении</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>back.tmpl</url>
+		<name>Страница с кнопкой "Назад"</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>refresh.tmpl</url>
+		<name>Страница-перенаправление</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>style.css</url>
+		<name>CSS системного шаблона</name>
+		<type>.css</type>
+	</pages>
+
+	<defaults>
+		<folder_SystemDefault>default</folder_SystemDefault>
+		<name_SystemDefault>Default шаблон</name_SystemDefault>
+	</defaults>
+</descript>

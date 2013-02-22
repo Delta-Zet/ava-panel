@@ -1,0 +1,210 @@
+
+
+/*
+Reset
+*/
+
+*, .* {
+	padding: 0px;
+	margin: 0px;
+	color: #000;
+	font-family: Tahoma, sans-serif;
+	border: 0px none;
+	text-align: left;
+	font-weight: light;
+	vertical-align: top;
+}
+
+body, div, p, table, tr, td, th, span, a, ul, ol, dl, dt, dd, li, img, h1, h2, h3, h4, h5, h6, form, input, select, textarea{
+	padding: 0px;
+	margin: 0px;
+	color: #000;
+	font-family: Tahoma, sans-serif;
+	border: 0px none;
+	text-align: left;
+	font-weight: light;
+	vertical-align: top;
+}
+
+
+.env2{
+	width: 100%;
+	float: left;
+	margin: 50px 0;
+}
+
+.env{
+	width: 1000px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+h3.block{
+	width: 100%;
+	height: 30px;
+	background: #F5F5EA;
+	color: #101010;
+	float: left;
+	font-size: 10pt;
+	margin: 0;
+	font-weight: bold;
+}
+
+h3.block span{
+	float: left;
+	display: block;
+	margin: 7px 0 0 20px;
+}
+
+.install_submit{
+	float: left;
+	clear: both;
+	width: 98%;
+	text-align: right;
+	border: 0 none;
+	background: #FFF;
+	padding: 10px 0 20px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.install_submit a{
+	float: right;
+	margin: 15px 50px;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+.install_submit a:hover{
+	text-decoration: underline;
+}
+
+
+/*
+	Формы
+*/
+
+input, select, textarea{
+	border: 1px inset #3F3B3A;
+	background: #FFF;
+}
+
+.b{
+	border: 0 none;
+	width: 83px;
+	height: 21px;
+	text-align: center;
+	vertical-align: middle;
+	color: #FFF;
+	background: #000 url('../images/button_bg.gif') no-repeat;
+	font-size: 8pt;
+	cursor: pointer;
+	padding: 0 0 2px 0;
+}
+
+input.t, select{
+	width: 100%;
+	height: 20px;
+	font-size: 10pt;
+}
+
+textarea{
+	width: 100%;
+	height: 150px;
+	font-size: 10pt;
+}
+
+input.ch{
+	border: 0px none;
+}
+
+.form{
+	float: left;
+	font-size: 8pt;
+	width: 232px;
+	margin: 0 50px 0 0;
+}
+
+.bigform{
+	width: 830px;
+	margin: 0 50px 70px 0;
+}
+
+.big100{
+	width: 100%;
+	border: 1px solid #E8E8D6;
+}
+
+.formentry{
+	float: left;
+	width: 290px;
+	margin: 15px 20px;
+}
+
+.comment_entry{
+	float: left;
+	width: 950px;
+	margin: 15px 20px;
+}
+
+.form p{
+	min-height: 25px;
+	float: left;
+	width: 100%;
+}
+
+.form p.error{
+	color: #D00;
+	min-height: 15px;
+	margin: 10px 0 0 0;
+}
+
+.form p.comment{
+	font-size: 8pt;
+	padding: 10px 0 0 0;
+	width: auto;
+}
+
+.bigform h4{
+	width: 100%;
+	float: left;
+	font-size: 12px;
+	padding: 10px 0 0 20px;
+}
+
+sup.surface_comment{
+	position: absolute;
+	z-index: 120;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 8pt;
+	margin: -5px 0 0 0;
+}
+
+sup.surface_comment span{
+	display: none;
+	float: right;
+	position: absolute;
+	z-index: 100;
+	background: #FFF;
+	border: 1px solid #000;
+	width: 250px;
+	padding: 10px;
+}
+
+sup:hover.surface_comment span{
+	display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

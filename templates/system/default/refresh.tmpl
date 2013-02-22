@@ -1,0 +1,17 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title><? echo strip_tags($GLOBALS['Core']->paramReplaces($refresh_msg, $CURRENT_PARENT_OBJ)); ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="refresh" content="3; URL={refresh_url}" />
+	<link rel="stylesheet" type="text/css" href="{TMPL_URL}style.css" />
+</head>
+
+<body>
+<div class="msg_box">
+	<h4>{refresh_msg}</h4>
+	<a href="{refresh_url}">{Call:Lang:templates:system/default:perejtinemed}</a>
+</div>
+</body>
+</html>

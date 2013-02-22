@@ -1,0 +1,14 @@
+<descript>
+	<installator>ModulesBill_leaseDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>modules/bill_lease</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<defaults>
+		<folder_ModulesBill_leaseDefault>default</folder_ModulesBill_leaseDefault>
+		<name_ModulesBill_leaseDefault>Default шаблон</name_ModulesBill_leaseDefault>
+	</defaults>
+</descript>

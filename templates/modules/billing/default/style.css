@@ -1,0 +1,325 @@
+
+
+/*
+  Таблица тарифов
+*/
+
+.pkgs_env1, .pkgs_env2, .pkgs_env3{	float: left;
+	clear: both;
+	width: 587px;
+}
+
+.pkgs_env1{	margin: 0 0 0 20px;
+	background: #FBFBFB url('images/packages_bg2.gif') left top;
+}
+
+.pkgs_env2{
+	background: url('images/packages_bg1.gif') no-repeat left top;
+}
+
+.v .pkgs_env2{
+	background: url('images/packages_bg6.gif') no-repeat left top;
+}
+
+.pkgs_env3{
+	background: url('images/packages_bg3.gif') no-repeat left bottom;
+	padding: 0 0 35px 0;
+}
+
+.packages{	width: 576px;}
+
+.packages tr{	background: url('images/packages_line_bg1.gif') repeat-x left bottom;
+}
+
+.packages td{	padding: 10px 0 10px 3px;
+	text-align: center;
+	vertical-align: middle;
+	background: url('images/packages_line_bg2.gif') repeat-y 1px top;
+}
+
+.packages .caption, .packages .order{	background: url('/images/noler.gif');
+}
+
+.packages .caption td{	height: 33px;
+	padding: 0 0 0 3px;
+}
+
+.packages .order td{	height: 28px;
+	padding: 0 0 0 3px;
+}
+
+.packages .constructor td{	height: 35px;
+	padding: 0 0 0 3px;
+}
+
+.packages td.linename{	text-align: right;
+	padding-right: 10px;
+	background: url('/images/noler.gif');}
+
+.packages td.caption_line, .packages td.order_line, .packages td.constructor_line{	width: 100px;	background: url('images/packages_caption_dlm.gif') no-repeat left 2px;
+	color: #352781;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 12px;
+}
+
+.packages td.order_line{	background: #352781 url('images/packages_caption_dlm.gif') no-repeat left top;}
+
+.packages td.constructor_line{
+	background: url('images/packages_caption_dlm.gif') repeat-y left top;
+}
+
+.packages td.order_line a{	color: #FFF;
+	font-size: 12px;}
+
+.packages td.constructor_line a{	float: left;
+	color: #FFF;
+	text-align: center;
+	background: #352781;	font-size: 12px;
+	width: 100px;
+	height: 23px;
+	padding: 5px 0 0 0;
+}
+
+.packages .order{	background: #;}
+
+.packages tr.constructor{	background: url('images/packages_bg4.gif') no-repeat left top;}
+
+.packages .empty_entry{	background: url('images/icon_no.gif') no-repeat center center;}
+
+.all_services a{	float: left;
+	width: 70%;
+	white-space: nowrap;
+	text-decoration: none;
+	margin: 40px 0 0 100px;
+	font-size: 30px;
+	color: #000;}
+
+
+/*
+  Описание модификаций
+*/
+
+.pkg_changes{	float: left;
+	width: 600px;
+	margin: 0 0 0 30px;
+}
+
+.pkg_changes p{	width: 270px;
+}
+
+.pkg_changes thead td{	height: 100px;}
+
+.pkg_changes .price td{	padding: 0 0 0 20px;
+	white-space: nowrap;}
+
+.pkg_changes .terms td{
+	padding: 20px 0 0 20px;
+	white-space: nowrap;
+}
+
+.pkg_changes .descript td{
+	padding: 20px 0 0 20px;
+	white-space: nowrap;
+}
+
+.pkg_changes .descript td p{
+	margin: 0;	font-size: 11px;}
+
+.pkg_changes .order_buttons p{	width: 100%;}
+
+
+/*
+  Расчет удаления, блокировки и т.п.
+*/
+
+ul.pkg_del{	list-style: none;}
+
+.pkg_del{	margin-left: 50px !important;	float: left;
+	clear: both;
+}
+
+.pkg_del li{	margin: 0 0 30px 0;
+	float: left;
+	clear: both;
+}
+
+.pkg_del h4{	margin: 0 0 15px 0;}
+
+.pkg_del h4 input{	float: left;
+	margin: 4px 15px 0 0;
+}
+
+
+/*
+  Расчет заказа
+*/
+
+.order_list{	float: left;
+	width: 630px;
+	min-height: 100px;
+	margin: 0 0 0 30px;
+}
+
+.ajax_window .order_list{	float: none;	margin: 20px auto;
+}
+
+.order_list .entryorder{	float: left;
+	width: 630px;
+	clear: both;
+	margin: 0 0 10px 0;}
+
+.order_list .modifydescript a{	float: left;
+	font-size: 11px;
+	margin: 0 0 0 30px;}
+
+.order_list .modifydescript h3{	display: none;}
+
+.order_list .modifydescript2{	float: left;
+	clear: both;
+	width: 100%;
+	list-style-type: none;}
+
+.order_list .modifydescript2 li{	float: left;
+	width: 190px;
+	margin: 10px 19px 0 0;
+	font-size: 11px;
+	font-weight: 800;}
+
+.order_list .modifydescript2 li p{	font-weight: 100;
+	font-size: 11px;
+	margin-left: 5px;
+	width: 190px;
+}
+
+.order_list .entryorder span{	float: left;
+	width: 55px;
+	font-size: 8pt;
+	margin: 0 0 0 15px;}
+
+.order_list .entryorder span em{	position: absolute;
+	display: none;
+	border: 1px solid #AAA;
+	padding: 5px 15px;
+	background: #FFF;
+	white-spacing: nowrap;}
+
+.order_list .entryorder span:hover em{	display: block;
+}
+
+.order_list .entryorder span.o_name{	width: 150px;
+	margin: 0;
+}
+
+.order_list .entryorder span.o_input{	width: 30px;
+	margin: 0;
+}
+
+.order_buttons a{	float: left;
+	padding: 2px 10px 3px 10px;
+	margin: 20px 15px 0 0;
+	font-size: 8pt;
+	color: #305571;
+	text-decoration: none;
+	border: 1px solid #C8C8C8;
+	background: #EFEFEF;}
+
+.order_buttons a:hover{
+	background: #DDD;
+}
+
+
+/*
+  Оплата
+*/
+
+.payments{	float: left;
+	width: 700px;
+	margin: 50px 0 0 0;}
+
+.payments a, .payments a:hover{	text-decoration: none;}
+
+.payments p{	float: left;
+	width: 290px;
+	height: 140px;
+	margin: 0 0 0 50px;}
+
+.payments p a, .payments p span{	float: left;
+	clear: both;}
+
+.payments p span{	margin: 10px 0 0 0;}
+
+.payments p span.price{	font-size: 18px;}
+
+.formentry label.unlimit{
+	float: left;
+	padding: 3px 0 0 0;
+}
+
+
+/*
+  Калькулятор
+*/
+
+.constructor .calculator input.b{	margin: 0 20px 10px 0;
+	width: auto;
+	padding: 0 10px;
+}
+
+.constructor p.calculator{	font-size: 16px;}
+
+.constructor p.calculator span{	font-size: 18px;
+	font-weight: bold;}
+
+.constructor .legend{	float: left;
+	clear: both;
+}
+
+.constructor .legend li{	list-style-type: none;
+	font-size: 14px;	float: left;
+	clear: both;
+}
+
+.constructor .legend li p{	padding: 10px 0 10px 20px;}
+
+.constructor .formentry{	margin-top: 15px;
+	font-size: 13px;}
+
+.constructor .formentry em{	padding: 3px 0 3px 20px;
+	margin: 0;
+	font-size: 12px;
+}
+
+.constructor .block{	float: left;
+	clear: both;
+	margin: 15px 0 0 0;}
+
+.base_limits{	padding: 0 0 0 20px;}
+
+.constructor .formentry em, .constructor .formentry strong, .constructor .formentry input, .constructor .formentry label{
+	float: left;
+	clear: both;
+}
+
+.constructor .chb em, .constructor .chb strong, .constructor .chb input, .constructor .chb label{
+	clear: none;
+}
+
+.constructor .formentry input[type=checkbox]{	margin: 2px 8px 0 0;}
+
+
+/*
+  Вывод сведений о создании новой услуги
+*/
+
+.new_service{	float: left;
+	clear: both;
+	margin: 0 0 30px 30px;}
+
+.new_service p{	margin: 30px 20px 0 20px;
+	float: left;
+	clear: both;
+	width: 580px;
+}
+
+

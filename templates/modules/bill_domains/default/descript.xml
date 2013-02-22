@@ -1,0 +1,44 @@
+<descript>
+	<installator>ModulesBill_domainsDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>modules/bill_domains</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<url>domains_form.tmpl</url>
+		<name>Форма поиска доменов</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>domains_search.tmpl</url>
+		<name>Результат поиска</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>whois.tmpl</url>
+		<name>Whois</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>list.tmpl</url>
+		<name>Список</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>style.css</url>
+		<name>Стили</name>
+		<type>.css</type>
+	</pages>
+
+	<defaults>
+		<folder_ModulesBill_domainsDefault>default</folder_ModulesBill_domainsDefault>
+		<name_ModulesBill_domainsDefault>Default шаблон</name_ModulesBill_domainsDefault>
+	</defaults>
+</descript>

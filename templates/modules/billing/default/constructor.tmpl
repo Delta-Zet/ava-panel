@@ -1,0 +1,280 @@
+<template>
+
+<item name="form" template="constructor" type="cover" descript="{Call:Lang:templates:modules/billing/default:dvizheniiade}">
+	<script type="text/javascript" src="<?=$GLOBALS['Core']->getModuleTemplateUrl($CURRENT_MOD)?>constructor.js"></script>
+	<div class="form constructor">
+		<form action="{action}" method="{method}" name="{name}" id="{name}" {extras}>
+			{hiddens}
+			<? if($caption){ ?><h3 class="block"><span>{caption}</span></h3><? } ?>
+			<? if(!empty($comment)){ ?><p class="comment">{comment}</p><? }
+
+			if($auth){ echo $auth; }
+			$i = 0;
+
+			while(isset(${'calculate'.$i}) || isset(${'order'.$i})){
+				if(${'caption'.$i}) echo '<h4>'.${'caption'.$i}.'</h4>';
+				if(${'calculate'.$i}){ ?>
+					<ul class="legend">
+						<li>{Call:Lang:templates:modules/billing/default:bazovaiastoi} <strong><?=Library::humanCurrency(${'pkgData'.$i}['price'])?></strong> <? echo ${'currency'.$i}; ?></li>
+						<li>{Call:Lang:templates:modules/billing/default:ustanovka} <strong><?=Library::humanCurrency(${'pkgData'.$i}['install_price'])?></strong> <? echo ${'currency'.$i}; ?></li>
+					</ul>
+					<div class="block">
+						<h5>{Call:Lang:templates:modules/billing/default:individualna}</h5>
+						<ul class="legend">
+							<? if(${'base_limits'.$i}){ ?><li><? echo ${'base_limits'.$i}; ?></li><? } ?>
+							<li>{Call:Lang:templates:modules/billing/default:mozhnodobavi} </li>
+						</ul>
+						<? echo ${'calculate'.$i}; ?>
+						<p class="calculator">
+							<input type="button" class="b" value="{Call:Lang:templates:modules/billing/default:raschitat}" id='calcButton<?=$i?>' onClick="Calculator.calculate('calculator', <? echo ${'jsCalcHash'.$i}; ?>);" /><br/>
+							{Call:Lang:templates:modules/billing/default:stoimost} <span id="calculator">0</span> <? echo ${'currency'.$i}; ?><br/>
+							{Call:Lang:templates:modules/billing/default:ustanovka} <span id="calculator_install">0</span> <? echo ${'currency'.$i}; ?><br/>
+							<script type="text/javascript">
+								document.getElementById('calcButton<?=$i?>').click();
+							</script>
+						</p>
+					</div>
+				<? } if(${'order'.$i}){
+					echo '<div class="block">';
+					if(${'calculate'.$i}) echo '{Call:Lang:templates:modules/billing/default:parametry}';
+					echo ${'order'.$i}.'</div>';
+				}
+				$i ++;
+			}
+			?><p class="rig submit"><input type="submit" value="{Call:Lang:templates:modules/billing/default:vpered}" class="b" onClick="return Submit('{name}', {js}, '{id_prefix}');" /></p>
+		</form>
+	</div>
+</item>
+
+<item name="base" type="extra" descript="{Call:Lang:templates:modules/billing/default:zapisobazovo}">
+	<h1 class="block"><span>{Call:Lang:templates:modules/billing/default:predustanovl}<a href="#" onClick="{Call:Lang:templates:modules/billing/default:switchblockb:<?=Library::serialize(array($cnt));?>}">{Call:Lang:templates:modules/billing/default:skryt}</a>):</span></h1>
+	<p id="base_limits{cnt}" class="base_limits"><?
+		foreach($base_limits as $i => $e){
+			if($e['type'] == 'checkbox') echo '<strong>'.$e['text'].'</strong><br/>';
+			else{
+				if(mod_billing::isUnlimit($e['value'])) $e['value'] = '{Call:Lang:templates:modules/billing/default:bezograniche}';
+				echo $e['text'].': <strong>'.$e['value'].'</strong><br/>';
+			}
+		}
+	?></p>
+</item>
+
+<item name="change" type="cover" descript="{Call:Lang:templates:modules/billing/default:svedeniiaota}">
+	<table class="pkg_changes" cellpadding="0" cellspacing="0">
+		<thead>
+			<td><h3>{Call:Lang:templates:modules/billing/default:staryjtarif:<?=Library::serialize(array($oPkgData['text']));?>}</strong></h3></td>
+			<td><h3>{Call:Lang:templates:modules/billing/default:novyjtarif:<?=Library::serialize(array($nPkgData['text']));?>}</strong></h3></td>
+		</thead>
+		<tr class="price">
+			<td>
+				{Call:Lang:templates:modules/billing/default:vsegozaosnov:<?=Library::serialize(array(Dates::termsListVars($oPkgData['base_term'])));?>}: <strong><?=($oldService['price'] + $oldService['modify_price']).' '.$oPkgData['curName']?></strong><br/>
+				Основной тариф: <strong><?=$oldService['price'].' '.$oPkgData['curName'];?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:modifikatsii} <strong><?=$oldService['modify_price'].' '.$oPkgData['curName'];?></strong><br/><br/>
+				Расчетная цена до <?=Dates::dateTime($old_paid_to);?>: <strong><?=$old_pay_stay.' '.$nPkgData['curName'];?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:dejstvuetdo} <strong><?=Dates::dateTime($old_paid_to);?></strong><br/>
+			</td>
+			<td>
+				{Call:Lang:templates:modules/billing/default:vsegozaosnov:<?=Library::serialize(array(Dates::termsListVars($oPkgData['base_term'])));?>}: <strong><?=($e_prolong_price + $e_modify_price).' '.$nPkgData['curName']?></strong><br/>
+				Основной тариф: <strong><?=$e_prolong_price.' '.$nPkgData['curName'];?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:modifikatsii} <strong><?=$e_modify_price.' '.$nPkgData['curName'];?></strong><br/><br/>
+				Расчетная цена до <?=Dates::dateTime($old_paid_to);?>: <strong><?=$new_calculate.' '.$nPkgData['curName'];?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:dejstvuetdo} <strong><?=Dates::dateTime($new_paid_to);?></strong><br/>
+			</td>
+		</tr>
+		<tr class="descript">
+			<td>{pkgDescript}</td>
+			<td>{pkgNewDescript}</td>
+		</tr>
+		<tr class="price">
+			<td colspan="2">
+				Разница в цене старого и нового тарифов: <strong><?=$difference.' '.$oPkgData['curName'];?></strong><br/>
+				Расчетная стоимость смены тарифа: <strong><?=$change_calculate.' '.$oPkgData['curName'];?></strong> <? if($change_calculate > $change_price) echo '(включена в перерасчет срока)'; ?><br/>
+				Расчетная стоимость установки нового тарифа: <strong><?=$install_calculate.' '.$oPkgData['curName'];?></strong> <? if($install_calculate > $install_price) echo '(включена в перерасчет срока)'; ?><br/>
+				<br/><br/><strong>
+				<?
+					if($oPkgData['service_modify_type'] == 'paidto') echo 'Остаточный срок услуги перерасчитан с точностью до секунды.<br/>';
+					elseif($oPkgData['service_modify_type'] == 'paidtobyday') echo 'Остаточный срок услуги перерасчитан с точностью до суток.<br/>';
+				?></strong>
+				<? if($total > 0){ ?>Сумма к оплате: <strong><?=$total.' '.$nPkgData['curName'];?></strong><br/>
+				<? }elseif($total < 0){ ?>Будет возвращено: <strong><?=-$total.' '.$nPkgData['curName'];?></strong><br/><? } ?>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="order_buttons">
+				<p>{message}</p>
+				<? if($okUrl){ ?><a href="{okUrl}">{Call:Lang:templates:modules/billing/default:modifitsirov}</a><? } ?>
+				<? if($cancelUrl){ ?><a href="{cancelUrl}">{Call:Lang:templates:modules/billing/default:otkazatsia}</a><? } ?>
+			</td>
+		</tr>
+	</table>
+</item>
+
+<item name="delete" type="cover" descript="Расчет удаления услуги">
+	<form action="{okUrl}" method="POST" id="delete_services">
+		<ul class="pkg_del"><?
+			foreach($orders as $i => $e){
+				$pkgData = $CURRENT_PARENT_OBJ->serviceData($e['sData']['service'], $e['sData']['package']);
+				$cn = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+
+				echo '<li>'.
+						'<h4><input type="checkbox" name="entry['.$i.']" value="'.$e['dData']['id'].'" checked />'.$e['sData']['ident'].', тариф '.$pkgData['text'].'</h4><p>'.
+						'Оплачена до: <strong>'.Dates::dateTime($e['sData']['paid_to']).'</strong><br/>'.
+						'Остаток оплаченных средств: <strong>'.$e['dData']['stay'].$cn.'</strong><br/>'.
+						'Штраф за досрочный отказ от услуги: <strong>'.$e['dData']['delete_price'].$cn.'</strong><br/>'.
+						'Итого '.($e['dData']['total'] > 0 ? 'к возврату: <strong>'.$e['dData']['total'] : 'к оплате: <strong>'.-$e['dData']['total']).$cn.'</strong><br/>'.
+					'</p></li>';
+			}
+		?></ul>
+		<p class="pkg_del">Итого <?=($price > 0 ? 'к возврату: <strong>'.$price : 'к оплате: <strong>'.-$price).$cn?></strong></p>
+		<p class="order_buttons pkg_del">
+			<? if($okUrl){ ?><a href="#" onClick="ge('delete_services').submit(); return false;">Удалить услуги</a><? } ?>
+			<? if($cancelUrl){ ?><a href="{cancelUrl}">{Call:Lang:templates:modules/billing/default:otkazatsia}</a><? } ?>
+		</p>
+	</form>
+</item>
+
+<item name="suspend" type="cover" descript="Расчет блокировки услуги">
+	<form action="{okUrl}" method="POST" id="delete_services">
+		<ul class="pkg_del"><?
+			foreach($orders as $i => $e){
+				$pkgData = $CURRENT_PARENT_OBJ->serviceData($e['sData']['service'], $e['sData']['package']);
+				$cn = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+
+				echo '<li>'.
+						'<h4><input type="checkbox" name="entry['.$i.']" value="'.$e['dData']['id'].'" checked />'.$e['sData']['ident'].', тариф '.$pkgData['text'].'</h4><p>'.
+						'Оплачена до: <strong>'.Dates::dateTime($e['sData']['paid_to']).'</strong><br/>'.
+						'Стоимость установки услуги на паузу: <strong>'.$e['dData']['price'].$cn.'</strong><br/>'.
+						'Скидка: <strong>'.$e['dData']['discount'].$cn.'</strong><br/>'.
+						'Итого '.$e['dData']['total'].$cn.'</strong><br/>'.
+					'</p></li>';
+			}
+		?></ul>
+		<p class="pkg_del">Итого <?=$price.$cn?></strong></p>
+		<p class="order_buttons pkg_del">
+			<? if($okUrl){ ?><a href="#" onClick="ge('delete_services').submit(); return false;">Заблокировать услуги</a><? } ?>
+			<? if($cancelUrl){ ?><a href="{cancelUrl}">{Call:Lang:templates:modules/billing/default:otkazatsia}</a><? } ?>
+		</p>
+	</form>
+</item>
+
+<item name="unsuspend" type="cover" descript="Расчет разблокировки услуги">
+	<form action="{okUrl}" method="POST" id="delete_services">
+		<ul class="pkg_del"><?
+			foreach($orders as $i => $e){
+				$pkgData = $CURRENT_PARENT_OBJ->serviceData($e['sData']['service'], $e['sData']['package']);
+				$cn = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+
+				echo '<li>'.
+						'<h4><input type="checkbox" name="entry['.$i.']" value="'.$e['dData']['id'].'" checked />'.$e['sData']['ident'].', тариф '.$pkgData['text'].'</h4><p>'.
+						'Оплачена до: <strong>'.Dates::dateTime($e['sData']['paid_to']).'</strong><br/>'.
+						'Стоимость снятия услуги с паузы: <strong>'.$e['dData']['price'].$cn.'</strong><br/>'.
+						'Скидка: <strong>'.$e['dData']['discount'].$cn.'</strong><br/>'.
+						'Итого '.$e['dData']['total'].$cn.'</strong><br/>'.
+					'</p></li>';
+			}
+		?></ul>
+		<p class="pkg_del">Итого <?=$price.$cn?></strong></p>
+		<p class="order_buttons pkg_del">
+			<? if($okUrl){ ?><a href="#" onClick="ge('delete_services').submit(); return false;">Разблокировать услуги</a><? } ?>
+			<? if($cancelUrl){ ?><a href="{cancelUrl}">{Call:Lang:templates:modules/billing/default:otkazatsia}</a><? } ?>
+		</p>
+	</form>
+</item>
+
+<item name="service_descript" type="cover" descript="{Call:Lang:templates:modules/billing/default:opisanieuslu}">
+	<table class="pkg_changes" cellpadding="0" cellspacing="0">
+		<tr class="price">
+			<td>
+				{Call:Lang:templates:modules/billing/default:vsegozaosnov:<?=Library::serialize(array(Dates::termsListVars($pkgData['base_term']).': <strong>'.$sData['total'].' '.$pkgData['curName']));?>} <strong><?=$sData['price'].' '.$pkgData['curName'];?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:modifikatsii} <strong><?=$sData['modify_price'].' '.$pkgData['curName'];?></strong><br/>
+			</td>
+		</tr>
+		<tr class="terms">
+			<td>
+				{Call:Lang:templates:modules/billing/default:zakazana} <strong><?=Dates::dateTime($sData['created']);?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:posledniaiao} <strong><?=Dates::dateTime($sData['last_paid']);?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:dejstvuetdo} <strong><?=Dates::dateTime($sData['paid_to']);?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:zachislenona} <strong><?=$sData['all_payments'].' '.$pkgData['curName'];?></strong><br/>
+			</td>
+		</tr>
+		<tr class="descript">
+			<td>{pkgDescript}</td>
+		</tr>
+	</table>
+</item>
+
+<item name="text" template="calculate" type="entry" descript="{Call:Lang:templates:modules/billing/default:tekstovoepol}">
+	<? $currency = ${'currency'.$blockId}; ?>
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<label>
+			<strong>{text}</strong><? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<em><?
+				$ust = $price_install ? '{Call:Lang:templates:modules/billing/default:ustanovka1:'.Library::serialize(array($price_install, $currency)).'}' : '';
+				$ustU = $price_install_unlimit ? '{Call:Lang:templates:modules/billing/default:ustanovka1:'.Library::serialize(array($price_install_unlimit, $currency)).'}' : '';
+
+				if($price) echo '{Call:Lang:templates:modules/billing/default:zaedenitsu:'.Library::serialize(array($price, $currency, $ust)).'}';
+				if($price_unlimit) echo '{Call:Lang:templates:modules/billing/default:bezlimit:'.Library::serialize(array($price_unlimit, $currency, $ustU)).'}';
+				if($min) echo '{Call:Lang:templates:modules/billing/default:minimum:'.Library::serialize(array($min)).'}';
+				if($max) echo '{Call:Lang:templates:modules/billing/default:maksimum:'.Library::serialize(array($max)).'}';
+			?></em>
+			<input type="text" name="{name}" value="{value}" id="{id_prefix}{name}" class="t" {additional_style} />
+		</label>
+		<? if($unlimit){ ?><label class="unlimit"><input id="unl{id_prefix}{name}" type="checkbox" onClick="var d = document.getElementById('{id_prefix}{name}'); if(d.value == 'Unlimit'){ d.value = val{id_prefix}{name}; } else{ val{id_prefix}{name} = d.value; d.value = 'Unlimit'; }" /> {Call:Lang:templates:modules/billing/default:bezograniche1}</label>
+		<script type="text/javascript">
+			val{id_prefix}{name} = '';
+			if(document.getElementById('{id_prefix}{name}').value == 'Unlimit') document.getElementById('unl{id_prefix}{name}').checked = true;
+		</script><? } ?>
+		{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="checkbox" template="calculate" type="entry" descript="{Call:Lang:templates:modules/billing/default:galochkakalk}">
+	<? $currency = ${'currency'.$blockId}; ?>
+	{pre_text}<div class="formentry chb"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		{additional_text}<label><input type="checkbox" name="{name}" value="1" id="{id_prefix}{name}" {additional_style} {mark} class="ch" />
+		<strong>{text}</strong><? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><em><? }
+			if($price || $price_install){
+				echo ' (';
+				if($price) echo '{Call:Lang:templates:modules/billing/default:tsena1:'.Library::serialize(array($price, $currency)).'}';
+				if($price_install) echo '{Call:Lang:templates:modules/billing/default:ustanovka2:'.Library::serialize(array($price_install, $currency)).'}';
+				echo ')';
+			}
+		?></em></label>
+	</div>{post_text}
+</item>
+
+<item name="select" template="calculate" type="entry" descript="{Call:Lang:templates:modules/billing/default:vypadaiushch}">
+	<? $currency = ${'currency'.$blockId}; ?>
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<label><strong>{text}</strong><? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<select name="{name}" id="{id_prefix}{name}" {additional_style}>{data}</select></label>{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="radio" template="calculate" type="entry" descript="{Call:Lang:templates:modules/billing/default:radioknopkak}">
+	<? $currency = ${'currency'.$blockId}; ?>
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?><strong>{text}</strong><? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><? } ?>{data}
+		{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="checkbox_array" template="calculate" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokgaloch}">
+	<? $currency = ${'currency'.$blockId}; ?>
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<? if(!empty($text)){ ?>
+			{text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?>
+		<? } ?>{data}{additional_text}
+	</div>{post_text}
+</item>
+
+<item name="checkbox_array" template="calculate" type="additentry" descript="{Call:Lang:templates:modules/billing/default:spisokgaloch}">
+	<p class="rz"><label><input type="checkbox" name="{name}[{id}]" value="1" id="{name}_{id}" {mark} {additional_style} />{text}</label></p>
+</item>
+
+</template>

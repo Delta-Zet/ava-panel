@@ -1,0 +1,17 @@
+
+
+/*
+Reset
+*/
+
+body, div, p, table, tr, td, th, span, a, ul, ol, dl, dt, dd, li, img, h1, h2, h3, h4, h5, h6, form, input, select, textarea{
+	padding: 0px;
+	margin: 0px;
+	color: #000;
+	font-family: Tahoma, sans-serif;
+	border: 0px none;
+	text-align: left;
+	font-weight: light;
+	vertical-align: top;
+}
+

@@ -1,0 +1,15 @@
+<descript>
+	<installator>cms</installator>
+	<type>modules</type>
+	<name>cms</name>
+	<text>Управление контентом</text>
+	<version>0.0.1.16</version>
+	<requirements></requirements>
+
+	<defaults>
+		<db></db>
+		<show>1</show>
+		<text_cms>Контент</text_cms>
+		<name_cms>content</name_cms>
+	</defaults>
+</descript>

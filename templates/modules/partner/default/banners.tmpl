@@ -1,0 +1,11 @@
+<?
+
+foreach($banners as $i => $e){	?>
+	<div class="banner_block">
+		<h4><?=$e['text']?></h4>
+		<div class="banner"><?=$e['code']?></div>
+		<textarea><? echo regExp::html($e['code']); ?></textarea>
+	</div>
+	<?}
+
+?>

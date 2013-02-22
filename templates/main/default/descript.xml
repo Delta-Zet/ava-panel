@@ -1,0 +1,84 @@
+<descript>
+	<installator>MainDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>main</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<url>main.tmpl</url>
+		<name>Основная страница</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>empty.tmpl</url>
+		<name>Пустая страница</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>ajax.tmpl</url>
+		<name>Ajax-вывод</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>list.tmpl</url>
+		<name>Шаблоны списков</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>form.tmpl</url>
+		<name>Шаблоны форм</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>structures.tmpl</url>
+		<name>Контент-структуры</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>css/style.css</url>
+		<name>Общий CSS</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>css/empty.css</url>
+		<name>CSS пустой страницы</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>css/ajax.css</url>
+		<name>CSS Ajax</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>css/reset.css</url>
+		<name>Сброс CSS</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>js/script.js</url>
+		<name>Javascript к шаблону</name>
+		<type>.js</type>
+	</pages>
+
+	<defaults>
+		<folder_MainDefault>default</folder_MainDefault>
+		<name_MainDefault>Default шаблон</name_MainDefault>
+		<language_MainDefault>russian</language_MainDefault>
+		<union_mod_cms_MainDefault>content</union_mod_cms_MainDefault>
+		<union_mod_bill_domains_MainDefault>domains</union_mod_bill_domains_MainDefault>
+		<installMainDefaultStep>1</installMainDefaultStep>
+	</defaults>
+</descript>

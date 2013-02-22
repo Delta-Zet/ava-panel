@@ -1,0 +1,34 @@
+<template>
+
+<item name="list" type="cover" descript="Список страниц">
+	<div class="subpages">
+		<? if($caption){ ?><h3>{caption}</h3><? } ?>
+		<? if($paginate){ ?><div class="pagination">
+			<? if(!empty($url_start)){ ?><a href="{url_start}"> |< </a><? } ?>
+			<? if(!empty($url_prev_block)){ ?><a href="{url_prev_block}"> << </a><? } ?>
+			<? if(!empty($url_prev)){ ?><a href="{url_prev}"> < </a><? } ?>
+			{paginate}
+			<? if(!empty($url_next)){ ?><a href="{url_next}"> > </a><? } ?>
+			<? if(!empty($url_next_block)){ ?><a href="{url_next_block}"> >> </a><? } ?>
+			<? if(!empty($url_end)){ ?><a href="{url_end}"> >| </a><? } ?>
+		</div><? } ?>
+		<? if($list){ ?><dl>{list}</dl><? }else{ echo '<p class="nopages">В этом разделе нет ни одной доступной вам страницы</p>'; } ?>
+		<? if($paginate){ ?><div class="pagination">
+			<? if(!empty($url_start)){ ?><a href="{url_start}"> |< </a><? } ?>
+			<? if(!empty($url_prev_block)){ ?><a href="{url_prev_block}"> << </a><? } ?>
+			<? if(!empty($url_prev)){ ?><a href="{url_prev}"> < </a><? } ?>
+			{paginate}
+			<? if(!empty($url_next)){ ?><a href="{url_next}"> > </a><? } ?>
+			<? if(!empty($url_next_block)){ ?><a href="{url_next_block}"> >> </a><? } ?>
+			<? if(!empty($url_end)){ ?><a href="{url_end}"> >| </a><? } ?>
+		</div><? } ?>
+	</div>
+</item>
+
+<item name="subpages" type="entry" descript="Список подстраниц">
+	<? $vars = Library::unserialize($vars); ?>
+	<dt><a href="index.php?mod={CURRENT_MOD}&func=page&id={url}"><?=$vars['blocks']['caption']?></a></dt>
+	<? if($vars['blocks']['description']){ ?><dd><?=$vars['blocks']['description']?></dd><? } ?>
+</item>
+
+</template>

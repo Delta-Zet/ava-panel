@@ -1,0 +1,78 @@
+<template>
+
+<item name="list" template="mainmenu" type="cover" descript="{Call:Lang:templates:main/default:glavnoemeniu}">
+	{list}
+</item>
+
+<item name="mainmenu" type="entry" descript="{Call:Lang:templates:main/default:glavnoemeniu}">
+	<? if($nesting > 0){ ?>
+	<li onMouseOver="openMainMenu('mm{id}')" onMouseOut="hideMainMenu('mm{id}')">
+		<? if($subblock){ ?><ul style="display: none;" id="mm{id}" class="subblock subblock2">{subblock}</ul><? }
+		if($link){ ?><a href="{link}">{text}</a><? }else{ echo "<span>$text</span>"; } ?>
+	</li>
+	<? }else{ ?>
+	<li onMouseOver="openMainMenu('mm{id}')" onMouseOut="hideMainMenu('mm{id}')">
+		<? if($subblock){ ?><ul style="display: none;" id="mm{id}" class="subblock subblock1">{subblock}</ul><? }
+		if($link){ ?><a href="{link}">{text}</a><? }else{ echo "<span>$text</span>"; } ?>
+	</li>
+	<? } ?>
+</item>
+
+<item name="list" template="usermenu" type="cover" descript="{Call:Lang:templates:main/default:meniupolzova}">
+<? if($list){ ?><ul class="sidemenu">
+	<li class="capt"><? if(file_exists($GLOBALS['Core']->getTemplatePath('main'))){
+		?><img src="<? echo $GLOBALS['Core']->getTemplateUrl('main'); ?>images/icon_sidemenu_navigate.gif" /><? }
+	?><span>{Call:Lang:templates:main/default:lichnyjkabin}</span></li>
+	{list}
+</ul><? } ?>
+</item>
+
+<item name="usermenu" type="entry" descript="{Call:Lang:templates:main/default:meniupolzova}">
+	<? if($nesting > 0){ ?>
+	<li class="s2"><? if(file_exists($GLOBALS['Core']->getTemplatePath('main'))){
+		?><img src="<? echo $GLOBALS['Core']->getTemplateUrl('main'); ?>images/icon_sidemenu2.gif" /><? }
+	if($link){ ?><a href="{link}">{text}</a><? }else{ echo "<span>$text</span>"; } ?></li>{subblock}
+	<? }else{ ?>
+	<li class="s1"><? if(file_exists($GLOBALS['Core']->getTemplatePath('main'))){
+		?><img src="<? echo $GLOBALS['Core']->getTemplateUrl('main'); ?>images/icon_sidemenu1.gif" /><? }
+	if($link){ ?><a href="{link}">{text}</a><? }else{ echo "<span>$text</span>"; } ?></li>{subblock}
+	<? } ?>
+</item>
+
+<item name="list" template="menu1" type="cover" descript="{Call:Lang:templates:main/default:dopolnitelno}">
+<? if($list){ ?><ul class="sidemenu">
+	<li class="capt"><? if(file_exists($GLOBALS['Core']->getTemplatePath('main'))){
+		?><img src="<? echo $GLOBALS['Core']->getTemplateUrl('main'); ?>images/icon_sidemenu_navigate.gif" /><? }
+	?><span>{Call:Lang:templates:main/default:navigatsiia}</span></li>
+	{list}
+</ul><? } ?>
+</item>
+
+<item name="menu1" type="entry" descript="{Call:Lang:templates:main/default:dopolnitelno}">
+	<? if($nesting > 0){ ?>
+	<li class="s2"><? if(file_exists($GLOBALS['Core']->getTemplatePath('main'))){
+		?><img src="<? echo $GLOBALS['Core']->getTemplateUrl('main'); ?>images/icon_sidemenu2.gif" /><? }
+	if($link){ ?><a href="{link}">{text}</a><? }else{ echo "<span>$text</span>"; } ?></li>{subblock}
+	<? }else{ ?>
+	<li class="s1"><? if(file_exists($GLOBALS['Core']->getTemplatePath('main'))){
+		?><img src="<? echo $GLOBALS['Core']->getTemplateUrl('main'); ?>images/icon_sidemenu1.gif" /><? }
+	if($link){ ?><a href="{link}">{text}</a><? }else{ echo "<span>$text</span>"; } ?></li>{subblock}
+	<? } ?>
+</item>
+
+<item name="list" template="news" type="cover" descript="{Call:Lang:templates:main/default:novosti}">
+<? if($list){ ?><div class="news">
+	<h3><? if(file_exists($GLOBALS['Core']->getTemplatePath('main'))){
+		?><img src="<? echo $GLOBALS['Core']->getTemplateUrl('main'); ?>images/icon_h3_news.gif" /><? }
+	?>{Call:Lang:templates:main/default:novosti}</h3>
+	{list}
+</div><? } ?>
+</item>
+
+<item name="news" type="entry" descript="{Call:Lang:templates:main/default:novosti}">
+	<p class="newsdate"><? echo $GLOBALS['Core']->getFormattedTime($date); ?></p>
+	<p>{notice}</p>
+	<? if($link){ ?><p class="newsmore"><a href="{link}">{Call:Lang:templates:main/default:podrobnee}</a></p><? } ?>
+</item>
+
+</template>

@@ -1,0 +1,283 @@
+<template>
+
+<item name="page_templates_list" type="entry" descript="Список шаблонов заполнения страницы">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><nobr><strong>{text}</strong></nobr></td>
+		<td>{name}</td>
+		<td class="list_right icons"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Выключен" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Включен" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="pages_list" type="entry" descript="{Call:Lang:templates:modules/cms/default:stranitsy}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><nobr>
+			<strong>{name}</strong><br/>
+			{Call:Lang:templates:modules/cms/default:urlimia} <strong>{url}</strong><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/cms/default:sozdana} <strong><?=Dates::dateTime($date)?></strong><br/>
+			<? if($start){ ?>{Call:Lang:templates:modules/cms/default:dostupnas} <strong><?=Dates::dateTime($start)?></strong><br/><? } ?>
+			<? if($stop){ ?>по <strong><?=Dates::dateTime($stop)?></strong><br/><? } ?>
+		</nobr></td>
+		<td><nobr>
+			<strong><?
+				switch($show){
+					case '': case '0': echo '{Call:Lang:templates:modules/cms/default:nedostupna}'; break;
+					case '1': echo '{Call:Lang:templates:modules/cms/default:dostupnaadmi}'; break;
+					case '2': echo '{Call:Lang:templates:modules/cms/default:dostupnapolz}'; break;
+					case '3': echo '{Call:Lang:templates:modules/cms/default:dostupnavsem}'; break;
+					case '4': echo '{Call:Lang:templates:modules/cms/default:dostupnavsem1}'; break;
+					case '5': echo '{Call:Lang:templates:modules/cms/default:individualny}'; break;
+				}
+			?></strong><br/>
+			<? if($version_date){ ?>
+				{Call:Lang:templates:modules/cms/default:rabochaiaver}
+				<strong><? if($version_name) echo '<br/>'.$version_name; ?><br/>от <?=Dates::dateTime($version_date)?></nobr></strong>
+			<? } ?>
+		</nobr></td>
+		<td><nobr><?
+			$link = $GLOBALS['Core']->getReplaceLink(_D.'index.php?mod='.$CURRENT_PARENT_OBJ->getMod().'&func=page&id='.$url);
+		?><a href="{link}" target="_blank">{link}</a></nobr></td>
+		<td class="list_right"><nobr>
+			<a href="<?=$CURRENT_PARENT_OBJ->path;?>?mod=<?=$CURRENT_PARENT_OBJ->getMod();?>&func=pages&parent={url}">{Call:Lang:templates:modules/cms/default:podstranitsy}</a>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="versions_list" type="entry" descript="{Call:Lang:templates:modules/cms/default:versiistrani}">
+	<? $blocks  = Library::unserialize($params); ?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<? if(!$version_on){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /><? } ?>
+		</td<? } ?>>
+		<td><a href="<?=$CURRENT_PARENT_OBJ->path.'?mod='.$CURRENT_PARENT_OBJ->getMod().'&func=pagesData&id='.$page_id.'&versionId='.$id?>">{name}</a></td>
+		<td>{version_name}</td>
+		<td><a href="{setMain_url}">{Call:Lang:templates:modules/cms/default:sdelatosnovn}</a></td>
+		<td>{Call:Lang:templates:modules/cms/default:roditel} <strong><? if($blocks['parent'] != '') echo $blocks['parent']; else echo '{Call:Lang:templates:modules/cms/default:net}'; ?></strong></td>
+		<td><strong>{Call:Lang:templates:modules/cms/default:sozdana} <?=Dates::dateTime($version_date)?></strong></td>
+		<td><strong>
+			<? if($blocks['start']){ ?>{Call:Lang:templates:modules/cms/default:dostupnas} <strong><?=Dates::dateTime($blocks['start'])?></strong><br/><? } ?>
+			<? if($blocks['stop']){ ?>{Call:Lang:templates:modules/cms/default:dostupnapo} <strong><?=Dates::dateTime($blocks['stop'])?></strong><br/><? } ?>
+		</strong></td>
+		<td class="list_right">
+			<strong><?
+				switch($show){
+					case '': case '0': echo '{Call:Lang:templates:modules/cms/default:stranitsaned}'; break;
+					case '1': echo '{Call:Lang:templates:modules/cms/default:dostupnaadmi}'; break;
+					case '2': echo '{Call:Lang:templates:modules/cms/default:dostupnapolz}'; break;
+					case '3': echo '{Call:Lang:templates:modules/cms/default:dostupnavsem}'; break;
+					case '4': echo '{Call:Lang:templates:modules/cms/default:dostupnavsem1}'; break;
+					case '5': echo '{Call:Lang:templates:modules/cms/default:individualny}'; break;
+				}
+			?></strong><br/>
+			<? if($extraParams['pageParams']['version_id'] == $id){ ?><strong>{Call:Lang:templates:modules/cms/default:ehtaosnovnai}</strong><br/><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="structures_list" type="entry" descript="{Call:Lang:templates:modules/cms/default:kontentstruk}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><a href="{text_url}">{text}</a></td>
+		<td>{name}</td>
+		<td><nobr>
+			<? if($type == 'internal'){ ?>
+				<strong>{Call:Lang:templates:modules/cms/default:vymozhetenap}<br/>
+				<?
+					switch($in_page){
+						case '0': echo '{Call:Lang:templates:modules/cms/default:nedostupnaiz}'; break;
+						case '1': echo '{Call:Lang:templates:modules/cms/default:zapisimogutd}'; break;
+						case '2': echo '{Call:Lang:templates:modules/cms/default:nakazhdojstr}'; break;
+						case '4': echo '{Call:Lang:templates:modules/cms/default:personalnyen}'; break;
+					}
+				?></strong>
+			<? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/cms/default:strukturasoz}</strong><br/><? } ?>
+		</nobr></td>
+		<td><nobr><? if($type == 'internal' && !empty($add_url)){ ?><strong><a href="{add_url}">{Call:Lang:templates:modules/cms/default:dobavitzapis}</a></strong><? } ?></nobr></td>
+		<td class="list_right"><nobr>
+			<? if($type == 'internal' && !empty($add_url)){ ?>
+				<a href="{redact_url}">{Call:Lang:templates:modules/cms/default:redaktirovat}</a><br/>
+			<? } ?>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="folders_list" type="entry" descript="{Call:Lang:templates:modules/cms/default:papkidliazag}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } ?>>
+		<td>{name}</td>
+		<td>{path}</td>
+		<td>{Call:Lang:templates:modules/cms/default:osnovnojstan} <strong><? echo ($std = $GLOBALS['Core']->getImageStandartName($main_standart)) ? $std : '{Call:Lang:templates:modules/cms/default:net}'; ?></strong></td>
+		<td>{Call:Lang:templates:modules/cms/default:dopolnitelny}<br/><strong><?
+			$s = array();
+			foreach($standarts as $i => $e){				if($i) $s[] = $GLOBALS['Core']->getImageStandartName($i).' ('.$i.')';			}
+			echo implode(', ', $s);
+		?></strong></td>
+		<td class="list_right"><strong><? if($show){ echo '{Call:Lang:templates:modules/cms/default:zagruzitfajl:'.Library::serialize(array($upload_url)).'}'; }else{ echo '{Call:Lang:templates:modules/cms/default:zakryta}'; } ?></strong></td>
+	</tr>
+</item>
+
+<item name="files_list" type="entry" descript="{Call:Lang:templates:modules/cms/default:spiskifajlov}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><?
+			if(file_exists(_W.$extraParams['folder'].'.thumbs/'.$name)) echo '<img src="'._D.$extraParams['folder'].'.thumbs/'.$name.'" class="thumb" />';
+			elseif(file_exists($TMPL_PATH.'images/fileicons/icon'.Files::getExtension($name).'.gif')) echo '<img src="'.$TMPL_URL.'images/fileicons/icon'.Files::getExtension($name).'.gif" />';
+			else echo '<img src="'.$TMPL_URL.'images/fileicons/icon.gif" />';
+		?></td>
+		<td><strong>{name}</strong></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/cms/default:razmer} <strong>{size}</strong> bytes<br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/cms/default:khoziain} <strong>{uid}</strong><br/>
+			{Call:Lang:templates:modules/cms/default:gruppa} <strong>{gid}</strong><br/>
+			{Call:Lang:templates:modules/cms/default:prava} <strong>{mode}</strong><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/cms/default:sozdan} <strong><?=Dates::dateTime($ctime)?></strong><br/>
+			{Call:Lang:templates:modules/cms/default:izmenen} <strong><?=Dates::dateTime($mtime)?></strong><br/>
+			{Call:Lang:templates:modules/cms/default:otkryt} <strong><?=Dates::dateTime($atime)?></strong><br/>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="structures_standart" type="entry" descript="{Call:Lang:templates:modules/cms/default:standartnyjs}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td>{link}</td>
+		<td class="list_right">
+			<? if($show){ ?><strong>{Call:Lang:templates:modules/cms/default:otobrazhaets}</strong><br/><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/cms/default:skryta}</strong><br/><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="forms_list" type="entry" descript="{Call:Lang:templates:modules/cms/default:formy}">
+	<? $vars = Library::unserialize($vars); ?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td><?
+			switch($vars['action_type']){
+				case '0': echo '{Call:Lang:templates:modules/cms/default:neperedaetsi}'; break;
+				case '1': echo '{Call:Lang:templates:modules/cms/default:actionurlfor}'; break;
+				case '2': echo '{Call:Lang:templates:modules/cms/default:peredaetsian:'.Library::serialize(array($vars['action'], $vars['action_method'])).'}'; break;
+			}
+		?></td>
+		<td><?
+			if($vars['save_style']['db'] && $vars['action_type'] == '1'){				switch($vars['save_style_table']){
+					case '1': echo '{Call:Lang:templates:modules/cms/default:ispolzuetsia:'.Library::serialize(array($vars['table'])).'}<br/>'; break;
+					case '2': echo '{Call:Lang:templates:modules/cms/default:ispolzuetsia1:'.Library::serialize(array($vars['table'], $vars['module'])).'}<br/>'; break;
+					case '3':
+						$strData = $CURRENT_PARENT_OBJ->getStructureParams($vars['structure']);
+						echo '{Call:Lang:templates:modules/cms/default:ispolzuiutsi:'.Library::serialize(array($strData['text'])).'}<br/>';
+						break;
+				}
+			}
+		?></td>
+		<td><nobr><?
+			if($vars['action_type'] == '1'){
+				if($vars['save_style']['eml']){					$emls = '';
+					foreach(regExp::split("\n", $vars['eml']) as $i => $e){						if($i > 3){							$emls[$i - 1] .= '...';
+							break;						}
+
+						$e = trim($e);						if($e) $emls[] = '<a href="mailto:'.$e.'">'.$e.'</a>';
+					}
+
+					echo '{Call:Lang:templates:modules/cms/default:soderzhimoeo:'.Library::serialize(array(implode(',', $emls))).'}<br/>';
+					echo '{Call:Lang:templates:modules/cms/default:pismastroiat:'.Library::serialize(array($GLOBALS['Core']->getMailTemplateName($vars['eml_template']))).'}<br/>';
+				}
+
+				if($vars['save_style']['http']){
+					echo '{Call:Lang:templates:modules/cms/default:soderzhimoeo1:'.Library::serialize(array($vars['url'], $vars['method'])).'}<br/>';
+				}
+			}
+		?></nobr></td>
+		<td><strong><a href="{fields_url}">{Call:Lang:templates:modules/cms/default:redaktirovat1}</a></strong></td>
+		<td class="list_right">
+			<? if($show){ ?><strong>{Call:Lang:templates:modules/cms/default:otobrazhaets}</strong><br/><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/cms/default:skryta}</strong><br/><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="export_list" type="entry" descript="Список RSS-лент">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}<br/>{name}<br/><a href="{url}" target="_blank">{url}</a></td>
+		<td>
+			Формат: <strong><? if($format == 'f') echo 'полный'; else echo 'скрытый'; ?></strong><br/>
+			Родитель: <strong><? echo $extraParams['pages'][$parent_page]; ?></strong><br/>
+			Интервал обновления: <strong>{update_interval} сек.</strong><br/>
+		</td>
+		<td>
+			Последнее обновление:<br/>
+			<strong><? echo $last ? Dates::DateTime($last) : 'Не было'; ?></strong>
+		</td>
+		<td class="list_right"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Выключена" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Включена" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="tags_list" type="entry" descript="Список тегов">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td>Популярность <strong>{pop}</strong></td>
+		<td class="list_right"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Выключена" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Включена" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+</template>

@@ -1,0 +1,35 @@
+<descript>
+	<installator>billing</installator>
+	<type>modules</type>
+	<name>billing</name>
+	<text>Биллинг</text>
+	<version>0.0.1.16</version>
+	<requirements>
+		<requiredModules>
+			<cms><minVersion>0.0.0.0</minVersion></cms>
+		</requiredModules>
+	</requirements>
+
+	<defaults>
+		<db></db>
+		<show>1</show>
+		<text_billing>Биллинг</text_billing>
+		<name_billing>bill</name_billing>
+
+		<payExtensions>WebMoney</payExtensions>
+		<payExtensions>Yandex</payExtensions>
+		<payExtensions>Sber</payExtensions>
+		<payExtensions>Bank</payExtensions>
+		<payExtensions>Rbc</payExtensions>
+		<payExtensions>MoneyBookers</payExtensions>
+		<payExtensions>PayPal</payExtensions>
+		<payExtensions>ZPayment</payExtensions>
+		<payExtensions>OSMP</payExtensions>
+		<payExtensions>Robox</payExtensions>
+		<payExtensions>Liqpay</payExtensions>
+		<payExtensions>Interkassa</payExtensions>
+		<payExtensions>LS</payExtensions>
+
+		<smsExtensions>a1</smsExtensions>
+	</defaults>
+</descript>

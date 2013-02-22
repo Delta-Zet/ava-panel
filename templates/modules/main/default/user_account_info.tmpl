@@ -1,0 +1,14 @@
+<ul class="sidemenu">
+	<li class="capt"><img src="<? echo $GLOBALS['Core']->getTemplateUrl('main'); ?>images/icon_sidemenu_navigate.gif" /><span>{Call:Lang:templates:modules/main/default:akkaunt}</span></li>
+	<?
+		foreach($params as $i => $e){
+			if($e['params']){
+				echo "<li class=\"s1\"><img src=\"".$GLOBALS['Core']->getTemplateUrl('main')."images/icon_sidemenu1.gif\" />".$e['name']."</li>";
+
+				foreach($e['params'] as $i1 => $e1){
+					echo "<li class=\"s2\"><img src=\"".$GLOBALS['Core']->getTemplateUrl('main')."images/icon_sidemenu2.gif\" />".$e1['name'].": <span>".$e1['value']."</span></li>";
+				}
+			}
+		}
+	?>
+</ul>

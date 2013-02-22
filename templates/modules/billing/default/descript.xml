@@ -1,0 +1,86 @@
+<descript>
+	<installator>ModulesBillingDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>modules/billing</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<url>server_reply.tmpl</url>
+		<name>Просмотр ответа сервера</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>blanks.tmpl</url>
+		<name>Бланки платежных документов</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>constructor.tmpl</url>
+		<name>Расчет индивидуальной настройки заказа</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>form.tmpl</url>
+		<name>Форма</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>list.tmpl</url>
+		<name>Списки</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>order.tmpl</url>
+		<name>Расчет заказа</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>packages.tmpl</url>
+		<name>Списки тарифов</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>payments.tmpl</url>
+		<name>Страница выбора способа оплаты</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>style.css</url>
+		<name>CSS основной</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>bank.css</url>
+		<name>CSS платежных документов</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>constructor.js</url>
+		<name>Расчет индивидуальной настройки заказа</name>
+		<type>.js</type>
+	</pages>
+
+	<pages>
+		<url>order.js</url>
+		<name>Расчет заказа</name>
+		<type>.js</type>
+	</pages>
+
+	<defaults>
+		<folder_ModulesBillingDefault>default</folder_ModulesBillingDefault>
+		<name_ModulesBillingDefault>Default шаблон</name_ModulesBillingDefault>
+	</defaults>
+</descript>

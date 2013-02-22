@@ -1,0 +1,26 @@
+<descript>
+	<installator>ModulesMainDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>modules/main</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<url>user_account_info.tmpl</url>
+		<name>Информация пользвательского аккаунта</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>list.tmpl</url>
+		<name>Списки</name>
+		<type>blocks</type>
+	</pages>
+
+	<defaults>
+		<folder_ModulesMainDefault>default</folder_ModulesMainDefault>
+		<name_ModulesMainDefault>Default шаблон</name_ModulesMainDefault>
+	</defaults>
+</descript>

@@ -1,0 +1,21 @@
+<descript>
+	<installator>ticket</installator>
+	<type>modules</type>
+	<name>ticket</name>
+	<text>Тикеты</text>
+	<version>0.0.1.16</version>
+	<requirements>
+		<requiredModules>
+			<cms>
+				<minVersion>0.0.0.0</minVersion>
+			</cms>
+		</requiredModules>
+	</requirements>
+
+	<defaults>
+		<db></db>
+		<show>1</show>
+		<text_ticket>Тикеты</text_ticket>
+		<name_ticket>support</name_ticket>
+	</defaults>
+</descript>

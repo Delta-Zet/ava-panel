@@ -1,0 +1,834 @@
+<template>
+
+<item name="admins_groups_list" type="entry" descript="{Call:Lang:templates:modules/core/default:gruppyadmini}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td class="list_right"><nobr>
+			<a href="{rights_url}">{Call:Lang:templates:modules/core/default:pravadostupa}</a><br/>
+			<a href="{ip_url}">{Call:Lang:templates:modules/core/default:ogranichitdo}</a>
+		</nobr></td>
+		<td class="list_right icons"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Доступ закрыт" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Доступ открыт" /><? }
+			if($ip_access_type == 'disallow'){ ?><img src="<?=$TMPL_URL?>images/off_ip.gif" alt="{Call:Lang:templates:modules/core/default:dostupzapres}" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on_ip.gif" alt="{Call:Lang:templates:modules/core/default:dostuprazres}" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="admins_list" type="entry" descript="{Call:Lang:templates:modules/core/default:administrato}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<? if(!$root){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /><? } ?>
+			<? else{ ?><input type="hidden" id="entry{entry_count}" /><? } ?>
+		</td<? } ?>>
+		<td>{login}</td>
+		<td><a href="mailto:{eml}">{eml}</a></td>
+		<td>
+			{Call:Lang:templates:modules/core/default:zaregistriro} <strong><? echo dates::datetime($date); ?></strong><br/>
+			{Call:Lang:templates:modules/core/default:gruppa} <strong><? if($group_name){ echo $group_name; }else{ echo '{Call:Lang:templates:modules/core/default:net}'; } ?></strong><br/>
+			<strong><? if($group_name && !$group_show){ ?>{Call:Lang:templates:modules/core/default:dliagruppyne}<? } ?>
+		</td>
+		<td class="list_right icons">
+			<a href="{stat_url}"><img src="<?=$TMPL_URL?>images/stat.gif" alt="{Call:Lang:templates:modules/core/default:statistika}" /></a>
+			<? if(!$root){ ?><a href="{rights_url}"><img src="<?=$TMPL_URL?>images/rights.gif" alt="{Call:Lang:templates:modules/core/default:pravadostupa}" /></a><? } ?>
+			<a href="{ip_url}"><a href="{rights_url}"><img src="<?=$TMPL_URL?>images/off_ip.gif" alt="{Call:Lang:templates:modules/core/default:ogranichitdo}" /></a>
+		</td>
+		<td class="list_right icons"><?
+			if($root){ ?><img src="<?=$TMPL_URL?>images/root.gif" alt="{Call:Lang:templates:modules/core/default:superadminis}" /><? }
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Неактивен" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Активен" /><? }
+			if($ip_access_type == 'disallow'){ ?><img src="<?=$TMPL_URL?>images/off_ip.gif" alt="{Call:Lang:templates:modules/core/default:dostupzapres}" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on_ip.gif" alt="{Call:Lang:templates:modules/core/default:dostuprazres}" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="users_groups_list" type="entry" descript="{Call:Lang:templates:modules/core/default:gruppypolzov}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td class="icons list_right"><?
+				if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Неактивен" /><? }
+				else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Активен" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="users_form_types_list" type="entry" descript="{Call:Lang:templates:modules/core/default:gruppypolzov}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td class="icons list_right"><?
+				if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Неактивен" /><? }
+				else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Активен" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="users_list" type="entry" descript="{Call:Lang:templates:modules/core/default:polzovateli}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<? if(!$root){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /><? } ?>
+		</td<? } ?>>
+		<td>
+			{Call:Lang:templates:modules/core/default:login} <strong>{login}</strong><br/>
+			{Call:Lang:templates:modules/core/default:imia} <strong><? if($name) echo $name; else echo '{Call:Lang:templates:modules/core/default:neukazano}'; ?></strong>
+		</td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:zaregistriro} <strong><? echo dates::datetime($date); ?></strong><br/>
+			{Call:Lang:templates:modules/core/default:chasovojpoia} <strong><? echo Dates::UTCName($utc); ?></strong><br/>
+			{Call:Lang:templates:modules/core/default:kodvosstanov} <strong>{code}</strong><br/>
+		</nobr></td>
+		<td><pre><? echo regExp::subStr(strip_tags($comment), 0, 500); ?><pre></td>
+		<td><a href="mailto:{eml}">{eml}</a></td>
+		<td>
+			{Call:Lang:templates:modules/core/default:gruppa} <nobr><strong><? if($group_name){ echo $group_name; }else{ echo '{Call:Lang:templates:modules/core/default:net1}'; } ?></strong></nobr><br/>
+			<strong><? if($group_name && !$group_show){ ?>{Call:Lang:templates:modules/core/default:dliagruppyne}<? } ?></strong>
+		</td>
+		<td class="list_right icons">
+			<a href="{act_url}"><img src="<?=$TMPL_URL?>images/modify.gif" alt="Редактировать" /></a>
+			<a href="{pwd_url}"><img src="<?=$TMPL_URL?>images/pwd.gif" alt="Сменить пароль" /></a>
+		</td>
+		<td class="list_right icons"><? switch($show){
+			case '1': echo '<img src="'.$TMPL_URL.'images/on.gif" alt="Активен" />'; break;
+			case '0': echo '<img src="'.$TMPL_URL.'images/on2.gif" alt="Неактивен" />'; break;
+			case '-1': echo '<img src="'.$TMPL_URL.'images/off.gif" alt="Забанен" />'; break;
+		} ?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="admin_access_ip_list" type="entry" descript="{Call:Lang:templates:modules/core/default:ipadresadost}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td class="px150">{ip}</td>
+		<td class="list_right">
+			<? if($type == 'allow'){ ?><strong>{Call:Lang:templates:modules/core/default:ipvspiskeraz}</strong><? } ?>
+			<? elseif($type == 'disallow'){ ?><strong>{Call:Lang:templates:modules/core/default:ipvspiskezap}</strong><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="site_access_ip_list" type="entry" descript="{Call:Lang:templates:modules/core/default:ipadresadost1}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><strong>{ip}</strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="api_list" type="entry" descript="{Call:Lang:templates:modules/core/default:ipadresadost2}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td class="px150">{ip}</td>
+		<td class="list_right">
+			<? if($type == 'allow'){ ?><strong>{Call:Lang:templates:modules/core/default:ipvspiskeraz}</strong><? } ?>
+			<? elseif($type == 'disallow'){ ?><strong>{Call:Lang:templates:modules/core/default:ipvspiskezap}</strong><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="sites_list" type="entry" descript="{Call:Lang:templates:modules/core/default:sajty}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td><a href="{url}" target="_blank">{url}</a></td>
+		<td class="list_right">
+			<? if($default){ ?><strong>{Call:Lang:templates:modules/core/default:ehtosajtpoum}</strong><br/><? } ?>
+			<? if($access == '1'){ ?><strong>{Call:Lang:templates:modules/core/default:zakrytdliavs}</strong><br/><? } ?>
+			<? elseif($access == '2'){ ?><strong>{Call:Lang:templates:modules/core/default:zakrytdliavs1}</strong><br/><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/core/default:otkrytdliapo}</strong><br/><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="templates_list" type="entry" descript="{Call:Lang:templates:modules/core/default:shablony}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr>{name}</nobr></td>
+		<td><nobr>
+			<? if($type == 'main'){ ?><strong>{Call:Lang:templates:modules/core/default:obshchijshab}</strong><br/><? } ?>
+			<? elseif($type == 'admin'){ ?><strong>{Call:Lang:templates:modules/core/default:shablonadmin}</strong><br/><? } ?>
+			<? elseif($type == 'blocks'){ ?><strong>{Call:Lang:templates:modules/core/default:shablonbloko}</strong><br/><? } ?>
+			<? elseif($type == 'system'){ ?><strong>{Call:Lang:templates:modules/core/default:sistemnyjsha}</strong><br/><? } ?>
+			<? elseif(regExp::Match('modules/', $type)){ ?>
+				<strong>{Call:Lang:templates:modules/core/default:shablonmodul}</strong><br/>
+				Модуль: <strong><? $t2 = regExp::Split('/', $type); echo $GLOBALS['Core']->getModuleTechNameByTechId($t2[1]).' ('.$t2[1].')'; ?></strong><br/>
+			<? } ?>
+		</nobr></td>
+		<td>
+			<? if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="{Call:Lang:templates:modules/core/default:zakryt}" /><? } ?>
+			<? else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="{Call:Lang:templates:modules/core/default:dejstvuet}" /><? } ?>
+		</td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:papka} <strong><?
+				if(file_exists(TMPL.$type.'/'.$folder)) echo TMPL.$type.'/'.$folder;
+				else echo 'Не использует папок';
+			?></strong><br/>
+			<? if($tech_name){ ?>{Call:Lang:templates:modules/core/default:tekhnichesko} <strong>{tech_name}</strong><br/><? } ?>
+		</nobr></td>
+		<td><nobr>
+			<? if($version){ ?>{Call:Lang:templates:modules/core/default:versiia} <strong>{version}</strong><br/><? } ?>
+		</nobr></td>
+		<td><nobr><? if($language){ ?>
+			{Call:Lang:templates:modules/core/default:iazyk} <strong><?=$GLOBALS['Core']->getLangName($language)?> ({language})</strong><br/>
+		<? } ?></nobr></td>
+		<td class="list_right icons">
+			<a href="{pages_url}"><img src="<?=$TMPL_URL?>images/pages.gif" alt="{Call:Lang:templates:modules/core/default:pravitstrani}" /></a>
+			<? if($type == 'main'){ ?><a href="{widgets_url}"><img src="<?=$TMPL_URL?>images/widgets.gif" alt="Виджеты" /></a><? } ?>
+			<a href="{uninstall_url}" onClick="return confirm('{Call:Lang:templates:modules/core/default:dejstud}');"><img src="<?=$TMPL_URL?>images/trash.gif" alt="{Call:Lang:templates:modules/core/default:deinstalliro}" /></a>
+			<a href="{clone_url}"><img src="<?=$TMPL_URL?>images/copy.gif" alt="{Call:Lang:templates:modules/core/default:sozdatkopiiu}" /></a>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="fields_list" type="entry" descript="{Call:Lang:templates:modules/core/default:poliaformy}">
+	<? if(!$text) $text = '<a href="'.$text_url.'">'.$name.'</a>'; ?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><? if(!$extraParams['protected'][$name]){ ?>
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		<? } ?></td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td>
+			<? if($type == 'text'){ ?>{Call:Lang:templates:modules/core/default:tekstovoepol}<? } ?>
+			<? elseif($type == 'textarea'){ ?>{Call:Lang:templates:modules/core/default:tekstovaiaob}<? } ?>
+			<? elseif($type == 'checkbox'){ ?>{Call:Lang:templates:modules/core/default:galochka}<? } ?>
+			<? elseif($type == 'checkbox_array'){ ?>{Call:Lang:templates:modules/core/default:spisokiznesk}<? } ?>
+			<? elseif($type == 'select'){ ?>{Call:Lang:templates:modules/core/default:vypadaiushch}<? } ?>
+			<? elseif($type == 'multiselect'){ ?>{Call:Lang:templates:modules/core/default:vypadaiushch1}<? } ?>
+			<? elseif($type == 'radio'){ ?>{Call:Lang:templates:modules/core/default:radioknopka}<? } ?>
+			<? elseif($type == 'password'){ ?>{Call:Lang:templates:modules/core/default:polevvodapar}<? } ?>
+			<? elseif($type == 'file'){ ?>{Call:Lang:templates:modules/core/default:zagruzkafajl}<? } ?>
+			<? elseif($type == 'calendar2'){ ?>{Call:Lang:templates:modules/core/default:data}<? } ?>
+			<? elseif($type == 'calendar'){ ?>{Call:Lang:templates:modules/core/default:promezhutokd}<? } ?>
+			<? elseif($type == 'gap'){ ?>{Call:Lang:templates:modules/core/default:promezhutokc}<? } ?>
+			<? elseif($type == 'captcha'){ ?>CAPTCHA<? } ?>
+			<? elseif($type == 'hidden'){ ?>{Call:Lang:templates:modules/core/default:skrytoepole}<? } ?>
+		</td>
+		<td class="list_right"><strong>
+			<? if(!$show){ ?>{Call:Lang:templates:modules/core/default:neotobrazhae}<? } ?>
+			<? elseif($show == '1'){ ?>{Call:Lang:templates:modules/core/default:otobrazhaets}<? } ?>
+		</strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="template_pages" type="entry" descript="{Call:Lang:templates:modules/core/default:stranitsysha}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td>{url}</td>
+		<td><a href="{correct_url}">{Call:Lang:templates:modules/core/default:pravitshablo}</a></td>
+		<td><a href="{clone_url}">{Call:Lang:templates:modules/core/default:sdelatkopiiu}</a></td>
+		<td class="list_right">
+			<? if($type == '.tmpl'){ ?><strong>{Call:Lang:templates:modules/core/default:shablonobshc}</strong><? } ?>
+			<? elseif($type == '.css'){ ?><strong>{Call:Lang:templates:modules/core/default:fajllistovst}</strong><? } ?>
+			<? elseif($type == '.js'){ ?><strong>{Call:Lang:templates:modules/core/default:fajljavascri}</strong><? } ?>
+			<? elseif($type == 'blocks'){ ?><strong>{Call:Lang:templates:modules/core/default:kollektsiiab}</strong><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/core/default:fajl} <? echo Files::getExtension($url); ?></strong><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="template_page_blocks" type="entry" descript="{Call:Lang:templates:modules/core/default:blokishablon}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{descript}</td>
+		<td>{name}</td>
+		<td><? if($template){ echo '{Call:Lang:templates:modules/core/default:shablon:'.Library::serialize(array($template)).'}'; } ?></td>
+		<td class="list_right"><strong><?
+			switch($type){
+				case 'cover': echo '{Call:Lang:templates:modules/core/default:shablonobolo}'; break;
+				case 'entry': echo '{Call:Lang:templates:modules/core/default:shablonzapis}'; break;
+				case 'additentry': echo '{Call:Lang:templates:modules/core/default:shablonsubza}'; break;
+				case 'head': echo '{Call:Lang:templates:modules/core/default:shablonshapk}'; break;
+				case 'extra': echo '{Call:Lang:templates:modules/core/default:dopolnitelna}'; break;
+			}
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="widgets_list" type="entry" descript="Список виджетов">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td class="icons list_right"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Неактивен" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Активен" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="languages_list" type="entry" descript="{Call:Lang:templates:modules/core/default:iazyki}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<? if(LANGUAGE != $name){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /><? } ?>
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td><? if($default){ echo '{Call:Lang:templates:modules/core/default:iazykpoumolc}'; } ?></td>
+		<td class="list_right"><a href="{pkgs_url}">{Call:Lang:templates:modules/core/default:iazykovyepak}</a></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="language_packages_list" type="entry" descript="{Call:Lang:templates:modules/core/default:iazykovyepak}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr><strong><?
+			switch($type){
+				case 'core': echo 'Пакет ядра'; break;
+				case 'modules': echo 'Пакет модуля'; break;
+				case 'templates': echo 'Пакет шаблона типа '.$tmplType; break;
+			}
+		?><br/>{text}</strong></nobr></td>
+		<td><nobr>
+			Файл: <strong>{id}</strong><br/>
+			{Call:Lang:templates:modules/core/default:versiia}: <strong>{version}</strong><br/>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="cron_list" type="entry" descript="{Call:Lang:templates:modules/core/default:cronzadaniia}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<? if(!$del_forbid){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /><? } ?>
+		</td<? } ?>>
+		<td><a href="{modify_url}"><? if($comment) echo $comment; else echo regExp::html($command, true); ?></a></td>
+		<td><nobr>{Call:Lang:templates:modules/core/default:mesiatsy} <strong>{month}</strong></nobr></td>
+		<td><nobr>{Call:Lang:templates:modules/core/default:dni} <strong>{day}</strong></nobr></td>
+		<td><nobr>{Call:Lang:templates:modules/core/default:dninedeli} <strong>{week}</strong></nobr></td>
+		<td><nobr>{Call:Lang:templates:modules/core/default:chasy} <strong>{hour}</strong></nobr></td>
+		<td><nobr>{Call:Lang:templates:modules/core/default:minuty} <strong>{minute}</strong></nobr></td>
+		<td><nobr><nobr><?
+			if($tick){ echo '{Call:Lang:templates:modules/core/default:tikovoeispol}'; }
+		?></nobr></td>
+		<td><nobr><?
+			if($limit){ echo 'Лимит исполнения до <strong>'.Dates::dateTime($limit).'</strong><br/>'; }
+			echo 'Последний запуск: <strong>'.($last_work ? Dates::dateTime($last_work) : 'Не было').'</strong><br/>';
+		?></nobr></td>
+		<td><nobr><?
+			echo 'Модуль: <strong>'.$GLOBALS['Core']->getModuleName($module).'</strong><br/>';
+			echo 'Идентификатор: <strong>'.$name.'</strong><br/>';
+		?></nobr></td>
+		<td class="list_right icons">
+			<? if($show){ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Запускается" /><? } ?>
+			<? else{ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Приостановлен" /><? } ?>
+			<? if($del_forbid){ ?><img src="<?=$TMPL_URL?>images/off_disable.gif" alt="Защищен от удаления" /><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="mail_templates_list" type="entry" descript="{Call:Lang:templates:modules/core/default:shablonypise}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<? if(!$system){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /><? } ?>
+		</td<? } ?>>
+		<td>{text}<br/>{name}<br/>Модуль: <strong>{mod}</strong></td>
+		<td class="list_right">
+			{Call:Lang:templates:modules/core/default:temaotltgt:<?=Library::serialize(array(regExp::html($subj), $sender, $sender_eml));?>}
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="mails_list" type="entry" descript="{Call:Lang:templates:modules/core/default:pisma}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:vneseno} <strong><? echo dates::datetime($date); ?></strong><br/>
+			{Call:Lang:templates:modules/core/default:nachataotpra} <strong><? echo $in_work ? dates::datetime($in_work) : '{Call:Lang:templates:modules/core/default:nenachata}'; ?></strong><br/>
+			{Call:Lang:templates:modules/core/default:otpravleno} <strong><? echo $senddate ? dates::datetime($senddate) : '{Call:Lang:templates:modules/core/default:neotpravleno}'; ?></strong><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:otpravitel} <strong><a href="mailto:{sender_eml}">{sender} <{sender_eml}></a></strong><br/>
+			{Call:Lang:templates:modules/core/default:poluchatel} <strong><a href="mailto:{eml}">{eml}</a></strong><br/>
+			{Call:Lang:templates:modules/core/default:tema} <strong>{subj}</strong><br/>
+			{Call:Lang:templates:modules/core/default:format} <strong>{format}</strong><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:popytokotpra} <strong>{attempts}</strong><br/>
+			{Call:Lang:templates:modules/core/default:status} <strong><?
+				switch($status){
+					case '0': echo '{Call:Lang:templates:modules/core/default:vocheredi}'; break;
+					case '1': echo '{Call:Lang:templates:modules/core/default:otpravleno1}'; break;
+					case '2': echo '{Call:Lang:templates:modules/core/default:neotpravleno1}'; break;
+				}
+			?></strong><br/>
+			{Call:Lang:templates:modules/core/default:modul} <strong><? echo $GLOBALS['Core']->getModuleName($mod); ?></strong><br/>
+			{Call:Lang:templates:modules/core/default:funktsiia} <strong>{func}</strong><br/>
+		</nobr></td>
+		<td class="list_right">
+			<a href="{data_url}">{Call:Lang:templates:modules/core/default:redaktirovat}</a><br/>
+			<a href="{resend_url}" onClick="return confirm('{Call:Lang:templates:modules/core/default:dejstper}');">{Call:Lang:templates:modules/core/default:pereslat}</a><br/>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="databases" type="entry" descript="{Call:Lang:templates:modules/core/default:bazydannykh}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><strong>{name}</strong></td>
+		<td>{ident}</td>
+		<td>{driver}</td>
+		<td>
+			{Call:Lang:templates:modules/core/default:polzovatelkh:<?=Library::serialize(array('<strong>'.$user.'</strong>', '<strong>'.$host.'</strong>', '<strong>'.$prefix.'</strong>'));?>}<br/>
+		</td>
+		<td class="icons list_right">
+			<a href="{del_url}" onClick="return confirm('Вы уверены?');"><img src="<?=$TMPL_URL?>images/off.gif" alt="{Call:Lang:templates:modules/core/default:udalitizspis}" /></a>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="installed_packages_list" type="entry" descript="{Call:Lang:templates:modules/core/default:moduli}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:urlimia} <strong>{url}</strong><br/>
+			{Call:Lang:templates:modules/core/default:bazadannykh}
+			<strong><? if($db){
+				$dbData = $GLOBALS['Core']->getDBData($db);
+				echo '{Call:Lang:templates:modules/core/default:polzovatelkh1:'.Library::serialize(array($dbData['name'], $dbData['user'], $dbData['host'], $dbData['prefix'])).'}';
+			}
+			else{
+				echo '{Call:Lang:templates:modules/core/default:poumolchanii}';
+			} ?></strong>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:modul} <strong>{orig_textname}</strong><br/>
+			{Call:Lang:templates:modules/core/default:tekhnichesko} <strong>{name}</strong><br/>
+			{Call:Lang:templates:modules/core/default:versiia1} <strong>{version}</strong>
+		</nobr></td>
+		<td><? if(!$show) echo '{Call:Lang:templates:modules/core/default:nedostupen}'; ?></td>
+		<td><nobr><a href="{clone_url}">{Call:Lang:templates:modules/core/default:sozdateshche}</a></nobr></td>
+		<td class="list_right"><a href="{uninstall_url}" onClick="return confirm('{Call:Lang:templates:modules/core/default:dejstdeinst}');">{Call:Lang:templates:modules/core/default:deinstalliro}</a></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="urls_list" type="entry" descript="URL">
+	<?
+		$siteUrl = $GLOBALS['Core']->getSiteUrl($site);
+		$url = $siteUrl.$url;
+		$rewrited = $siteUrl.$rewrited;
+	?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{rewrited}</td>
+		<td>=></td>
+		<td><a href="{url}" target="_blank">{url}</a></td>
+		<td class="list_right"><a href="{params_url}"><strong>{Call:Lang:templates:modules/core/default:izmenit}</strong></a></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="url_rights_list" type="entry" descript="Правила формирования URL">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}<br/>{name}</td>
+		<td><nobr>
+			<strong><?
+				switch($type){
+					case 'drop': echo 'Отмена имени модуля и функции в URL'; break;
+					case 'replace': echo 'Замена имени модуля и функции'; break;
+					case 'dropvars': echo 'Исключение имен переменных из URL'; break;
+					case 'unusetext': echo 'Включение неиспользуемых конструкций в URL'; break;
+					case 'free': echo 'Свободная обработка URL'; break;
+				}
+			?></strong><br/>
+		</nobr></td>
+		<td><nobr>
+			Модуль: <strong><?=$GLOBALS['Core']->getModuleName($mod)?></strong><br/>
+			Функция: <strong>{func}</strong><br/>
+		</nobr></td>
+		<td class="list_right icons"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Доступ закрыт" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Доступ открыт" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="plugins_list" type="entry" descript="{Call:Lang:templates:modules/core/default:plaginy}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td class="list_right icons"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="{Call:Lang:templates:modules/core/default:ispolneniepl}" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="{Call:Lang:templates:modules/core/default:plaginrabota}" /><? }
+		?></td>
+		<td><nobr><?
+
+			extract(Library::unserialize($vars));
+
+			switch($type){
+				case 'point':
+					switch($point){
+						case 'start': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav}'; break;
+						case 'settings': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav1}'; break;
+						case 'url': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav2}'; break;
+						case 'access': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav3}'; break;
+						case 'callFunction': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav4}'; break;
+						case 'templateGen': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav5}'; break;
+						case 'headers': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav6}'; break;
+						case 'content': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav7}'; break;
+						case 'contentTransform': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav8}'; break;
+						case 'shutdown': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav9}'; break;
+						case 'closeSite': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav10}'; break;
+						case 'accessDeny': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav11}'; break;
+						case 'exception': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav12}'; break;
+					}
+					break;
+
+				case 'function':
+					switch($point){
+						case 'instead': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiav13:'.Library::serialize(array($function)).'}'; break;
+						case 'before': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiad:'.Library::serialize(array($function)).'}'; break;
+						case 'after': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiap:'.Library::serialize(array($function)).'}'; break;
+					}
+					break;
+
+				case 'noExistFunc': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiak:'.Library::serialize(array($function, $class)).'}'; break;
+				case 'widget': echo 'Вызывается в шаблоне как виджет'; break;
+				case 'simple': echo '{Call:Lang:templates:modules/core/default:vyzyvaetsiat}'; break;
+			}
+
+			echo '<br/>{Call:Lang:templates:modules/core/default:plaginispolz}';
+			if($services['site']) echo '{Call:Lang:templates:modules/core/default:obshchemsajt}';
+			if($services['admin']) echo '{Call:Lang:templates:modules/core/default:adminke}';
+			if($services['api']) echo "API, ";
+			if($services['cron']) echo '{Call:Lang:templates:modules/core/default:vyzovakhcron}';
+
+			echo $mod ? '<br/>К модулю '.$GLOBALS['Core']->getModuleName($mod) : '';
+
+		?></nobr></td>
+		<td>{descript}</td>
+		<td class="list_right icons"><?
+			if($settings_code){ ?><a href="{settings_url}"><img src="<?=$TMPL_URL?>images/modify.gif" alt="Настроить" /></a><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="cron_tasks" type="entry" descript="{Call:Lang:templates:modules/core/default:rezultatvypo}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{comment}</td>
+		<td><nobr>{Call:Lang:templates:modules/core/default:status} <strong><?
+				switch($status){
+					case 1: echo '{Call:Lang:templates:modules/core/default:ispolniaetsi}'; break;
+					case 2: echo '{Call:Lang:templates:modules/core/default:vypolnenosre:'.Library::serialize(array((empty($result) ? 'FALSE' : 'TRUE'))).'}'; break;
+					case -1: echo '{Call:Lang:templates:modules/core/default:ostanovlenop}'; break;
+					default: echo 'Ожидет выполнения'; break;
+				}
+			?></strong>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:postavlenovo} <strong><? echo dates::datetime($added); ?></strong><br/>
+			<? if($runned){ ?>{Call:Lang:templates:modules/core/default:otpravlenona} <strong><? echo dates::datetime($runned); ?></strong><br/><? } ?>
+			<? if($execute){ ?>{Call:Lang:templates:modules/core/default:vypolneno} <strong><? echo dates::datetime($execute); ?></strong><br/><? } ?>
+		</nobr></td>
+		<td class="list_right"><? if($result_text){ ?>
+			<div class="hidden_result">
+				<strong><a href="#" onClick="return false;">{Call:Lang:templates:modules/core/default:smotretrezul}</a></strong>
+				<textarea><? echo regExp::html($result_text, 0, 300); ?></textarea>
+			</div>
+		<? } ?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="folders_list" type="entry" descript="{Call:Lang:templates:modules/core/default:papkidliazag}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td>{name}</td>
+		<td>{path}</td>
+		<td>{Call:Lang:templates:modules/core/default:osnovnojstan} <strong><? echo ($std = $GLOBALS['Core']->getImageStandartName($main_standart)) ? $std : '{Call:Lang:templates:modules/core/default:net}'; ?></strong></td>
+		<td class="list_right"><strong><? if($show){ echo '{Call:Lang:templates:modules/core/default:otkryta}'; }else{ echo '{Call:Lang:templates:modules/core/default:zakryta}'; } ?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="fonts_list" type="entry" descript="{Call:Lang:templates:modules/core/default:shrifty}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><strong>{name}</strong></td>
+		<td>{Call:Lang:templates:modules/core/default:fajl1} <strong>{file}</strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="watermarks_list" type="entry" descript="{Call:Lang:templates:modules/core/default:vodianyeznak}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><strong>{text}</strong></td>
+		<td>{name}</td>
+		<td><?
+			if($type == 'image') echo '<img src="'._D.$GLOBALS['Core']->getParam('watermarksFolder').'.thumbs/'.$file.'" class="thumb" />';
+			else echo '{Call:Lang:templates:modules/core/default:tekst:'.Library::serialize(array($content)).'}';
+		?></td>
+		<td><?
+			if($type == 'text'){
+				echo '{Call:Lang:templates:modules/core/default:shrift:'.Library::serialize(array($GLOBALS['Core']->getFontByFile($font))).'}';
+				echo '{Call:Lang:templates:modules/core/default:tsvet:'.Library::serialize(array($color)).'}';
+			}
+		?></td>
+		<td>
+			{Call:Lang:templates:modules/core/default:pogorizontal} <strong>{hpos}px, <? switch($hcorner){ case 'l': echo '{Call:Lang:templates:modules/core/default:sleva}'; break; case 'r': echo '{Call:Lang:templates:modules/core/default:sprava}'; break; } ?></strong><br/>
+			{Call:Lang:templates:modules/core/default:povertikali} <strong>{vpos}px, <? switch($vcorner){ case 't': echo '{Call:Lang:templates:modules/core/default:sverkhu}'; break; case 'b': echo '{Call:Lang:templates:modules/core/default:snizu}'; break; } ?></strong><br/>
+		</td>
+		<td>
+			{Call:Lang:templates:modules/core/default:prozrachnost} <strong>{transparency}</strong><br/>
+			{Call:Lang:templates:modules/core/default:povorotna} <strong>{corner}<sup>o</sup></strong><br/>
+		</td>
+		<td class="list_right"><strong><? if(!$show){ echo '{Call:Lang:templates:modules/core/default:neprimeniaet}'; }else{ echo '{Call:Lang:templates:modules/core/default:ispolzuetsia}'; } ?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="image_standarts_list" type="entry" descript="{Call:Lang:templates:modules/core/default:standartyizo}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><strong>{text}</strong></td>
+		<td>{name}</td>
+		<td>
+			{Call:Lang:templates:modules/core/default:shirina} <strong>{width}px</strong><br/>
+			{Call:Lang:templates:modules/core/default:vysota} <strong>{height}px</strong><br/>
+		</td>
+		<td>
+			{Call:Lang:templates:modules/core/default:kachestvo} <strong>{quality}</strong><br/>
+			Угол поворота <strong>{rotate}<sup>o<sup></strong><br/>
+		</td>
+		<td>{Call:Lang:templates:modules/core/default:prikonflikte}<br><strong><?
+			switch($resize_style){
+				case 0: echo '{Call:Lang:templates:modules/core/default:umenshatprop}'; break;
+				case 1: echo '{Call:Lang:templates:modules/core/default:vyrezatlevyj}'; break;
+				case 2: echo '{Call:Lang:templates:modules/core/default:vyrezatiztse}'; break;
+				case 3: echo '{Call:Lang:templates:modules/core/default:vyrezatlevyj1}'; break;
+				case 4: echo '{Call:Lang:templates:modules/core/default:vyrezatverkh}'; break;
+				case 5: echo '{Call:Lang:templates:modules/core/default:vyrezattsent}'; break;
+				case 6: echo '{Call:Lang:templates:modules/core/default:vyrezatnizts}'; break;
+				case 7: echo '{Call:Lang:templates:modules/core/default:vyrezatpravy}'; break;
+				case 8: echo '{Call:Lang:templates:modules/core/default:vyrezatiztse1}'; break;
+				case 9: echo '{Call:Lang:templates:modules/core/default:vyrezatpravy1}'; break;
+			}
+		?></strong></td>
+		<td><? if($enlarge) echo '{Call:Lang:templates:modules/core/default:budetuvelich}'; ?></td>
+		<td class="list_right"><strong><? if(!$show){ echo '{Call:Lang:templates:modules/core/default:neprimeniaet}'; }else{ echo '{Call:Lang:templates:modules/core/default:ispolzuetsia}'; } ?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="captcha_backgrounds_list" type="entry" descript="{Call:Lang:templates:modules/core/default:spisokfonovd}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><?
+			if(file_exists(_W.$extraParams['folder'].'.thumbs/'.$name)) echo '<img src="'._D.$extraParams['folder'].'.thumbs/'.$name.'" class="thumb" />';
+			elseif(file_exists($TMPL_PATH.'images/fileicons/icon'.Files::getExtension($name).'.gif')) echo '<img src="'.$TMPL_URL.'images/fileicons/icon'.Files::getExtension($name).'.gif" />';
+			else echo '<img src="'.$TMPL_URL.'images/fileicons/icon.gif" />';
+		?></td>
+		<td><strong>{name}</strong></td>
+		<td><nobr>
+			<? list($w, $h) = getimagesize(_W.$extraParams['folder'].$name); ?>
+			{Call:Lang:templates:modules/core/default:shirina} <strong>{w}</strong> {Call:Lang:templates:modules/core/default:pxvysta} <strong>{h}</strong> {Call:Lang:templates:modules/core/default:pxrazmer} <strong>{size}</strong> bytes<br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:khoziain} <strong>{uid}</strong><br/>
+			{Call:Lang:templates:modules/core/default:gruppa} <strong>{gid}</strong><br/>
+			{Call:Lang:templates:modules/core/default:prava} <strong>{mode}</strong><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:sozdan} <strong><?=Dates::dateTime($ctime)?></strong><br/>
+			{Call:Lang:templates:modules/core/default:izmenen} <strong><?=Dates::dateTime($mtime)?></strong><br/>
+			{Call:Lang:templates:modules/core/default:otkryt} <strong><?=Dates::dateTime($atime)?></strong><br/>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="captcha_standarts_list" type="entry" descript="{Call:Lang:templates:modules/core/default:spisokstanda}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><nobr><strong>{text}</strong><br/>{name}</nobr></td>
+		<td><nobr><strong><?
+			switch($captcha_type){
+				case 't':
+					echo '{Call:Lang:templates:modules/core/default:tekstovaiadl:'.Library::serialize(array($len, $len_to)).'}';
+					switch($direction){
+						case 'l': echo '{Call:Lang:templates:modules/core/default:slevanapravo}'; break;
+						case 'r': echo '{Call:Lang:templates:modules/core/default:spravanalevo}'; break;
+						case 't': echo '{Call:Lang:templates:modules/core/default:sverkhuvniz}'; break;
+						case 'b': echo '{Call:Lang:templates:modules/core/default:snizuvverkh}'; break;
+						case 'c': echo '{Call:Lang:templates:modules/core/default:vkrugovuiupo}'; break;
+						case 'd': echo '{Call:Lang:templates:modules/core/default:vkrugovuiupr}'; break;
+						case 'a': echo '{Call:Lang:templates:modules/core/default:sluchajnymob}'; break;
+					}
+					if($register_depend) echo '{Call:Lang:templates:modules/core/default:registrozavi}';
+					break;
+
+				case 'm':
+					echo '{Call:Lang:templates:modules/core/default:matematiches:'.Library::serialize(array($math_nums, $math_nums_to, $math_len, $math_len_to)).'}';
+					break;
+			}
+		?></strong></nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:startpogoriz} <strong>{start_position}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{start_position_to}</strong> {Call:Lang:templates:modules/core/default:pxstartpover} <strong>{start_position_vertical}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{start_position_vertical_to}</strong> {Call:Lang:templates:modules/core/default:pxrazmershri} <strong>{font_size}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{font_size_to}</strong><br/>
+			{Call:Lang:templates:modules/core/default:razmytostot} <strong>{font_blur}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{font_blur_to}</strong><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:ugolpovorota} <strong>{angle}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{angle_to}<sup>o</sup></strong><br/>
+			{Call:Lang:templates:modules/core/default:smeshchenies} <strong>{letter_offset}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{letter_offset_to}</strong> {Call:Lang:templates:modules/core/default:pxsmeshcheni} <strong>{letter_vertical_offset}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{letter_vertical_offset_to}</strong> px<br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/core/default:tsvetot} <strong>{color}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{color_to}</strong><br/>
+			{Call:Lang:templates:modules/core/default:prozrachnost1} <strong>{transparent}</strong> {Call:Lang:templates:modules/core/default:do} <strong>{transparent_to}</strong><br/>
+		</nobr></td>
+		<td class="list_right"><nobr><strong><?
+			if($show) echo '{Call:Lang:templates:modules/core/default:ispolzuetsia}';
+			else echo '{Call:Lang:templates:modules/core/default:zakryt}';
+		?></strong></nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="sessions_list" type="entry" descript="Списки пользовательских сессий">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left"><input type="checkbox" name="entry[{sessid}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" /></td<? } ?>>
+		<td><strong>{sessid}</strong></td>
+		<td><? echo dates::datetime($date); ?></td>
+		<td class="list_right">
+			Пользователь: <a href="<?=$CURRENT_PARENT_OBJ->path?>?mod=core&func=users&id={user_id}&type_action=modify">{u_name}</a><br/>
+			Логин: {u_login}<br/>
+			Зарегистрирован: <? echo dates::datetime($u_date); ?><br/>
+			<?
+				if($u_show == 0) echo 'Не активирован';
+				elseif($u_show == -1) echo 'Забанен';
+			?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+</template>

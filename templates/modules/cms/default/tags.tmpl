@@ -1,0 +1,15 @@
+<template>
+
+<item name="list" template="simple" type="cover" descript="Список тегов">
+	<p class="tags">{list}</p>
+</item>
+
+<item name="simple" type="entry" descript="Список тегов">
+	<?
+		$size = ceil($pop / ($extraParams['sum'] / $extraParams['INTERFACE_OBJ']->getVar('count')) * 15);
+		if($size < 10) $size = 10;
+		if($size > 48) $size = 48;
+	?><a href="?mod={CURRENT_MOD}&func=pagesByTag&tag={name}" style="font-size: {size}px">{text}</a>
+</item>
+
+</template>

@@ -1,0 +1,28 @@
+<install>
+	<name>hostingBilling</name>
+
+	<installation>core/</installation>
+
+	<installation>languages/russian/</installation>
+
+	<installation>modules/cms/</installation>
+	<installation>modules/billing/</installation>
+	<installation>modules/partner/</installation>
+	<installation>modules/ticket/</installation>
+	<installation>modules/bill_domains/</installation>
+	<installation>modules/bill_hosting/</installation>
+	<installation>modules/bill_lease/</installation>
+
+	<installation>templates/system/default/</installation>
+	<installation>templates/modules/main/default/</installation>
+	<installation>templates/modules/core/default/</installation>
+	<installation>templates/modules/bill_lease/default/</installation>
+	<installation>templates/modules/bill_domains/default/</installation>
+	<installation>templates/modules/bill_hosting/default/</installation>
+	<installation>templates/modules/partner/default/</installation>
+	<installation>templates/modules/ticket/default/</installation>
+	<installation>templates/modules/billing/default/</installation>
+	<installation>templates/modules/cms/default/</installation>
+	<installation>templates/main/default/</installation>
+	<installation>templates/admin/default/</installation>
+</install>

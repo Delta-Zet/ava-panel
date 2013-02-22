@@ -1,0 +1,10 @@
+<div style="width: 96%; margin: 20px 1%; padding: 20px 1%; float: left; border: 1px solid;"><?
+	foreach($steps as $i => $e){
+		echo '<p style="margin: 20px 0 0 0;"><strong>'.$i.': '.$e['time'].': </strong>'.$e['action'].'</p>'."\n\n\n\n\n";
+	}
+
+	echo '<br/><br/><br/><br/><br/>'."\n\n\n\n\n";
+	foreach($intervals as $i => $e){
+		echo '<p style="margin: 20px 0 0 0;">'.$e['action'].': <strong>'.$e['length'].': </strong></p>'."\n\n\n\n\n";
+	}
+?></div>

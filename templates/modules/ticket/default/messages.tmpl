@@ -1,0 +1,43 @@
+<template>
+
+<item name="messages" type="cover" descript="Список сообщений">
+	<?
+
+	if($type == 'support' && $extra){		echo '<ul class="support_messages">'.$extra.'</ul>';	}
+
+	foreach($tickets as $i => $e){ ?>
+	<dl class="support_messages">
+		<dt>
+			<strong>
+				<span class="date"><?=Dates::dateTime($e['date']);?></span>
+				<span class="user"><?
+					$uName = ($uName = $CURRENT_PARENT_OBJ->Core->getUserParam($e['author'], 'name')) ? $uName : $CURRENT_PARENT_OBJ->Core->getUserParam($e['author'], 'login');
+					if($e['author_type'] == 'support') echo $CURRENT_PARENT_OBJ->getSupportName($e['author']).' <em>({Call:Lang:templates:modules/ticket/default:sotrudnikpod})</em>';
+					else echo '<em>'.($e['author'] ? $uName.'({Call:Lang:templates:modules/ticket/default:polzovatel1})' : '{Call:Lang:templates:modules/ticket/default:nezaregistri}').'</em>';
+				?></span>
+			</strong>
+			<em>{Call:Lang:templates:modules/ticket/default:pishet}</em>
+		</dt>
+		<dd><?
+			echo '<p>'.bbCode::decode($e['text']).'</p>';
+			$e['attaches'] = Library::unserialize($e['attaches']);
+
+			if($e['attaches']){				echo '{Call:Lang:templates:modules/ticket/default:prikrepleno}';
+				foreach($e['attaches'] as $e){
+					$file = _D.$GLOBALS['Core']->getParam('supportMessagesAttachFolder', $CURRENT_MOD).$e;					echo '<li><a href="'.$file.'">'.$file.'</a></li>';				}
+				echo '</ul>';
+			}
+		?></dd>
+	</dl>
+	<? }
+
+	echo '<div class="support_messages">'.$form.'</div>';
+
+	?>
+</item>
+
+<item name="descript" type="entry" descript="Дополнительные поля">
+	<li>{text}: <strong>{value}</strong></li>
+</item>
+
+</template>

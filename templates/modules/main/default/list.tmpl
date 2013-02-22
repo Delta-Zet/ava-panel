@@ -1,0 +1,46 @@
+<template>
+
+<item name="admin_buttons_list" type="entry" descript="{Call:Lang:templates:modules/main/default:dopolnitelny}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td><a href="{url}" target="_blank">{url}</a></td>
+		<td class="list_right">
+			<?
+				if($target == '_blank') echo '{Call:Lang:templates:modules/main/default:vnovomokne}';
+				else echo '{Call:Lang:templates:modules/main/default:vtomzheokne}';
+			?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="admin_stat_list" type="entry" descript="{Call:Lang:templates:modules/main/default:statistikaad}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td class="px150"><?=Dates::dateTime($date)?></td>
+		<td>{ip}</td>
+		<td>{action_descript}</td>
+		<td class="list_right">
+			<strong>{Call:Lang:templates:modules/main/default:modul}</strong> <? if(!$action_mod) $action_mod = '{Call:Lang:templates:modules/main/default:neustanovlen}'; echo $action_mod; ?><br/>
+			<strong>{Call:Lang:templates:modules/main/default:tablitsa}</strong> <?
+				if(!$action_object) $action_object = '{Call:Lang:templates:modules/main/default:neustanovlen1}';
+				elseif($action_mod && $action_mod != 'core' && $action_mod != 'main') $action_object = $action_object.' ('.AVA_DB_PREF.$action_mod.$action_object.')';
+				else $action_object = $action_object.' ('.AVA_DB_PREF.$action_object.')';
+				echo $action_object.'<br />';
+			?>
+			<strong>{Call:Lang:templates:modules/main/default:idzapisi}</strong> {action_id}
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+</template>

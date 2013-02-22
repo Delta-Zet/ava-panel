@@ -1,0 +1,806 @@
+<template>
+
+<item name="services_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokuslug}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}<br/>({name})</td>
+		<td><nobr>
+			<strong><a href="{orders_url}">{Call:Lang:templates:modules/billing/default:zakazy}</a></strong><br/>
+			<strong><a href="{modifyOrders_url}">Запросы на смену тарифа</a></strong>
+		</nobr></td>
+		<td><a href="{discounts_url}">{Call:Lang:templates:modules/billing/default:skidki}</a></td>
+		<td><nobr>
+			<a href="{packages_url}">{Call:Lang:templates:modules/billing/default:tarifnyeplan}</a><br/>
+			<a href="{group_url}">{Call:Lang:templates:modules/billing/default:gruppytarifo}</a><br/>
+			<a href="{descript_url}">{Call:Lang:templates:modules/billing/default:opisanietari}</a><br/>
+		</nobr></td>
+		<td></td>
+		<td><strong>
+			<? if($show){ ?>{Call:Lang:templates:modules/billing/default:uslugaotkryt}<? } ?>
+			<? else{ ?>{Call:Lang:templates:modules/billing/default:uslugazakryt}<? } ?>
+		</strong></td>
+		<td class="list_right">
+			<strong><a href="{del_url}" onClick="{Call:Lang:templates:modules/billing/default:returnconfir}">{Call:Lang:templates:modules/billing/default:udalit}</a><br/></strong>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="complex_list" type="entry" descript="Комплексы услуг">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td>Ссылка для заказа:<br/>index.php?mod=<?=$CURRENT_MOD?>&func=complexOrder&complex={name}</td>
+		<td class="list_right icons"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Доступ закрыт" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Доступ открыт" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="package_groups_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokgruppt}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td class="list_right">
+			<strong>
+			<? if($main){ ?>{Call:Lang:templates:modules/billing/default:gruppaiavlia}<br/><? } ?>
+			<? if($pkg_table_mode == 'v'){ echo '{Call:Lang:templates:modules/billing/default:tarifyraspol}'; }else{ echo '{Call:Lang:templates:modules/billing/default:tarifyraspol1}'; } ?>
+			</strong>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="packages_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisoktarifo}">
+	<? $cName = $CURRENT_PARENT_OBJ->currencyName($currency); ?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>
+			{text}<br/>
+			<? if($grp_name){ ?>{Call:Lang:templates:modules/billing/default:gruppa} <strong>{grp_name}</strong><br/><? } ?>
+		</td>
+		<td>
+			<? if(!$c_name) $c_name = '{Call:Lang:templates:modules/billing/default:net}'; ?>
+			{Call:Lang:templates:modules/billing/default:identifikato} <strong>{name}</strong><br />
+			{Call:Lang:templates:modules/billing/default:imianaserver} <strong>{server_name}</strong><br />
+			{Call:Lang:templates:modules/billing/default:server} <strong>{c_name}</strong><br/>
+		</td>
+		<td><nobr>
+			<? if($extraParams['sType'] != 'onetime'){ ?>
+				{Call:Lang:templates:modules/billing/default:jmesiats} <strong>{price} {cName}</strong><br />
+				{Call:Lang:templates:modules/billing/default:prodlenie} <strong>{prolong_price} {cName}</strong><br />
+			<? } ?>
+			{Call:Lang:templates:modules/billing/default:ustanovka} <strong>{install_price} {cName}</strong><br />
+		</nobr></td>
+		<td class="list_right">
+			<strong><? if($show){ ?>{Call:Lang:templates:modules/billing/default:otkryt}<? }else{ ?>{Call:Lang:templates:modules/billing/default:zakryt}<? } ?></strong>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="pkg_descript_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:opisaniepole}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td>
+			<? if($type == 'text'){ ?>{Call:Lang:templates:modules/billing/default:tekstovoepol1}<? } ?>
+			<? elseif($type == 'textarea'){ ?>{Call:Lang:templates:modules/billing/default:tekstovaiaob}<? } ?>
+			<? elseif($type == 'checkbox'){ ?>{Call:Lang:templates:modules/billing/default:galochka}<? } ?>
+			<? elseif($type == 'checkbox_array'){ ?>{Call:Lang:templates:modules/billing/default:spisokiznesk}<? } ?>
+			<? elseif($type == 'select'){ ?>{Call:Lang:templates:modules/billing/default:vypadaiushch1}<? } ?>
+			<? elseif($type == 'multiselect'){ ?>{Call:Lang:templates:modules/billing/default:vypadaiushch2}<? } ?>
+			<? elseif($type == 'radio'){ ?>{Call:Lang:templates:modules/billing/default:radioknopka}<? } ?>
+			<? elseif($type == 'password'){ ?>{Call:Lang:templates:modules/billing/default:polevvodapar}<? } ?>
+			<? elseif($type == 'file'){ ?>{Call:Lang:templates:modules/billing/default:zagruzkafajl}<? } ?>
+			<? elseif($type == 'hidden'){ ?>{Call:Lang:templates:modules/billing/default:skrytoepole}<? } ?>
+		</td>
+		<td>{Call:Lang:templates:modules/billing/default:ispolzuetsia}<strong>
+			<?
+				if($cp = Library::str2arrKeys($cp)){					echo '{Call:Lang:templates:modules/billing/default:spaneliami}';					foreach($cp as $i => $e) echo $CURRENT_PARENT_OBJ->getConnectModName($i).'; ';				}
+			?>
+			<? if($use_if_no_conformity){ ?><br/>{Call:Lang:templates:modules/billing/default:eslinetsootv}<? } ?>
+			<? if($use_if_no_panel){ ?><br/>{Call:Lang:templates:modules/billing/default:eslinetpanel}<? } ?>
+		</strong></td>
+		<td><strong><nobr>
+			<? if($apkg){ ?>{Call:Lang:templates:modules/billing/default:prisozdaniip}<br/><? } ?>
+			<? if($aacc){ ?>{Call:Lang:templates:modules/billing/default:prisozdaniia}<br/><? } ?>
+			<? if($opkg){ ?>{Call:Lang:templates:modules/billing/default:prioformleni}<br/><? } ?>
+			<? if($mpkg){ ?>{Call:Lang:templates:modules/billing/default:vkonstruktor}<br/><? } ?>
+			<? if($pkg_list){ ?>{Call:Lang:templates:modules/billing/default:pripostroeni}<br/><? } ?>
+		</nobr></strong></td>
+		<td class="list_right"><strong><nobr>
+			<? if(!$show){ ?>{Call:Lang:templates:modules/billing/default:neotobrazhae}<? } ?>
+			<? elseif($show == '1'){ ?>{Call:Lang:templates:modules/billing/default:otobrazhaets}<? } ?>
+			<? elseif($show == '2'){ ?>{Call:Lang:templates:modules/billing/default:mozhnoskryto}<? } ?>
+			<? elseif($show == '3'){ ?>{Call:Lang:templates:modules/billing/default:mozhnovystav}<? } ?>
+			<? elseif($show == '4'){ ?>{Call:Lang:templates:modules/billing/default:personalnyen}<? } ?>
+		</nobr></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="connections_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisoksoedin}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text} ({name})</td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:login} <strong>{login}</strong><br/>
+			{Call:Lang:templates:modules/billing/default:khost} <a href="{host}" target="_blank">{host}</a><br/>
+			<? if($login_host){ ?>{Call:Lang:templates:modules/billing/default:khostdostupa} <a href="{login_host}" target="_blank">{login_host}</a><br/><? } ?>
+		</nobr></td>
+		<td>{comment}</td>
+		<td class="list_right"><nobr>{Call:Lang:templates:modules/billing/default:panel} <br/><strong>{extname}</strong></nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="connect_extensions_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokrasshi}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td>{mod}</td>
+		<td>{Call:Lang:templates:modules/billing/default:krasshirenii} <strong><? echo $GLOBALS['Core']->getModuleTechNameByTechId($service); ?></strong></td>
+		<td class="list_right">
+			<a href="{update_url}">{Call:Lang:templates:modules/billing/default:obnovit}</a><br/>
+			<a href="{descript_url}">Описание тарифов</a>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="connection_extension_descript_list" type="entry" descript="Описание тарифов (уровень расширения)">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{id}</td>
+		<td>Тип: <strong><?
+			switch($type){				case 'text': echo 'Текст'; break;
+				case 'select': echo 'Список'; break;
+				case 'checkbox': echo 'Галочка'; break;
+				case 'checkbox_array': echo 'Список со множественным выбором'; break;
+			}
+		?></strong></td>
+		<td class="list_right"><nobr><?
+			if($k) echo 'Коэффициент: <strong>'.$k.'</strong><br/>';
+			if($unlimit) echo 'Безлимит: <strong>'.$unlimit.'</strong><br/>';
+			if($unlimitAlias) echo 'Поле для безлимита: <strong>'.$unlimitAlias.'</strong><br/>';
+			if($ch) echo 'Значение если поле отмечено: <strong>'.$ch.'</strong><br/>';
+			if($noch) echo 'Значение если поле не отмечено: <strong>'.$noch.'</strong><br/>';
+		?></nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="pay_extensions_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokrasshi1}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td>{mod}</td>
+		<td class="list_right"><a href="{update_url}">{Call:Lang:templates:modules/billing/default:obnovit}</a></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="sms_extensions_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokrasshi1}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td>{mod}</td>
+		<td class="list_right"><a href="{update_url}">{Call:Lang:templates:modules/billing/default:obnovit}</a></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="sms_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisoksposob}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text} ({name})</td>
+		<td>
+			{Call:Lang:templates:modules/billing/default:rasshirenie} <strong><? echo $CURRENT_PARENT_OBJ->getSmsExtName($extension); ?></strong>
+		</td>
+		<td>
+			<? if($show){ ?><strong>{Call:Lang:templates:modules/billing/default:otkrytdliais}</strong><br/><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/billing/default:skryt1}</strong><br/><? } ?>
+		</td>
+		<td class="list_right">
+			<a href="{smsNumbers_url}">Номера</a>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="sms_numbers_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisoksposob}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{number}</td>
+		<td>Зачисляется <strong><? echo $sum.' '.$CURRENT_PARENT_OBJ->currencyName($currency); ?></strong></td>
+		<td>Комментарий:<br/>{comment}</td>
+		<td class="list_right icons"><?
+			if(!$show){ ?><img src="<?=$TMPL_URL?>images/off.gif" alt="Доступ закрыт" /><? }
+			else{ ?><img src="<?=$TMPL_URL?>images/on.gif" alt="Доступ открыт" /><? }
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="currency_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokvaliut}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text} ({name})</td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:kurs} <strong>{exchange}</strong><br/>
+			Разменная еденица: <strong>{coin}</strong><br/>
+			Разменных едениц в одной базовой: <strong>{coincount}</strong><br/>
+		</nobr></td>
+		<td>
+			<? if(!$default){ ?><a href="{default_url}">{Call:Lang:templates:modules/billing/default:sdelatispolz}</a><br/><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/billing/default:ispolzuetsia1}</strong><br/><? } ?>
+		</td>
+		<td class="list_right">
+			<? if(!$default){ ?><a href="{del_url}">{Call:Lang:templates:modules/billing/default:udalit}</a><br/><? } ?>
+			<? else{ ?>{Call:Lang:templates:modules/billing/default:nelziaudalit}<br/><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="payments_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisoksposob}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text} ({name})</td>
+		<td>
+			{Call:Lang:templates:modules/billing/default:valiuta} <strong><? echo $CURRENT_PARENT_OBJ->currencyName($currency); ?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:rasshirenie} <strong><? echo $CURRENT_PARENT_OBJ->getPayExtName($extension); ?></strong>
+		</td>
+		<td class="list_right">
+			<? if($show){ ?><strong>{Call:Lang:templates:modules/billing/default:otkrytdliais}</strong><br/><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/billing/default:skryt1}</strong><br/><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="ordered_services_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokzakaza}">
+	<? $dcur = $CURRENT_PARENT_OBJ->getMainCurrencyName(); ?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr>
+			<strong>{ident}</strong>{Call:Lang:templates:modules/billing/default:tarif} <strong>{pkg_name}</strong><br/>
+			<strong><a href="{params_url}">{Call:Lang:templates:modules/billing/default:parametry1}</a></strong><br/>
+			<strong><a href="{history_url}">История</a></strong>
+		</nobr></td>
+		<td><nobr><? if($user_name){ ?>{Call:Lang:templates:modules/billing/default:klient:<?=Library::serialize(array($CURRENT_PARENT_OBJ->path.'?mod='.$CURRENT_PARENT_OBJ->getMod().'&func=clientsData&id='.$client_id));?>}<strong>{user_name}</strong></a><br/><? } ?></nobr></td>
+		<td><nobr><? if($connect_name){ ?>{Call:Lang:templates:modules/billing/default:server} <br/><a href="{connect_login_host}" target="_blank">{connect_login_host}</a><br/>({connect_textname})<br/><? } ?></nobr></td>
+		<td><nobr><? if($paid_to){ ?>{Call:Lang:templates:modules/billing/default:ostalos} <strong><?=Dates::daysStay($paid_to);?></strong><br/>{Call:Lang:templates:modules/billing/default:do} <strong><? echo Dates::dateTime($paid_to); ?></strong>)<? } ?></nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:vnesenavzaka} <strong><? echo Dates::dateTime($date); ?></strong><br/>
+			<? if($created){ ?>
+				{Call:Lang:templates:modules/billing/default:sozdana} <strong><? echo Dates::dateTime($created); ?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:posledniaiao1} <strong><? echo Dates::dateTime($last_paid); ?></strong><br/>
+			<? } ?>
+		</nobr></td>
+		<td><? if($price != 0 || $modify_price != 0){ ?><nobr>
+			{Call:Lang:templates:modules/billing/default:tsena2} <strong><?=Library::humanCurrency($price + $modify_price);?> {cur_name}<? if(!$cur_default){ echo ' ('.Library::humanCurrency($price + $modify_price * $cur_ex).$dcur.')'; } ?> {Call:Lang:templates:modules/billing/default:vtchosnovnoj:<?=Library::serialize(array($extraParams['baseTerm']));?>} <strong><?=Library::humanCurrency($price);?> {cur_name}<? if(!$cur_default){ echo ' ('.Library::humanCurrency($price * $cur_ex).$dcur.')'; } ?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:modifikatsii} <strong><?=Library::humanCurrency($modify_price);?> {cur_name}<? if(!$cur_default){ echo ' ('.Library::humanCurrency($modify_price * $cur_ex).$dcur.')'; } ?></strong><br/>
+		</nobr><? } ?></td>
+		<td><? if($all_payments != 0){ ?><nobr>{Call:Lang:templates:modules/billing/default:vsegooplache}<br/><strong><?=Library::humanCurrency($all_payments);?> {cur_name}<? if(!$cur_default){ echo ' ('.Library::humanCurrency($all_payments * $cur_ex).$dcur.')'; } ?></strong><br/></nobr><? } ?></td>
+		<td class="list_right"><strong><?
+			switch($step){
+				case '0': echo '{Call:Lang:templates:modules/billing/default:zablokirovan:'.Library::serialize(array($suspend_reason_descript)).'}'; break;
+				case '1': echo '{Call:Lang:templates:modules/billing/default:rabotaet}'; break;
+				case '-1': echo '{Call:Lang:templates:modules/billing/default:udalena:'.Library::serialize(array($suspend_reason_descript)).'}'; break;
+			}
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="ordered_services_list_by_client" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokzakaza1}">
+	<? $curName = $CURRENT_PARENT_OBJ->currencyName($pkg_currency); ?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="e() document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="f() this.click();" />
+		</td<? } ?>>
+		<td>
+			<strong>{ident}</strong>{Call:Lang:templates:modules/billing/default:tarif1:<?=Library::serialize(array($pkg_name));?>}<br/>
+			<? if($connect_name){ ?>{Call:Lang:templates:modules/billing/default:server} <a href="{connect_login_host}" target="_blank">{connect_login_host}</a> ({connect_textname})<br/><? } ?>
+		</td>
+		<td><strong><?
+			switch($step){
+				case '0': echo '{Call:Lang:templates:modules/billing/default:zablokirovan:'.Library::serialize(array($suspend_reason_descript)).'}'; break;
+				case '1': echo '{Call:Lang:templates:modules/billing/default:rabotaet}'; break;
+				case '-1': echo '{Call:Lang:templates:modules/billing/default:udalena:'.Library::serialize(array($suspend_reason_descript)).'}'; break;
+			}
+		?></strong></td>
+		<td><nobr><? if($paid_to){ ?>{Call:Lang:templates:modules/billing/default:ostalos} <strong><?=Dates::daysStay($paid_to);?></strong><br/>{Call:Lang:templates:modules/billing/default:do} <strong><? echo Dates::dateTime($paid_to); ?></strong>)<? } ?></nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:vnesenavzaka} <strong><? echo Dates::dateTime($date); ?></strong><br/>
+			<? if($created){ ?>
+				{Call:Lang:templates:modules/billing/default:sozdana} <strong><? echo Dates::dateTime($created); ?></strong><br/>
+				{Call:Lang:templates:modules/billing/default:posledniaiao1} <strong><? echo Dates::dateTime($last_paid); ?></strong><br/>
+			<? } ?>
+		</nobr></td>
+		<td><? if($price != 0 || $modify_price != 0){ ?><nobr>
+			{Call:Lang:templates:modules/billing/default:tsena2} <strong><?=Library::humanCurrency($price + $modify_price);?> {Call:Lang:templates:modules/billing/default:vtchosnovnoj1:<?=Library::serialize(array($extraParams['baseTerm'], $curName));?>} <strong><?=Library::humanCurrency($price);?> {curName}</strong><br/>
+			{Call:Lang:templates:modules/billing/default:modifikatsii} <strong><?=Library::humanCurrency($modify_price);?> {curName}</strong><br/>
+		</nobr><? } ?></td>
+		<td><? if($all_payments != 0){ ?><nobr>{Call:Lang:templates:modules/billing/default:vsegooplache} <strong><?=Library::humanCurrency($all_payments);?> {curName}</strong></nobr><? } ?></td>
+		<td class="list_right"><strong><a href="{params_url}">{Call:Lang:templates:modules/billing/default:parametry1}</a></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="modify_orders_list" type="entry" descript="Запросы смены тарифа для услуги">
+	<?
+		$pkgOldData = $CURRENT_PARENT_OBJ->serviceData($service, $old_pkg);
+		$pkgNewData = $CURRENT_PARENT_OBJ->serviceData($service, $new_pkg);
+		$vars = Library::unserialize($vars);
+		$currency = $CURRENT_PARENT_OBJ->currencyName($currency);
+
+		$old_vars = Library::unserialize($old_vars);
+		$nModify = !$CURRENT_PARENT_OBJ->modifyIsEmpty($vars['params3']);
+		$oModify = !$CURRENT_PARENT_OBJ->modifyIsEmpty($old_vars);
+	?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr>{Call:Lang:templates:modules/billing/default:klientemail:<?=Library::serialize(array($client_id, $user_login, $user_name));?>} <a href="mailto:{user_eml}">{user_eml}</a></nobr></td>
+		<td><strong><? echo Dates::dateTime($date); ?></strong></td>
+		<td><strong><?=$pkgOldData['text'].($oModify ? ' + опции' : '')?></strong></td>
+		<td>=></td>
+		<td><strong><?=$pkgNewData['text'].($nModify ? ' + опции' : '')?></strong></td>
+		<td>
+			Старый тариф до: <strong><?=Dates::dateTime($old_paid_to);?></strong><br/>
+			Новый тариф до: <strong><?=Dates::dateTime($new_paid_to);?></strong><br/>
+		</td>
+		<td>
+			Разница в цене: <strong>{difference} {currency}</strong><br/>
+			Стоимость установки: <strong>{install_price} {currency}</strong><br/>
+			Стоимость смены тарифа: <strong>{change_price} {currency}</strong><br/>
+		</td>
+		<td>К доплате: <strong>{total} {currency}</strong></td>
+		<td class="list_right"><strong><?
+			switch($status){				case '2': echo 'Заявка просматривается'; break;
+				case '3': echo 'Заявка в процессе оплаты'; break;
+				case '4': echo 'Ожидает выполнения админом'; break;
+				case '5': echo 'Выполняется'; break;
+				case '6': echo 'Выполнена'; break;
+			}
+
+			if($status < 5 && $status > 1) echo "<br/><a href='{$modifyRun_url}'>Выполнить заявку</a>";
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="service_history_list" type="entry" descript="Запросы смены тарифа для услуги">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><strong><? echo Dates::dateTime($date); ?></strong></td>
+		<td><strong>{operationDescript}</strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="clients" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokklient}">
+	<? $cur = $CURRENT_PARENT_OBJ->getMainCurrencyName(); ?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr>
+			<a href="{data_url}"><strong>{user_login}</strong></a><br/>
+			{user_name}<br/>
+			<a href="mailto:{eml}">{user_eml}</a><br/>
+		</nobr></td>
+		<td><nobr>
+			<a href="{services_url}">{Call:Lang:templates:modules/billing/default:uslugi}</a><br/>
+			<a href="{orders_url}">{Call:Lang:templates:modules/billing/default:zakazy}</a><br/>
+			<a href="{pays_url}">{Call:Lang:templates:modules/billing/default:platezhi}</a><br/>
+			<? if($user_comment){
+				?><a href="" onClick="return false;" onMouseOver="showFormBlock('comment{id}');" onMouseOut="hideFormBlock('comment{id}');">{Call:Lang:templates:modules/billing/default:kommentarij}</a>
+				<div class="hidden_block" id="comment{id}">{user_comment}</div><?
+			} ?>
+		</nobr></td>
+		<td><nobr>
+			<? if($user_group){ ?>{Call:Lang:templates:modules/billing/default:gruppapolzov} <strong><? echo $GLOBALS['Core']->getUserGroupName($user_group); ?></strong><br/><? } ?>
+			<? if($loyal_level){ ?>{Call:Lang:templates:modules/billing/default:urovenklient} <strong><? echo $CURRENT_PARENT_OBJ->getLoyaltyLevelName($loyal_level); ?></strong><br/><? } ?>
+			{Call:Lang:templates:modules/billing/default:chasovojpoia} <strong><?
+				$utcName = Dates::UTCName($user_utc);
+				echo RegExp::len($utcName) > 43 ? regExp::subStr($utcName, 0, 40).'...' : $utcName;
+			?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:kodvosstanov} <strong>{user_code}</strong><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:zaregistriro} <strong><?=$GLOBALS['Core']->getFormattedTime($user_date);?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:stalklientom} <strong><?=$GLOBALS['Core']->getFormattedTime($date);?></strong><br/>
+			<strong><?
+				switch($user_show){
+					case '-1': echo '{Call:Lang:templates:modules/billing/default:zabanen}'; break;
+					case '0': case '': echo '{Call:Lang:templates:modules/billing/default:vozhidaniiak}'; break;
+					case '1': echo '{Call:Lang:templates:modules/billing/default:aktiven}'; break;
+				}
+			?></strong>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:balans} <strong>{balance}{cur}</strong><br/>
+			{Call:Lang:templates:modules/billing/default:vsegoplatezh} <strong>{all_payments}{cur}</strong><br/>
+			{Call:Lang:templates:modules/billing/default:oplachenousl} <strong>{all_payed_services}{cur}</strong><br/>
+		</nobr></td>
+		<td class="list_right"><nobr>
+			<select name="addService" id="addService{id}"><?
+				foreach($CURRENT_PARENT_OBJ->getServices() as $i => $e){					echo '<option value="'.$i.'">'.$e.'</option>';				}
+			?></select><br/>
+			<input type="button" value="{Call:Lang:templates:modules/billing/default:dobavit}" class="b" onClick="top.location.href='<?=$CURRENT_PARENT_OBJ->path?>?mod=<?=$CURRENT_MOD?>&func=orderService&service=' + document.getElementById('addService{id}').value + '&id={user_id}';" />
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="bills_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokzakazo}">
+	<?
+		$cur = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+	?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr>
+			<a href="{id_url_url}">{Call:Lang:templates:modules/billing/default:zakaz}{id}</a><br/>
+			{Call:Lang:templates:modules/billing/default:platezh}{payment_transaction_id}
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:klientemail:<?=Library::serialize(array($client_id, $user_login, $user_name));?>} <a href="mailto:{user_eml}">{user_eml}</a><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:oformleniena} <strong><? echo Dates::dateTime($date); ?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:zakoncheno} <strong><? echo empty($ordered) ? '{Call:Lang:templates:modules/billing/default:nezakoncheno}' : Dates::dateTime($ordered); ?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:priniataopla} <strong><? echo empty($paydate) ? '{Call:Lang:templates:modules/billing/default:nepriniata}' : Dates::dateTime($paydate); ?></strong><br/>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:raschetnaias} <strong><? echo Library::humanCurrency($sum).$cur; ?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:skidka} <strong><? echo Library::humanCurrency($discount).$cur; ?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:itogo1} <strong><? echo Library::humanCurrency($total).$cur; ?></strong><br/>
+		</nobr></td>
+		<td class="list_right"><nobr><strong><?
+			switch($step){				case '-1': echo '{Call:Lang:templates:modules/billing/default:udalen}'; break;
+				case '0': case '1': echo '{Call:Lang:templates:modules/billing/default:vprotsesseza}'; break;
+				case '3': echo '{Call:Lang:templates:modules/billing/default:vyborsposoba}'; break;
+				case '4': echo '{Call:Lang:templates:modules/billing/default:vprotsesseop}'; break;
+				case '5': case '6': echo '{Call:Lang:templates:modules/billing/default:oplachen}'; break;
+			} ?></strong><br/><?
+			if($step >= 4){				echo '{Call:Lang:templates:modules/billing/default:sposoboplaty:'.Library::serialize(array($paytextname, $total * $curexch, $curtextname)).'}';			}
+		?></nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="pays" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokdvizhe}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr><strong><? echo Dates::dateTime($date); ?></strong></nobr></td>
+		<td><nobr><strong><? echo Library::humanCurrency($sum).' '.$CURRENT_PARENT_OBJ->getMainCurrencyName(); ?></strong></nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:naznacheniet:<?=Library::serialize(array($foundation));?>} <?
+				switch($foundation_type){
+					case 'balance': echo '{Call:Lang:templates:modules/billing/default:popolnenieba}'; break;
+					case 'bonus': echo '{Call:Lang:templates:modules/billing/default:zachislenieb}'; break;
+					case 'service': echo '{Call:Lang:templates:modules/billing/default:spisaniezaus}'; break;
+					case 'wrong': echo '{Call:Lang:templates:modules/billing/default:oshibochnoez}'; break;
+					case 'return': echo '{Call:Lang:templates:modules/billing/default:vozvratsreds}'; break;
+					default: echo '{Call:Lang:templates:modules/billing/default:drugoe}'; break;
+				}
+			?><br/>
+		</nobr></td>
+		<td class="list_right"><? if($user_name){ ?>{Call:Lang:templates:modules/billing/default:klient1} <strong>{user_name} ({user_login})</strong><? } ?></td>
+	</tr>
+</item>
+
+<item name="promocodegroups_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokgruppp}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td><?
+			if(!$code_distrib_style) echo '{Call:Lang:templates:modules/billing/default:kodyrazdaiut}';
+			else echo '{Call:Lang:templates:modules/billing/default:kodyrazdaiut1}';
+		?></td>
+		<td class="list_right"><a href="{code_url}">{Call:Lang:templates:modules/billing/default:dobavitkod}</a></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="promocodes_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokpromok}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{code}</td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:dobavlen} <strong><? echo Dates::dateTime($date); ?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:dejstvuets} <strong><? echo $started ? Dates::dateTime($started) : '{Call:Lang:templates:modules/billing/default:momentaustan}'; ?></strong><br/>
+			{Call:Lang:templates:modules/billing/default:do1} <strong><? echo $actually ? Dates::dateTime($actually) : '{Call:Lang:templates:modules/billing/default:bessrochno}'; ?></strong><br/>
+		</nobr></td>
+		<td class="list_right"><nobr><strong><?
+			if($code_style == 1) echo '{Call:Lang:templates:modules/billing/default:odnorazovyjk}';
+			elseif($code_style == 2) echo '{Call:Lang:templates:modules/billing/default:mnogorazovyj}';
+		?></strong></nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="loyalty_levels_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokurovne}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<td class="list_right"><?
+			if($add_with_registry || $add_with_all_payments || $add_with_all_payed_services){				echo '{Call:Lang:templates:modules/billing/default:avtomatiches}';
+				if($add_with_registry) echo '{Call:Lang:templates:modules/billing/default:registratsii}';
+				$regs = array();
+				$cur = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+
+				if($add_with_all_payments) $regs[] = '{Call:Lang:templates:modules/billing/default:dostizheniis:'.Library::serialize(array($add_with_all_payments, $cur)).'}';
+				if($add_with_all_payed_services) $regs[] = '{Call:Lang:templates:modules/billing/default:dostizheniis1:'.Library::serialize(array($add_with_all_payed_services, $cur)).'}';
+				if($regs && $add_with_registry) echo '{Call:Lang:templates:modules/billing/default:ili}';
+				if($regs) echo implode('<br/><strong>'.(($add_with_logic == 'OR') ? '{Call:Lang:templates:modules/billing/default:ili1}' : 'и').'</strong> ', $regs);
+			}
+			else{				echo '{Call:Lang:templates:modules/billing/default:avtomatiches1}';			}
+		?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="bonuses_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokbonuso}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td><strong>
+			{bonus}
+			<?
+				if($bonus_type == 'percent') echo '{Call:Lang:templates:modules/billing/default:otsummy}';
+				else echo $CURRENT_PARENT_OBJ->getMainCurrencyName();
+			?>
+		</strong></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:minimalnaias} <strong>{min_sum} <?=$CURRENT_PARENT_OBJ->{Call:Lang:templates:modules/billing/default:getmaincurre} <strong><?=Dates::dateTime($date);?></strong><br/>
+			<?
+				if($start) echo '{Call:Lang:templates:modules/billing/default:ispolzuetsia2:'.Library::serialize(array(Dates::dateTime($start))).'}';
+				if($end) echo '{Call:Lang:templates:modules/billing/default:ispolzuetsia3:'.Library::serialize(array(Dates::dateTime($end))).'}';
+			?>
+		</nobr></td>
+		<td class="list_right"><strong><?
+			if($show) echo '{Call:Lang:templates:modules/billing/default:ispolzuetsia4}';
+			else echo '{Call:Lang:templates:modules/billing/default:otkliuchen}';
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="discounts_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokskidok}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}<br/>({name})</td>
+		<td><nobr>
+			{Call:Lang:templates:modules/billing/default:vnesenaispol:<?=Library::serialize(array(Dates::dateTime($date)));?>} <? echo $start ? Dates::dateTime($start) : '{Call:Lang:templates:modules/billing/default:momentaustan}'; ?><br/>
+			{Call:Lang:templates:modules/billing/default:po} <? echo $end ? Dates::dateTime($end) : '{Call:Lang:templates:modules/billing/default:bessrochno}'; ?><br/>
+		</nobr></td>
+		<td>{Call:Lang:templates:modules/billing/default:predostavlia} <?
+			switch($type){				case 'term': echo '{Call:Lang:templates:modules/billing/default:zasrokzakaza}'; break;
+				case 'order_sum': echo '{Call:Lang:templates:modules/billing/default:zaobshchuius}'; break;
+				case 'other_services': echo '{Call:Lang:templates:modules/billing/default:vsviaziszaka}'; break;
+				case 'promocode': echo '{Call:Lang:templates:modules/billing/default:zaukazaniepr}'; break;
+				case 'cash_manner': echo '{Call:Lang:templates:modules/billing/default:zaispolzovan}'; break;
+				case 'baseless': echo '{Call:Lang:templates:modules/billing/default:bezosnovanij}'; break;
+				case 'other': echo '{Call:Lang:templates:modules/billing/default:zaosobennost}'; break;
+			}
+		?></td>
+		<td class="list_right"><strong><?
+			if($show) echo '{Call:Lang:templates:modules/billing/default:ispolzuetsia4}';
+			else echo '{Call:Lang:templates:modules/billing/default:otkliuchena}';
+			if($in_pkg_list) echo '{Call:Lang:templates:modules/billing/default:vyvoditsiavs}';
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="user_services_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokzakaza2}">
+	<div class="user_acc_list_entry">
+		<ul>
+			<? if($step == 1){ ?><li>{Call:Lang:templates:modules/billing/default:oplachenado}<span><?=Dates::date("d.m.Y [H:i]", $paid_to);?> {Call:Lang:templates:modules/billing/default:ostalos1:<?=Library::serialize(array(Dates::daysStay($paid_to)));?>}</span></li><? } ?>
+			<li>{Call:Lang:templates:modules/billing/default:zakazana1}<span><?=Dates::date("d.m.Y [H:i]", $date);?></span></li>
+			<? if($step == 1){ ?><li>{Call:Lang:templates:modules/billing/default:sozdana1}<span><?=Dates::date("d.m.Y [H:i]", $created);?></span></li>
+			<li>{Call:Lang:templates:modules/billing/default:tekushchaias}<span><?=Library::humanCurrency($price + $modify_price).' '.$cur_text.'/'.Dates::termsListVars($s_base_term);?></span></li>
+			<? if($modify_price){ ?><li>В т.ч. докупленные опции<span><?=Library::humanCurrency($modify_price).' '.$cur_text.'/'.Dates::termsListVars($s_base_term);?></span></li><? } ?>
+			<li>{Call:Lang:templates:modules/billing/default:vsegozachisl}<span><?=Library::humanCurrency($all_payments).' '.$cur_text;?></span></li><? } ?>
+			<li><?
+				if($auto_prolong){					echo 'Включено автопродление на '.Dates::rightCaseTerm($s_base_term, $auto_prolong);
+					if($auto_prolong_fract) echo ',<br/>разрешено дробить срок';				}
+				else echo 'Автопродление выключено';
+			?></li>
+		</ul>
+		<h4><label><? if($extraParams['action']){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" /><? } ?>{ident}{Call:Lang:templates:modules/billing/default:tarif2} {pkg_text}</label></h4>
+		<p>
+			<span><?
+				if($step == 1) echo '{Call:Lang:templates:modules/billing/default:rabotaet}';
+				elseif($step == 0) echo 'Заблокирована.';
+			?></span>
+			<? if($canUseChangePkg && $step > 0){ ?><a href="{changePkg_url}">{Call:Lang:templates:modules/billing/default:smenittarif}</a><? } ?>
+			<? if($CURRENT_PARENT_OBJ->canUseModifyPkg($service, $package) && $step > 0){ ?><a href="{modifyPkg_url}">Добавить опции</a><? } ?>
+			<a href="{params_url}">{Call:Lang:templates:modules/billing/default:opisanie}</a>
+		</p>
+	</div>
+</item>
+
+<item name="user_bills_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokzakazo1}">
+	<? $cur = $CURRENT_PARENT_OBJ->getMainCurrencyName(); ?>
+	<div class="user_acc_list_entry">
+		<ul>
+			<li>{Call:Lang:templates:modules/billing/default:nachatooform}<span><?=Dates::date("d.m.Y [H:i]", $date);?></span></li>
+			<li><? if($ordered){ ?>{Call:Lang:templates:modules/billing/default:zakonchenoof}<span><? echo Dates::date("d.m.Y [H:i]", $ordered).'</span>'; }else{ echo '{Call:Lang:templates:modules/billing/default:oformlenieza}'; } ?></li>
+			<li>{Call:Lang:templates:modules/billing/default:summa}<span>{sum} {cur}</span></li>
+			<li>{Call:Lang:templates:modules/billing/default:skidka1}<span>{discount} {cur}</span></li>
+			<li>{Call:Lang:templates:modules/billing/default:itogo}<span>{total} {cur}</span></li>
+		</ul>
+		<h4><label><? if($extraParams['action']){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" /><? } ?>{Call:Lang:templates:modules/billing/default:zakaz} {id}</label></h4>
+		<p>
+			<span><?
+				switch($step){
+					case '-1': echo '{Call:Lang:templates:modules/billing/default:udalen}'; break;
+					case '0': case '1': echo '{Call:Lang:templates:modules/billing/default:vprotsesseza}'; break;
+					case '3': echo '{Call:Lang:templates:modules/billing/default:vyborsposoba}'; break;
+					case '4': echo '{Call:Lang:templates:modules/billing/default:vprotsesseop}'; break;
+					case '5': case '6': echo '{Call:Lang:templates:modules/billing/default:oplachen}'; break;
+				}
+			?></span>
+			<a href="{show_url}">{Call:Lang:templates:modules/billing/default:vyvestizakaz}</a>
+		</p>
+	</div>
+</item>
+
+<item name="documents" type="head" descript="{Call:Lang:templates:modules/billing/default:dokumenty}">
+	<tr class="head">
+		<td>{Call:Lang:templates:modules/billing/default:usluga}</td>
+		<td>{Call:Lang:templates:modules/billing/default:data}</td>
+		<td>{Call:Lang:templates:modules/billing/default:aktvypolnenn}</td>
+		<td>{Call:Lang:templates:modules/billing/default:schetfaktura}</td>
+	</tr>
+</item>
+
+<item name="documents" type="entry" descript="{Call:Lang:templates:modules/billing/default:dokumenty}">
+	<tr>
+		<td>{entry_caption}</td>
+		<td class="c"><? echo Dates::date("d.m.Y", $date); ?></td>
+		<td class="c"><strong><a href="{act_url}" target="_blank">HTML</a><br/></strong></td>
+		<td class="c"><strong><a href="{invoice_url}" target="_blank">HTML</a><br/></strong></td>
+	</tr>
+</item>
+
+<item name="user_balances_list" type="head" descript="{Call:Lang:templates:modules/billing/default:dvizheniiade}">
+	<tr class="head">
+		<td>{Call:Lang:templates:modules/billing/default:data}</td>
+		<td>{Call:Lang:templates:modules/billing/default:zachisleno}</td>
+		<td>{Call:Lang:templates:modules/billing/default:spisano}</td>
+		<td>{Call:Lang:templates:modules/billing/default:naznachenie}</td>
+		<td>{Call:Lang:templates:modules/billing/default:tipoperatsii}</td>
+	</tr>
+</item>
+
+<item name="user_balances_list" type="entry" descript="{Call:Lang:templates:modules/billing/default:dvizheniiade}">
+	<tr>
+		<td><? echo Dates::dateTime($date); ?></td>
+		<td><? if($sum >= 0) echo $sum.$extraParams['currency']; ?></td>
+		<td><? if($sum < 0) echo -$sum.$extraParams['currency']; ?></td>
+		<td>{foundation}</td>
+		<td><?
+			switch($foundation_type){
+				case 'balance': echo '{Call:Lang:templates:modules/billing/default:popolnenieba}'; break;
+				case 'bonus': echo '{Call:Lang:templates:modules/billing/default:zachislenieb}'; break;
+				case 'service': echo '{Call:Lang:templates:modules/billing/default:spisaniezaus}'; break;
+				case 'wrong': echo '{Call:Lang:templates:modules/billing/default:oshibochnoez}'; break;
+				case 'return': echo '{Call:Lang:templates:modules/billing/default:vozvratsreds}'; break;
+				default: echo '{Call:Lang:templates:modules/billing/default:drugoe}'; break;
+			}
+		?></td>
+	</tr>
+</item>
+
+</template>

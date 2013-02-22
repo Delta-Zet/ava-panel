@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>{Call:Lang:templates:admin/default:avapanelrazd}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=<? echo $GLOBALS['Core']->getParam('charset'); ?>" />
+	<base href="{TMPL_URL}" />
+	<link rel="stylesheet" type="text/css" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+	<script type="text/javascript" src="<?=_D?>js/common.js"></script>
+	<script type="text/javascript" src="<?=_D?>js/ajax.js"></script>
+
+	{head}
+</head>
+
+<body>
+<div class="top">
+	<div class="exit">
+		<a href="{URL}index.php?mod=main&func=logout">{Call:Lang:templates:admin/default:vykhod}</a>
+		<div class="info">
+			<?
+				if($tMods = $GLOBALS['Core']->getModulesByType('ticket')){
+					$tMod = Library::firstKey($tMods);
+					echo "Новых тикетов: <span>".$GLOBALS['Core']->callModule($tMod)->DB->count(array('tickets', "`status_by`='user'")).'</span><br/>';
+				}
+
+			?>
+			{Call:Lang:templates:admin/default:zdrastvujte} <? if($user_name){ ?>{user_name} {user_patronimycname}<? } else echo $admin_login; ?>!<br/>{Call:Lang:templates:admin/default:vashposledni}<br/>IP <span>{admin_ip}</span>
+			{Call:Lang:templates:admin/default:data1} <span><?=Dates::date("d.m.Y", $admin_login_date)?></span>
+			{Call:Lang:templates:admin/default:vremia} <span><?=Dates::date("H:i:s", $admin_login_date)?></span><br />
+			<a href="{URL}index.php?mod=main&func=myStat">{Call:Lang:templates:admin/default:posmotretsta}</a>
+		</div>
+	</div>
+	<a href="{URL}"><img src="images/logo.gif" class="logo" /></a>
+	<div class="service_buttons">
+		<div class="service_buttons2">
+			<a href="{URL}">{Call:Lang:templates:admin/default:glavnaia}</a> |
+			{Call:ModuleCall:main:buttons:buttons}
+			<a href="{URL}index.php?mod=main&func=admin_buttons">{Call:Lang:templates:admin/default:dobavitsluzh}</a>
+		</div>
+	</div>
+</div>
+<div class="menu">{Call:ModuleCall:main:menu:menu}</div>
+<div class="path"><a href="<?=$GLOBALS['Core']->adminSite->params['url']?>"><?=$GLOBALS['Core']->adminSite->params['name']?></a> / <a href="{URL}">admin</a> / {Call:ModuleCall:main:menu:path}</div>
+<div class="content">
+	<? if (!empty($caption)){ ?><h3>{caption}</h3><? } ?>
+	<? if (!empty($top_comment)){ ?><p class="top_comment">{top_comment}</p><? } ?>
+	{body}
+</div>
+<div class="bottom">
+	Powered by &copy; <a href="http://ava-panel.ru">AVA-Panel</a>, 2006-<?=date('Y');?>
+</div>
+</body>
+</html>

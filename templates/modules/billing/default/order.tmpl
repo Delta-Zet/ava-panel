@@ -1,0 +1,79 @@
+<template>
+
+<item name="list" type="cover" descript="{Call:Lang:templates:modules/billing/default:spisokuslugv}">
+	<div class="order_list"><form action="{modifyUrl}" method="post" id="orderForm">
+		<input type="hidden" name="delete" value="" id="delete" />
+		<div class="entryorder">
+			<? if(empty($calcOnly)){ ?><span class="o_input">&nbsp;</span></span><? } ?>
+			<span class="o_name">&nbsp;</span>
+			<span class="o_price">{Call:Lang:templates:modules/billing/default:tsena}</span>
+			<span>{Call:Lang:templates:modules/billing/default:ustanovka3}</span>
+			<span>{Call:Lang:templates:modules/billing/default:srok}</span>
+			<span>{Call:Lang:templates:modules/billing/default:itogo}</span>
+			<span>{Call:Lang:templates:modules/billing/default:soskidkoj}</span>
+			<span>{Call:Lang:templates:modules/billing/default:skidka1}</span>
+		</div>
+		{list}
+		<div class="entryorder">
+			<? if(empty($calcOnly)){ ?><span class="o_input">&nbsp;</span><? } ?>
+			<span class="o_name">{Call:Lang:templates:modules/billing/default:itogo1}</span>
+			<span class="o_price">&nbsp;</span>
+			<span>&nbsp;</span>
+			<span>&nbsp;</span>
+			<span><? echo Library::humanCurrency($allSum).' '.$curName; ?></span>
+			<span><? echo Library::humanCurrency($allTotal).' '.$curName; ?></span>
+			<span><? echo Library::humanCurrency($allDiscount).' '.$curName; ?></span>
+		</div>
+		<? if(empty($calcOnly)){ ?><div class="order_buttons">
+			<a href="{moreOrderUrl}" onClick="return !closeSurfaceAndAddContent('body');">{Call:Lang:templates:modules/billing/default:dobaviteshch}</a>
+			<a href="#" onClick="document.getElementById('delete').value=0; document.getElementById('orderForm').submit(); return false;">{Call:Lang:templates:modules/billing/default:izmenitotmec}</a>
+			<a href="#" onClick="document.getElementById('delete').value=1; document.getElementById('orderForm').submit(); return false;">{Call:Lang:templates:modules/billing/default:udalitotmech}</a>
+			<a href="{cancelUrl}" onClick="return confirm('{Call:Lang:templates:modules/billing/default:returnconfir1}');">{Call:Lang:templates:modules/billing/default:otkazatsiaot}</a>
+			<a href="{newOrderUrl}" onClick="return confirm('Действительно закончить этот заказ и начать новый?');">Начать новый заказ</a>
+			<? if($canOrder){ ?><a href="{canOrder}">{Call:Lang:templates:modules/billing/default:sozdatakkaun}</a><? } ?>
+		</div><? } ?>
+	</form></div>
+	{payPage}
+</item>
+
+<item name="order" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisokuslugv}">
+	<div class="entryorder"><label>
+		<? if(empty($extraParams['calcOnly'])){ ?><span class="o_input"><? if($status < 2){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" value="1" /><? } ?>&nbsp;</span><? } ?>
+		<span class="o_name"> {entry_caption}<? if($status == 2) echo "<br/><strong>Услуга уже оказана</strong>"; ?></span>
+		<span class="o_price"><?
+			if($bt){
+				if($modify_price_mc > 0) $mpDsc = ' + '.Library::humanCurrency($modify_price_mc);
+				if($entry_type == 'prolong') echo Library::humanCurrency($prolong_price_mc).$mpDsc.' '.$extraParams['curName'];
+				elseif($price_mc == $price2_mc) echo Library::humanCurrency($price_mc).$mpDsc.' '.$extraParams['curName'];
+				else echo '{Call:Lang:templates:modules/billing/default:prodlenie1:'.Library::serialize(array(Library::humanCurrency($price_mc), $mpDsc, $extraParams['curName'], Library::humanCurrency($price2_mc), $mpDsc, $extraParams['curName'])).'}';
+			}
+			else{				echo '-';			}
+		?></span>
+		<span><?
+			if($modify_install_price_mc > 0) $mipDsc = ' + '.Library::humanCurrency($modify_install_price_mc);
+			echo Library::humanCurrency($install_price_mc).$mipDsc.' '.$extraParams['curName'];
+		?></span>
+		<span><? if($bt){ echo $term ? Dates::rightCaseTerm($bt, $term) : '{Call:Lang:templates:modules/billing/default:test:'.Library::serialize(array(Dates::rightCaseTerm($tt, $pkgtest))).'}'; }else{ echo '-'; } ?></span>
+		<span><? echo Library::humanCurrency($sum_mc).' '.$extraParams['curName']; ?></span>
+		<span><? echo Library::humanCurrency($total_mc).' '.$extraParams['curName']; ?></span>
+		<span><?
+			echo Library::humanCurrency($discount_mc).' '.$extraParams['curName'];
+			if($discounts['discountDescripts']){
+				echo '<em>';
+				foreach($discounts['discountDescripts'] as $i => $e){					echo $e['descript'].' - '.$e['discount'].'%<br/>';				}
+				echo '</em>';
+			}
+		?></span>
+	</label></div><? if($modifyParamsExtra){ ?>
+	<div class="entryorder modifydescript">
+		<a href="#" onClick="switchBlock('modifydescript{id}'); return false;">{Call:Lang:templates:modules/billing/default:smotretmodif}</a>
+		<ul class="legend modifydescript2" id="modifydescript{id}" style="display: none;">
+			<li>{Call:Lang:templates:modules/billing/default:bazovyjtarif} {modifyParamsBase}</li>
+			<li>{Call:Lang:templates:modules/billing/default:dobavleno} {modifyParamsExtra}</li>
+			<li>{Call:Lang:templates:modules/billing/default:itogo} {modifyParamsTotal}</li>
+		</ul>
+	</div>
+	<? } ?>
+</item>
+
+</template>

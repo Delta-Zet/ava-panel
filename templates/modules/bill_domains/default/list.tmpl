@@ -1,0 +1,127 @@
+<template>
+
+<item name="whois_servers_list" type="entry" descript="{Call:Lang:templates:modules/bill_domains/default:whoisservera}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{zone}</td>
+		<td><? if(!$port) $port = '{Call:Lang:templates:modules/bill_domains/default:poumolchanii}'; ?>
+			{Call:Lang:templates:modules/bill_domains/default:serverport:<?=Library::serialize(array($host, $port));?>}<br/>
+		</td>
+		<td class="list_right"><strong>{Call:Lang:templates:modules/bill_domains/default:pattern}</strong><br/>{pattern}<br/><? if($inverse) echo '<strong>{Call:Lang:templates:modules/bill_domains/default:rabotapatter}</strong>'; ?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="user_services_list" type="entry" descript="{Call:Lang:templates:modules/bill_domains/default:zakazannyedo}">
+	<div class="user_acc_list_entry">
+		<ul>
+			<? if($step == 1){ ?><li>{Call:Lang:templates:modules/bill_domains/default:oplachenado}<span><?=Dates::date("d.m.Y [H:i]", $paid_to);?> {Call:Lang:templates:modules/bill_domains/default:ostalos:<?=Library::serialize(array(Dates::daysStay($paid_to)));?>}</span></li><? } ?>
+			<li>{Call:Lang:templates:modules/bill_domains/default:zakazana}<span><?=Dates::date("d.m.Y [H:i]", $date);?></span></li>
+			<? if($step == 1){ ?><li>{Call:Lang:templates:modules/bill_domains/default:sozdana}<span><?=Dates::date("d.m.Y [H:i]", $created);?></span></li>
+			<li>{Call:Lang:templates:modules/bill_domains/default:tekushchaias}<span><?=Library::humanCurrency($price).' '.$cur_text.'/'.Dates::termsListVars($s_base_term);?></span></li>
+			<li>{Call:Lang:templates:modules/bill_domains/default:vsegozachisl}<span><?=Library::humanCurrency($all_payments).' '.$cur_text;?></span></li><? } ?>
+			<li><?
+				if($auto_prolong){					echo 'Включено автопродление на '.Dates::rightCaseTerm($s_base_term, $auto_prolong);					if($auto_prolong_fract) echo ',<br/>разрешено дробить срок';
+				}
+				else echo 'Автопродление выключено';
+			?></li>
+		</ul>
+		<h4><label><? if($extraParams['action']){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" /><? } ?>{Call:Lang:templates:modules/bill_domains/default:domen} {ident}</label></h4>
+		<p>
+			<span><?
+				switch($step){
+					case '0': echo 'Заблокирована: '.$suspend_reason_descript; break;
+					case '1': echo '{Call:Lang:templates:modules/bill_domains/default:rabotaet}'; break;
+					case '-1': echo 'Удалена: '.$suspend_reason_descript; break;
+				}
+			?></span>
+			<? if($step == 1){ ?><a href="{modifyNs_url}">{Call:Lang:templates:modules/bill_domains/default:smenitns}</a>
+			<a href="{modifyWhois_url}">{Call:Lang:templates:modules/bill_domains/default:smenitvladel}</a><? } ?>
+			<a href="{params_url}">{Call:Lang:templates:modules/bill_domains/default:opisanie}</a>
+		</p>
+	</div>
+</item>
+
+<item name="domain_owners_list" type="entry" descript="{Call:Lang:templates:modules/bill_domains/default:anketyvladel}">
+	<div class="user_acc_list_entry">
+		<? $params = Library::unserialize($vars); ?>
+		<ul>
+			<li>{Call:Lang:templates:modules/bill_domains/default:anketa} <span><?
+				switch($params['type']){					case 'person': echo '{Call:Lang:templates:modules/bill_domains/default:fizicheskogo}'; break;
+					case 'organization': echo '{Call:Lang:templates:modules/bill_domains/default:iuridichesko}'; break;
+					case 'ip': echo '{Call:Lang:templates:modules/bill_domains/default:individualno}'; break;
+				}
+			?></span></li>
+			<li>{Call:Lang:templates:modules/bill_domains/default:strana}<span><?=Geo::getCountry($params['country']);?></span></li>
+			<li>{Call:Lang:templates:modules/bill_domains/default:region}<span><?=$params['region'];?></span></li>
+			<li>{Call:Lang:templates:modules/bill_domains/default:gorod}<span><?=$params['city'];?></span></li>
+			<li>{Call:Lang:templates:modules/bill_domains/default:adres}<span><?=$params['street'];?></span></li>
+			<li>{Call:Lang:templates:modules/bill_domains/default:pochtovyjkod}<span><?=$params['zip'];?></span></li>
+			<li>{Call:Lang:templates:modules/bill_domains/default:telefon}<span><?=$params['phone'];?></span></li>
+		</ul>
+		<h4><label><? if($extraParams['action']){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" /><? } echo $name; ?></label></h4>
+		<p>
+			<span><? echo $params['lname'].' '.$params['fname'].' '.$params['pname'].'<br/>'.$params['oCompany']; ?></span>
+			<a href="{modify_url}">{Call:Lang:templates:modules/bill_domains/default:pravit}</a>
+		</p>
+	</div>
+</item>
+
+<item name="domain_owners_admin_list" type="entry" descript="Анкеты владельцев доменов (раздел админа)">
+	<? $params = Library::unserialize($vars); $uData = $CURRENT_PARENT_OBJ->getBillingMod()->getUserByClientId($client_id); ?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td>
+			Пользователь: <strong><?=$uData['name'];?></strong><br/>
+			Логин: <strong><?=$uData['login'];?></strong><br/>
+		</td>
+		<td>
+			{Call:Lang:templates:modules/bill_domains/default:anketa} <?
+				switch($params['type']){
+					case 'person': echo '{Call:Lang:templates:modules/bill_domains/default:fizicheskogo}'; break;
+					case 'organization': echo '{Call:Lang:templates:modules/bill_domains/default:iuridichesko}'; break;
+					case 'ip': echo '{Call:Lang:templates:modules/bill_domains/default:individualno}'; break;
+				}
+			?>
+		</td>
+		<td>
+			Контакт: <strong><?=$params['fname'].' '.$params['pname'].' '.$params['lname'];?></strong><br/>
+			{Call:Lang:templates:modules/bill_domains/default:pochtovyjkod}: <strong><?=$params['zip'];?></strong><br/>
+			{Call:Lang:templates:modules/bill_domains/default:strana}: <strong><?=Geo::getCountry($params['country']);?></strong><br/>
+		</td>
+		<td>
+			{Call:Lang:templates:modules/bill_domains/default:region}: <strong><?=$params['region'];?></strong><br/>
+			{Call:Lang:templates:modules/bill_domains/default:gorod}: <strong><?=$params['city'];?></strong><br/>
+			{Call:Lang:templates:modules/bill_domains/default:adres}: <strong><?=$params['street'];?></strong><br/>
+		</td>
+		<td>
+			{Call:Lang:templates:modules/bill_domains/default:telefon}: <strong><?=$params['phone'];?></strong><br/>
+		</td>
+		<td class="list_right"><a href="{reg_url}">Анкеты на сайте регистраторов</a></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="contacts_list" type="entry" descript="Контакты регистрантов доменов">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td><?=$CURRENT_PARENT_OBJ->getBillingMod()->getConnectionName($connection)?></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+</template>

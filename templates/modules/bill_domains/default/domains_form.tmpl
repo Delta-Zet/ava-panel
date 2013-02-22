@@ -1,0 +1,17 @@
+<template>
+
+<item name="domain_form" type="cover" descript="{Call:Lang:templates:modules/bill_domains/default:formapoiskad}">
+	<link rel="stylesheet" type="text/css" href="<? echo $GLOBALS['Core']->getModuleTemplateUrl($mod); ?>style.css" />
+	<form action="<?=_D?>index.php?mod={mod}&func=searchDomain" method="post" name="search_domains" id="search_domains">
+		<div class="frm">
+			<input type="text" name="domain" value="{domain}" class="t" />
+			<input type="image" src="<?=TMPL_STYLE_FOLDER?>main/default/images/icon_button_go2.gif" class="b1" onClick="ajaxSubmit('search_domains'); return false;" />
+		</div>
+		<div class="chs"><? foreach($tlds as $i => $e){			foreach($e as $i1 => $e1){
+				echo '<span><input type="checkbox" class="ch" name="tld['.$i.']['.$i1.']" id="tld_'.$i.'_'.$i1.'" value="1"'.
+					(empty($tld[$i][$i1]) ? '' : ' checked').' /> <label for="tld_'.$i.'_'.$i1.'">'.$e1.'</label></span>';
+			}		} ?></div>
+	</form>
+</item>
+
+</template>

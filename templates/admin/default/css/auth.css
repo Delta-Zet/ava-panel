@@ -1,0 +1,56 @@
+
+
+.form{
+	width: 213px;
+	height: 384px;
+	background: url('../images/bg_login_form.gif') no-repeat left top;
+	margin: 100px auto;
+	display: block;
+}
+
+.form2{
+	float: left;
+	margin: 60px 0 0 0;
+}
+
+p{
+	padding: 6px 0 0 12px;
+	font-size: 18pt;
+	width: 200px;
+	height: 82px;
+}
+
+p.error{
+	color: #D00;
+	font-size: 8pt;
+	height: 17px;
+	padding: 0 0 0 12px;
+}
+
+p.center{
+	text-align: center;
+	font-size: 13pt;
+	padding-left: 0;
+	height: 40px;
+}
+
+p.submit{
+	padding-left: 11px;
+}
+
+input.t{
+	vertical-align: middle;
+	font-size: 18pt;
+	width: 172px;
+	height: 33px;
+	padding: 10px 10px;
+	background: url('../images/bg_auth_field.gif') no-repeat left top;
+	margin-left: -3px;
+}
+
+input.ch{
+	margin: 0 7px;
+	height: 22px;
+}
+
+

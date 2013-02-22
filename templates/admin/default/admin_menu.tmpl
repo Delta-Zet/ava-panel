@@ -1,0 +1,51 @@
+<template>
+
+<item name="list" template="admin_menu" type="cover" descript="{Call:Lang:templates:admin/default:meniuadminis}">
+	{list}
+</item>
+
+<item name="admin_menu" type="entry" descript="{Call:Lang:templates:admin/default:meniuadminis}">
+	<? if($nesting > 0){ ?>
+		<li<? if(!empty($subblock)){ ?>
+			onMouseOver="document.getElementById('menu_{id}').style.display = 'block';"
+			onMouseOut="document.getElementById('menu_{id}').style.display = 'none';">
+			<ul onMouseOver="this.style.display = 'block';" onMouseOut="this.style.display = 'none';" id="menu_{id}" class="nest2">{subblock}</ul<? } ?>>
+		<? if($url){ echo '<a href="'.$url.'"'; if($entry_active) echo ' class="strong"'; } else echo '<span'; ?>>{text}<? if($url) echo '</a>'; else echo '</span>'; ?></li>
+	<? }else{
+		if(!empty($subblock)){ ?>
+			<span><ul onMouseOver="this.style.display = 'block';" onMouseOut="this.style.display = 'none';" id="menu_{id}">{subblock}</ul></span>
+		<? } ?>
+		<img src="images/icon_menu.gif" />
+		<? if($url){ echo '<a href="'.$url.'"'; if($entry_active) echo ' class="strong"'; } else echo '<span'; ?>
+		<? if(!empty($subblock)){ ?>
+			onMouseOver="document.getElementById('menu_{id}').style.display = 'block';"
+			onMouseOut="document.getElementById('menu_{id}').style.display = 'none';"
+		<? } ?>>{text}<? if($url) echo '</a>'; else echo '</span>';
+	} ?>
+</item>
+
+<item name="list" template="admin_subblocks" type="cover" descript="{Call:Lang:templates:admin/default:bolshoemeniu}">
+	<h1 class="subblockcap">{text}</h1>
+	{list}
+</item>
+
+<item name="admin_subblocks" type="entry" descript="{Call:Lang:templates:admin/default:bolshoemeniu}">
+	<div class="subblockentry">
+		<? if($icon){ ?><img src="{icon}" /><? } ?>
+		<a href="{url}">{text}</a>
+	</div>
+</item>
+
+<item name="list" template="path_point" type="cover" descript="{Call:Lang:templates:admin/default:meniuadminis1}">
+	{list}
+</item>
+
+<item name="path_point" type="entry" descript="{Call:Lang:templates:admin/default:meniuadminis1}">
+	<a href="{url}">{text}</a> /
+</item>
+
+<item name="admin_buttons" type="entry" descript="{Call:Lang:templates:admin/default:personalnoem}">
+	<a href="{url}" target="{target}">{name}</a> |
+</item>
+
+</template>

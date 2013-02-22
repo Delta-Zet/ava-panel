@@ -1,0 +1,402 @@
+<template>
+
+<item name="banners_list" type="entry" descript="{Call:Lang:templates:modules/partner/default:banery}">
+	<?
+		$cur = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+	?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}<br/>({name})</td>
+		<td>
+			<strong><?
+				switch($type){					case 'text': echo '{Call:Lang:templates:modules/partner/default:tekstovyjban}'; break;
+					case 'image': echo '{Call:Lang:templates:modules/partner/default:graficheskij}'; break;
+				}
+
+				switch($code_gen_type){
+					case 'auto': echo '{Call:Lang:templates:modules/partner/default:generiruetsi}'; break;
+					case 'manual': echo '{Call:Lang:templates:modules/partner/default:generiruetsi1}'; break;
+				}
+			?></strong>
+			{Call:Lang:templates:modules/partner/default:ssylka} <strong><a href="{link}" target="_blank">{link}</a></strong>
+		</td>
+		<td><?
+			if($code_gen_type == 'auto' || $code_gen_type == 'js'){				if($type == 'text') echo '{Call:Lang:templates:modules/partner/default:tekst:'.Library::serialize(array($content)).'}';
+				elseif($type == 'image') echo '<img src="'._D.$GLOBALS['Core']->getParam('partnerBannerFolder', $CURRENT_MOD).'.thumbs/'.$content.'" class="thumb" />';
+			}
+		?></td>
+		<td>
+			{Call:Lang:templates:modules/partner/default:stoimostklik} <strong><? echo $pay_type == 'hand' ? $click_pay.$cur : '{Call:Lang:templates:modules/partner/default:poumolchanii}'; ?></strong><br/>
+			{Call:Lang:templates:modules/partner/default:stoimostpoka} <strong><? echo $pay_type == 'hand' ? $view_pay.$cur : '{Call:Lang:templates:modules/partner/default:poumolchanii}'; ?></strong><br/>
+		</td>
+		<td>
+			{Call:Lang:templates:modules/partner/default:vsegoklikov} <strong>{clicks}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:vsegopokazov} <strong>{views}</strong><br/>
+		</td>
+		<td class="list_right"><strong><? if($show){ ?>{Call:Lang:templates:modules/partner/default:otkryt}<? } else{ ?>{Call:Lang:templates:modules/partner/default:zakryt}<? } ?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="partner_groups_list" type="entry" descript="{Call:Lang:templates:modules/partner/default:gruppypartne}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}<br/>({name})</td>
+		<td><nobr><?
+			if($add_auto){				echo '{Call:Lang:templates:modules/partner/default:prisvaivaets:'.Library::serialize(array(($add_logic == 'AND' ? 'И' : 'ИЛИ'))).'}';
+				if($add_reg) echo '{Call:Lang:templates:modules/partner/default:priregistrat}';
+				if($add_refs > 0) echo '{Call:Lang:templates:modules/partner/default:esliboleeref:'.Library::serialize(array($add_refs)).'}';
+				if($add_orders > 0) echo '{Call:Lang:templates:modules/partner/default:esliboleekli:'.Library::serialize(array($add_orders)).'}';
+				if($add_clicks > 0) echo '{Call:Lang:templates:modules/partner/default:esliboleekli1:'.Library::serialize(array($add_clicks)).'}';
+				if($add_pays > 0) echo '{Call:Lang:templates:modules/partner/default:eslizachisle:'.Library::serialize(array($add_pays, $CURRENT_PARENT_OBJ->getMainCurrencyName())).'}';
+				if($add_time > 0) echo '{Call:Lang:templates:modules/partner/default:eslipartnerz:'.Library::serialize(array($add_time)).'}';
+			}
+			else echo '{Call:Lang:templates:modules/partner/default:avtoustanovk}';
+		?></nobr></td>
+		<td class="list_right"><a href="{settings_url}">{Call:Lang:templates:modules/partner/default:spetsialnyen}</a></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="partners_list" type="entry" descript="{Call:Lang:templates:modules/partner/default:portnery}">
+	<?
+		$cur = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+	?>
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><nobr>
+			{Call:Lang:templates:modules/partner/default:psevdonim} <strong>{login}</strong><br/>
+			{user_login}, {user_name}, ID {user_id}<br/>
+			<a href="mailto:{user_eml}">{user_eml}</a><br/>
+		</nobr></td>
+		<td><nobr>
+			<a href="{stat_url}">{Call:Lang:templates:modules/partner/default:statistika}</a><br/>
+			<a href="{sites_url}">{Call:Lang:templates:modules/partner/default:sajty}</a><br/>
+			<a href="{settings_url}">{Call:Lang:templates:modules/partner/default:spetsialnyen}</a><br/>
+			<? if($user_comment){
+				?><a href="" onClick="return false;" onMouseOver="showFormBlock('comment{id}');" onMouseOut="hideFormBlock('comment{id}');">{Call:Lang:templates:modules/partner/default:kommentarij}</a>
+				<div class="hidden_block" id="comment{id}">{user_comment}</div><?
+			} ?>
+		</nobr></td>
+		<td><nobr>
+			{Call:Lang:templates:modules/partner/default:zaregistriro} <strong><? echo Dates::dateTime($user_date); ?></strong><br/>
+			{Call:Lang:templates:modules/partner/default:zaregistriro1} <strong><? echo Dates::dateTime($date); ?></strong><br/>
+			{Call:Lang:templates:modules/partner/default:chasovojpoia} <strong><?
+				$utcName = Dates::UTCName($user_utc);
+				echo RegExp::len($utcName) > 43 ? regExp::subStr($utcName, 0, 40).'...' : $utcName;
+			?></strong><br/>
+			<? if($refered_by){ ?>{Call:Lang:templates:modules/partner/default:prishelporek} <strong>{refered_by}</strong><? } ?>
+		</nobr></td>
+		<td><nobr>
+			<? if($grp){ ?>{Call:Lang:templates:modules/partner/default:gruppa} <strong><? echo $CURRENT_PARENT_OBJ->getPartnerGroupName($grp); ?></strong><br/><? } ?>
+			{Call:Lang:templates:modules/partner/default:balans} <strong><? echo Library::humanCurrency($balance).$cur; ?></strong><br/>
+			{Call:Lang:templates:modules/partner/default:vsegoplatezh} <strong><? echo Library::humanCurrency($all_pays).$cur; ?></strong>
+		</nobr></td>
+		<td class="list_right"><strong><?
+			switch($status){				case '1': echo '{Call:Lang:templates:modules/partner/default:rabotaet}'; break;
+				case '0': echo '{Call:Lang:templates:modules/partner/default:ozhidaetprov}'; break;
+				case '-1': echo '{Call:Lang:templates:modules/partner/default:zablokirovan}'; break;
+				case '-2': echo '{Call:Lang:templates:modules/partner/default:udalen}'; break;
+			}
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="currency_list" type="entry" descript="{Call:Lang:templates:modules/partner/default:voliuty}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text} ({name})</td>
+		<td>{Call:Lang:templates:modules/partner/default:kurs} {exchange}</td>
+		<td>
+			<? if(!$default){ ?><a href="{default_url}">{Call:Lang:templates:modules/partner/default:sdelatispolz}</a><br/><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/partner/default:ispolzuetsia}</strong><br/><? } ?>
+		</td>
+		<td class="list_right">
+			<? if(!$default){ ?><a href="{del_url}">{Call:Lang:templates:modules/partner/default:udalit}</a><br/><? } ?>
+			<? else{ ?>{Call:Lang:templates:modules/partner/default:nelziaudalit}<br/><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="payments_list" type="entry" descript="{Call:Lang:templates:modules/partner/default:sposobyoplat}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text} ({name})</td>
+		<td class="list_right">
+			<? if($show){ ?><strong>{Call:Lang:templates:modules/partner/default:otkrytdliais}</strong><br/><? } ?>
+			<? else{ ?><strong>{Call:Lang:templates:modules/partner/default:skryt}</strong><br/><? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="pays" type="entry" descript="{Call:Lang:templates:modules/partner/default:platezhi}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><strong><? echo ((float)$sum).$CURRENT_PARENT_OBJ->getMainCurrencyName(); ?></strong></td>
+		<td><? echo dates::dateTime($date); ?></td>
+		<td>{Call:Lang:templates:modules/partner/default:partner} <strong>{login}</strong></td>
+		<td class="list_right"><?
+			switch($type){				case 'click': echo '{Call:Lang:templates:modules/partner/default:zaklik}'; break;
+				case 'view': echo '{Call:Lang:templates:modules/partner/default:zaprosmotrba}'; break;
+				case 'order': echo '{Call:Lang:templates:modules/partner/default:zazakaz}'; break;
+				case 'referals': echo '{Call:Lang:templates:modules/partner/default:otreferala}'; break;
+				case 'admin': echo '{Call:Lang:templates:modules/partner/default:vnesenadmino}'; break;
+			}
+			if($entry_id){ ?><br />{Call:Lang:templates:modules/partner/default:idzapisi} {entry_id}<? } ?>
+		</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="sites_list" type="entry" descript="{Call:Lang:templates:modules/partner/default:sajty}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{name}</td>
+		<td><a href="{url}" target="_blank">{url}</a></td>
+		<td>
+			{Call:Lang:templates:modules/partner/default:partner1} <strong>{partner_id}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:sajtdobavlen} <strong><? echo Dates::dateTime($date); ?></strong>
+		</td>
+		<td><nobr>
+			{Call:Lang:templates:modules/partner/default:klikov} <strong>{clicks}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:prosmotrov} <strong>{views}</strong><br/>
+			CTR: <strong><? echo $views ? ($clicks / $views * 100) : 0; ?>%</strong><br/>
+		</nobr></td>
+		<td class="list_right"><strong><?
+			switch($status){
+				case '1': echo '{Call:Lang:templates:modules/partner/default:proverenrabo}'; break;
+				case '0': echo '{Call:Lang:templates:modules/partner/default:ozhidaetprov}'; break;
+				case '-1': echo '{Call:Lang:templates:modules/partner/default:zablokirovan}'; break;
+				case '-2': echo '{Call:Lang:templates:modules/partner/default:udalen}'; break;
+			}
+		?></strong></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="site_groups_list" type="entry" descript="{Call:Lang:templates:modules/partner/default:gruppysajtov}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{text}</td>
+		<td>{name}</td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="pay_orders" type="entry" descript="{Call:Lang:templates:modules/partner/default:zaprosyoplat}">
+	<?
+		$payments = $CURRENT_PARENT_OBJ->getPayment();
+	?><tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td>{Call:Lang:templates:modules/partner/default:partner1} <strong>{login}</strong></td>
+		<td>
+			{Call:Lang:templates:modules/partner/default:sozdan} <strong><? echo Dates::dateTime($date); ?></strong><br/>
+			{Call:Lang:templates:modules/partner/default:oplachen} <strong><? echo $payed ? Dates::dateTime($payed) : '{Call:Lang:templates:modules/partner/default:neoplachen}'; ?></strong>
+		</td>
+		<td>
+			{Call:Lang:templates:modules/partner/default:summa} <strong><? echo Library::humanCurrency($sum).$CURRENT_PARENT_OBJ->getMainCurrencyName(); ?></strong><br/>
+			{Call:Lang:templates:modules/partner/default:sposoboplaty} <strong><? echo $payments[$payment] ? $payments[$payment] : $payment; ?></strong>
+		</td>
+		<td class="list_right"><nobr><strong><?
+			switch($init){
+				case 'a': echo '{Call:Lang:templates:modules/partner/default:initsiirovan}'; break;
+				case 'u': echo '{Call:Lang:templates:modules/partner/default:initsiirovan1}'; break;
+			}
+			switch($status){
+				case '1': echo '{Call:Lang:templates:modules/partner/default:vypolnen}'; break;
+				case '0': echo '{Call:Lang:templates:modules/partner/default:nevypolnen}'; break;
+				case '-1': echo '{Call:Lang:templates:modules/partner/default:otkazvvypoln}'; break;
+			}
+		?></strong></nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="click_stat" type="entry" descript="{Call:Lang:templates:modules/partner/default:statistikakl}">
+	<?
+		$bList = $CURRENT_PARENT_OBJ->getBanners();
+	?><tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><strong><? echo Dates::dateTime($date); ?></strong><br/></td>
+		<td>{Call:Lang:templates:modules/partner/default:partner1} <strong>{partner_id}</strong></td>
+		<td>{Call:Lang:templates:modules/partner/default:zachisleno} <strong><? echo Library::humanCurrency($sum).$CURRENT_PARENT_OBJ->getMainCurrencyName(); ?></strong><br/></td>
+		<td>{Call:Lang:templates:modules/partner/default:baner} <strong><? echo $bList[$banner] ? $bList[$banner] : '{Call:Lang:templates:modules/partner/default:net}'; ?></strong><br/></td>
+		<td class="list_right"><nobr>
+			IP: <strong>{ip}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:perekhods} <strong><a href="{referer}">{referer}</a></strong>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="view_stat" type="entry" descript="{Call:Lang:templates:modules/partner/default:statistikaba}">
+	<?
+		$bList = $CURRENT_PARENT_OBJ->getBanners();
+	?><tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><strong><? echo Dates::dateTime($date); ?></strong><br/></td>
+		<td>{Call:Lang:templates:modules/partner/default:partner1} <strong>{partner_id}</strong></td>
+		<td>{Call:Lang:templates:modules/partner/default:zachisleno} <strong><? echo Library::humanCurrency($sum).$CURRENT_PARENT_OBJ->getMainCurrencyName(); ?></strong><br/></td>
+		<td>{Call:Lang:templates:modules/partner/default:baner} <strong><? echo $bList[$banner] ? $bList[$banner] : '{Call:Lang:templates:modules/partner/default:net}'; ?></strong><br/></td>
+		<td class="list_right"><nobr>
+			IP: <strong>{ip}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:perekhods} <strong><a href="{referer}">{referer}</a></strong>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="order_stat" type="entry" descript="{Call:Lang:templates:modules/partner/default:statistikaza}">
+	<tr<? if(!($entry_count % 2)){ echo ' class="even"'; } if(!empty($extraParams['action'])){ ?> onClick="document.getElementById('entry{entry_count}').click();">
+		<td class="list_left">
+			<input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" onClick="this.click();" />
+		</td<? } ?>>
+		<td><strong><? echo Dates::dateTime($date); ?></strong><br/></td>
+		<td>{Call:Lang:templates:modules/partner/default:partner1} <strong>{partner_id}</strong></td>
+		<td>{Call:Lang:templates:modules/partner/default:zachisleno} <strong><? echo Library::humanCurrency($sum).$CURRENT_PARENT_OBJ->getMainCurrencyName(); ?></strong><br/></td>
+		<td>{Call:Lang:templates:modules/partner/default:idklienta} <strong>{client_id}</strong><br/></td>
+		<td class="list_right"><nobr>
+			<strong><?
+				switch($object_type){					case 'payment_transactions': echo '{Call:Lang:templates:modules/partner/default:otchislenies}'; break;
+					case 'order_services': echo '{Call:Lang:templates:modules/partner/default:otchisleniia}'; break;
+				}
+			?><br/>
+			{Call:Lang:templates:modules/partner/default:idobekta} {object_id}
+			</strong>
+		</nobr></td>
+		<? if(isset($sort)){ ?><td class="list_right sorter">
+			<input type="text" name="sort_entry[{id}]" id="sort_entry{entry_count}" value="{sort}" />
+		</td><? } ?>
+	</tr>
+</item>
+
+<item name="user_sites" type="entry" descript="{Call:Lang:templates:modules/partner/default:sajtyakkaunt}">
+	<div class="user_acc_list_entry">
+		<ul>
+			<li>URL<span><a href="{url}" target="_blank">{url}</a></span></li>
+			<li>{Call:Lang:templates:modules/partner/default:dobavlen}<span><?=Dates::date("d.m.Y [H:i]", $date);?></span></li>
+			<li>{Call:Lang:templates:modules/partner/default:baneropokazo}<span>{views}</span></li>
+			<li>{Call:Lang:templates:modules/partner/default:klikov1}<span>{clicks}</span></li>
+			<li>CTR<span><? echo $views ? ($clicks / $views * 100) : 0; ?>%</span></li>
+		</ul>
+		<h4><label><? if($extraParams['action']){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" /><? } ?>{name}</label></h4>
+		<p>
+			<span><?
+				switch($status){					case 1: echo '{Call:Lang:templates:modules/partner/default:rabotaet}'; break;
+					case 0: echo '{Call:Lang:templates:modules/partner/default:zhdetproverk}'; break;
+					case -1: echo '{Call:Lang:templates:modules/partner/default:zablokirovan}'; break;
+				}
+			?></span>
+			<a href="{show_url}">{Call:Lang:templates:modules/partner/default:redaktirovat}</a>
+		</p>
+	</div>
+</item>
+
+<item name="user_clients_stat" type="entry" descript="{Call:Lang:templates:modules/partner/default:sajtyakkaunt}">
+	<div class="user_acc_list_entry">
+		<ul>
+			<li>Зарегистрировался <span><?=Dates::date("d.m.Y [H:i]", $date);?></span></li>
+			<li>Логин <span>{login}</span></li>
+			<li>Часовой пояс <span><?=Dates::UTCName($utc);?></span></li>
+			<?
+				foreach($GLOBALS['Core']->getCoUnitedModulesByType('billing', $CURRENT_MOD, 'cms') as $i => $e){					$bObj = $GLOBALS['Core']->callModule($i);
+					$cur1 = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+					if($cId = $bObj->getClientByUserId($id)){
+						$cp = $CURRENT_PARENT_OBJ->getOrderStat(false, $i, $cId);
+						$cp2 = $bObj->getClientData($cId);
+						$cur2 = $bObj->getMainCurrencyName();
+
+						?><li class="subcaption"><?=$e?></li>
+						<li>Зачислено как вознаграждение <span><?=$cp['pay']['enroll'].' '.$cur1?></span></li>
+						<li>Всего оплачено <span><?=$cp2['all_payments'].' '.$cur2?></span></li>
+						<li>Баланс <span><?=$cp2['balance'].' '.$cur2?></span></li>
+					<? }				}
+			?>
+		</ul>
+		<h4><label><? if($extraParams['action']){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" /><? } ?>{name}</label></h4>
+		<p>
+			<span><?
+				switch($show){
+					case 1: echo 'Активен'; break;
+					case 0: echo 'Не активен'; break;
+					case -1: echo 'Забанен'; break;
+				}
+			?></span>
+			<a href="{services_url}">Услуги клиента</a>
+		</p>
+	</div>
+</item>
+
+<item name="user_clients_orders_stat" type="entry" descript="{Call:Lang:templates:modules/partner/default:sajtyakkaunt}">
+	<div class="user_acc_list_entry">
+		<ul>
+			<li>Заказана <span><?=Dates::dateTime($created);?></span></li>
+			<li>Последняя оплата <span><?=Dates::dateTime($last_paid);?></span></li>
+			<li>Оплачена по <span><?=Dates::dateTime($paid_to);?></span></li>
+			<li>Стоимость (в <?=Dates::termsListVars($s_base_term)?>) <span><?=($price + $modify_price).$extraParams['bObj']->getMainCurrencyName();?></span></li>
+			<li>Зачислено в качестве оплаты <span><?=$all_payments.$extraParams['bObj']->getMainCurrencyName();?></span></li>
+			<li>Ваше вознаграждение <span><?
+				$cp = $CURRENT_PARENT_OBJ->getOrderStat(false, $extraParams['bObj']->getMod(), $extraParams['clientId'], $id);
+				echo $cp['pay']['enroll'].$CURRENT_PARENT_OBJ->getMainCurrencyName();
+			?></span></li>
+		</ul>
+		<h4><label><? if($extraParams['action']){ ?><input type="checkbox" name="entry[{id}]" id="entry{entry_count}" class="ch" value="1" /><? } ?>{ident}</label></h4>
+		<p>
+			<span><?
+				switch($step){
+					case 2: echo 'Работает'; break;
+					case -1: echo 'Заблокирована'; break;
+				}
+			?></span>
+		</p>
+	</div>
+</item>
+
+</template>

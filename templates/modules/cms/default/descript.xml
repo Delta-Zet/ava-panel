@@ -1,0 +1,20 @@
+<descript>
+	<installator>ModulesCmsDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>modules/cms</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<url>list.tmpl</url>
+		<name>Списки</name>
+		<type>blocks</type>
+	</pages>
+
+	<defaults>
+		<folder_ModulesCmsDefault>default</folder_ModulesCmsDefault>
+		<name_ModulesCmsDefault>Default шаблон</name_ModulesCmsDefault>
+	</defaults>
+</descript>

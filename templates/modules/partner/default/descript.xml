@@ -1,0 +1,38 @@
+<descript>
+	<installator>ModulesPartnerDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>modules/partner</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<url>banners.tmpl</url>
+		<name>Банеры</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>stat.tmpl</url>
+		<name>Статистика</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>list.tmpl</url>
+		<name>Списки</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>style.css</url>
+		<name>CSS</name>
+		<type>.css</type>
+	</pages>
+
+	<defaults>
+		<folder_ModulesPartnerDefault>default</folder_ModulesPartnerDefault>
+		<name_ModulesPartnerDefault>Default шаблон</name_ModulesPartnerDefault>
+	</defaults>
+</descript>

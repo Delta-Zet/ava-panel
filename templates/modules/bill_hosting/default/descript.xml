@@ -1,0 +1,14 @@
+<descript>
+	<installator>ModulesBill_hostingDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>modules/bill_hosting</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<defaults>
+		<folder_ModulesBill_hostingDefault>default</folder_ModulesBill_hostingDefault>
+		<name_ModulesBill_hostingDefault>Default шаблон</name_ModulesBill_hostingDefault>
+	</defaults>
+</descript>

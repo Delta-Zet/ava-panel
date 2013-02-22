@@ -1,0 +1,13 @@
+AddDefaultCharset UTF-8
+
+RewriteEngine On
+# RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^index\.php(.*)$ ?%{QUERY_STRING}
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ index.php?AVAUrl=$1&%{QUERY_STRING}
+

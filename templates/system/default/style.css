@@ -1,0 +1,39 @@
+
+body{
+	margin: 0;
+	padding: 0;
+}
+
+.msg_box{
+	display: block;
+	margin: 200px auto;
+	width: 400px;
+	text-align: center;
+}
+
+.msg_box h4{
+	text-align: center;
+}
+
+.error{
+	color: #D00;
+}
+
+.error_box{
+	border: 1px solid;
+	padding: 30px;
+	margin: 80px auto;
+	width: 800px;
+}
+
+.close_msg{
+	margin: 200px auto;
+	width: 500px;
+	font-size: 24px;
+}
+
+.login{
+	text-align: center;
+}
+
+

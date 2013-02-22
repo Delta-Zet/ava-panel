@@ -1,0 +1,32 @@
+<descript>
+	<installator>bill_domains</installator>
+	<type>modules</type>
+	<name>bill_domains</name>
+	<text>Домены</text>
+	<version>0.0.1.16</version>
+	<requirements>
+		<requiredModules>
+			<billing>
+				<minVersion>0.0.0.0</minVersion>
+			</billing>
+		</requiredModules>
+	</requirements>
+
+	<defaults>
+		<db></db>
+		<show>1</show>
+		<text_bill_domains>Домены</text_bill_domains>
+		<name_bill_domains>domains</name_bill_domains>
+		<bill_domains>
+			<serverExtensions>directi</serverExtensions>
+			<serverExtensions>naunet</serverExtensions>
+			<serverExtensions>reg</serverExtensions>
+			<serverExtensions>rucenter</serverExtensions>
+			<serverExtensions>started</serverExtensions>
+			<serverExtensions>ukrnames</serverExtensions>
+			<serverExtensions>webnames</serverExtensions>
+			<serverExtensions>hostmaster</serverExtensions>
+			<serverExtensions>ava</serverExtensions>
+		</bill_domains>
+	</defaults>
+</descript>

@@ -1,0 +1,12 @@
+<?
+
+$varOnly = $GLOBALS['Core']->getGPCVar('callData', 'varOnly');
+if($varOnly && !is_array($varOnly)) $varOnly = array($varOnly);
+
+foreach($__int_replaces as $i => $e){
+	if(!$varOnly || in_array($i, $varOnly)){
+		echo "{$i}:".base64_encode($e)."|";
+	}
+}
+
+?>

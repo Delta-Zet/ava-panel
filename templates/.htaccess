@@ -1,0 +1,3 @@
+<Files "*.tmpl">
+  deny from all
+</Files>

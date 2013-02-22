@@ -1,0 +1,92 @@
+<template>
+
+<item name="list" template="listh" type="cover" descript="{Call:Lang:templates:modules/billing/default:spisoktarifo1}">
+<div class="pkgs_env1"><div class="pkgs_env2"><div class="pkgs_env3">
+	<table class="packages" cellpadding="0" cellspacing="0">
+		{caption}
+		{order}
+		{price}
+		{term}
+		{calc}
+		{test}
+		{descript}
+	</table>
+</div></div></div>
+</item>
+
+<item name="list" template="listv" type="cover" descript="{Call:Lang:templates:modules/billing/default:spisoktarifo2}">
+<div class="pkgs_env1 v"><div class="pkgs_env2"><div class="pkgs_env3">
+	<table class="packages" cellpadding="0" cellspacing="0">
+		{caption}
+		{list}
+	</table>
+</div></div></div>
+</item>
+
+<item name="packagesh" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisoktarifo1}">
+	<tr class="{block}">
+		<td class="linename"><?=$linecapt?></td>
+		<?
+
+		if(is_array($values)){			foreach($values as $i => $e){				$class2 = '';
+
+				if($e === '' && $block != 'order') $e = '<img src="'.$CURRENT_TMPL_MOD_URL.'images/icon_no.gif" />';
+				elseif($e === 'yes') $e = '<img src="'.$CURRENT_TMPL_MOD_URL.'images/icon_yes.gif" />';
+				elseif(mod_billing::isUnlimit($e)) $e = '<img src="'.$CURRENT_TMPL_MOD_URL.'images/icon_unlimit.gif" />';
+
+				echo '<td class="'.$block.'_line">';				if($block == 'order' && $e) echo '{Call:Lang:templates:modules/billing/default:zakazat:'.Library::serialize(array($e, $e)).'}';
+				else echo $e.'</td>';
+			}
+		}
+		else{			$class2 = '';
+			$e = $values;
+
+			if($e === '' && $block != 'order') $e = '<img src="'.$CURRENT_TMPL_MOD_URL.'images/icon_no.gif" />';
+			elseif($e === 'yes') $e = '<img src="'.$CURRENT_TMPL_MOD_URL.'images/icon_yes.gif" />';
+			elseif(mod_billing::isUnlimit($e)) $e = '<img src="'.$CURRENT_TMPL_MOD_URL.'images/icon_unlimit.gif" />';
+
+			echo '<td class="'.$block.'_line" colspan="'.$extraParams['cols'].'">';
+			if($block == 'order' && $e) echo '{Call:Lang:templates:modules/billing/default:zakazat:'.Library::serialize(array($e, $e)).'}';
+			else echo $e.'</td>';
+		}
+
+		?>
+	</tr>
+</item>
+
+<item name="packagesv" type="entry" descript="{Call:Lang:templates:modules/billing/default:spisoktarifo2}">
+	<tr>
+		<?
+			if($caption){
+				foreach($caption as $i => $e){ echo '<td class="linename">'.$e.'</td>'; }
+				if($order) foreach($order as $i => $e){ echo '{Call:Lang:templates:modules/billing/default:zakazat1:'.Library::serialize(array($e, $e)).'}'; }
+				if($price) foreach($price as $i => $e){ echo '<td>'.$e.'</td>'; }
+				if($calc) foreach($calc as $i => $e){ echo '<td>'.$e.'</td>'; }
+				if($term) foreach($term as $i => $e){ echo '<td>'.$e.'</td>'; }
+				if($test) foreach($test as $i => $e){ echo '<td>'.$e.'</td>'; }
+				if($descript) foreach($descript as $i => $e){ echo '<td>'.$e.'</td>'; }
+			}
+		?>
+	</tr>
+</item>
+
+<item name="packagesv_caption" type="entry" descript="{Call:Lang:templates:modules/billing/default:zagolovoktar}">
+	<tr class="caption">
+		<td class="linename" colspan="<? echo count($order) + count($caption); ?>">&#160;</td>
+		<?
+			if($price) foreach($price as $i => $e){ echo '<td class="caption_line">'.$e.'</td>'; }
+			if($calc) foreach($calc as $i => $e){ echo '<td class="caption_line">'.$e.'</td>'; }
+			if($term) foreach($term as $i => $e){ echo '<td class="caption_line">'.$e.'</td>'; }
+			if($test) foreach($test as $i => $e){ echo '<td class="caption_line">'.$e.'</td>'; }
+			if($descript) foreach($descript as $i => $e){ echo '<td class="caption_line">'.$e.'</td>'; }
+		?>
+	</tr>
+</item>
+
+<item name="services" type="cover" descript="{Call:Lang:templates:modules/billing/default:spisokdostup}">
+	<p class="all_services"><?
+		foreach($services as $i => $e){			?><a href="<?=_D?>index.php?mod=<?=$CURRENT_MOD;?>&func=packages&service=<?=$e['name']?>" ><?=$e['text'];?></a><?		}
+	?></p>
+</item>
+
+</template>

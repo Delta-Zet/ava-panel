@@ -1,0 +1,69 @@
+<descript>
+	<installator>AdminDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>admin</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<name>Основная страница</name>
+		<url>main.tmpl</url>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>auth_page.tmpl</url>
+		<name>Страница аутентификации</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>empty.tmpl</url>
+		<name>Пустая страница</name>
+		<type>.tmpl</type>
+	</pages>
+
+	<pages>
+		<url>css/auth.css</url>
+		<name>CSS страницы аутентификации</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>css/reset.css</url>
+		<name>Сброс CSS</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>css/style.css</url>
+		<name>Основной CSS</name>
+		<type>.css</type>
+	</pages>
+
+	<pages>
+		<url>admin_menu.tmpl</url>
+		<name>Меню администратора</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>list.tmpl</url>
+		<name>Шаблоны списков</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>form.tmpl</url>
+		<name>Шаблоны форм</name>
+		<type>blocks</type>
+	</pages>
+
+	<defaults>
+		<folder_AdminDefault>default</folder_AdminDefault>
+		<name_AdminDefault>Default шаблон</name_AdminDefault>
+		<language_AdminDefault>russian</language_AdminDefault>
+	</defaults>
+</descript>

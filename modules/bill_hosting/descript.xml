@@ -1,0 +1,33 @@
+<descript>
+	<installator>bill_hosting</installator>
+	<type>modules</type>
+	<name>bill_hosting</name>
+	<text>Хостинг</text>
+	<version>0.0.1.16</version>
+	<requirements>
+		<requiredModules>
+			<billing>
+				<minVersion>0.0.0.0</minVersion>
+			</billing>
+		</requiredModules>
+	</requirements>
+
+	<defaults>
+		<db></db>
+		<show>1</show>
+		<text_bill_hosting>Хостинг</text_bill_hosting>
+		<name_bill_hosting>hosting</name_bill_hosting>
+		<bill_hosting>
+			<serverExtensions>da</serverExtensions>
+			<serverExtensions>dareseller</serverExtensions>
+			<serverExtensions>cp</serverExtensions>
+			<serverExtensions>cpreseller</serverExtensions>
+			<serverExtensions>plesk</serverExtensions>
+			<serverExtensions>pleskreseller</serverExtensions>
+			<serverExtensions>isp</serverExtensions>
+			<serverExtensions>ispreseller</serverExtensions>
+			<serverExtensions>vds</serverExtensions>
+			<serverExtensions>vdsreseller</serverExtensions>
+		</bill_hosting>
+	</defaults>
+</descript>

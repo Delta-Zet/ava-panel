@@ -1,0 +1,226 @@
+<template>
+
+<item name="bank_style" type="extra" descript="{Call:Lang:templates:modules/billing/default:stilibankovs}">
+	<link rel="stylesheet" type="text/css" href="{CURRENT_TMPL_MOD_URL}bank.css" />
+</item>
+
+<item name="bank" type="cover" descript="{Call:Lang:templates:modules/billing/default:schetdliaopl}">
+	<p>{Call:Lang:templates:modules/billing/default:postavshchik:<?=Library::serialize(array($orgNameShort, $inn));?>}{kpp}</p>
+	<h4>{Call:Lang:templates:modules/billing/default:obrazetszapo}</h4>
+	<table cellpadding="0" cellspacing="0" class="blanks_bank_top">
+		<tr>
+			<td>{Call:Lang:templates:modules/billing/default:poluchatelin:<?=Library::serialize(array($inn, $kpp, $orgName, $bankAccount));?>} {bank}</td>
+			<td>{Call:Lang:templates:modules/billing/default:bankovskijsc}</td>
+			<td>{bankAccount}</td>
+		</tr>
+		<tr>
+			<td rowspan=2>{Call:Lang:templates:modules/billing/default:bankpoluchat}<br>{bank}</td>
+			<td>{Call:Lang:templates:modules/billing/default:bik}</td>
+			<td>{bik}</td>
+		</tr>
+		<tr>
+			<td>{Call:Lang:templates:modules/billing/default:korrschet}</td>
+			<td>{bankCorrAccount}</td>
+		</tr>
+	</table>
+	<p><b>{Call:Lang:templates:modules/billing/default:prizapolneni:<?=Library::serialize(array($descript));?>}</b></p>
+	<h3>{Call:Lang:templates:modules/billing/default:schetot:<?=Library::serialize(array($id));?>} <? echo dates::date('d.m.Y', $date); ?></h3>
+	<table cellpadding="0" cellspacing="0" class="blanks_bank_top">
+		<tr>
+			<td>№</td>
+			<td>{Call:Lang:templates:modules/billing/default:tovar}</td>
+			<td>{Call:Lang:templates:modules/billing/default:tsena}</td>
+			<td>{Call:Lang:templates:modules/billing/default:kolvo}</td>
+			<td>{Call:Lang:templates:modules/billing/default:ed}</td>
+			<td>{Call:Lang:templates:modules/billing/default:summa}</td>
+		</tr>
+		<?
+			$j = 1;
+			foreach($calculation as $i => $e){				?><tr>
+					<td><?=$j?></td>
+					<td><?=$e['name']?></td>
+					<td><?=$e['total']?></td>
+					<td>1</td>
+					<td> - </td>
+					<td><?=$e['total']?></td>
+				</tr><?
+				$j ++;			}
+		?>
+	</table>
+	<hr>
+	<p>{Call:Lang:templates:modules/billing/default:summandsitog:<?=Library::serialize(array($total, $nds, $ndsCount, $total2));?>}<br></p>
+	<hr>{Call:Lang:templates:modules/billing/default:summa1:<?=Library::serialize(array($printSum));?>}<br><br>
+	<img src='<?=$GLOBALS['Core']->getParam('defaultFolder').$stampImage?>' border=0 align=left>
+</item>
+
+<item name="receipt" type="cover" descript="{Call:Lang:templates:modules/billing/default:kvitantsiia}">
+	<table cellpadding="0" cellspacing="0" class="blanks_bank_top">
+		<tr>
+			<td>{Call:Lang:templates:modules/billing/default:izveshchenie}</td>
+			<td>
+				<table cellpadding="0" cellspacing="0" class="blanks_bank_top">
+					<tr><td colspan="3">
+						{Call:Lang:templates:modules/billing/default:poluchatelin1:<?=Library::serialize(array($orgNameShort, $inn, $kpp, $bankAccount, $bank, $bankCorrAccount));?>} {bik}
+					</td></tr>
+					<tr><td colspan=3 align=left height=35 valign=top>
+						{Call:Lang:templates:modules/billing/default:fioadresplat} <?=$clientData['name']?>
+					</td></tr>
+					<tr>
+						<td align=center>{Call:Lang:templates:modules/billing/default:naznacheniep}</td>
+						<td align=center>{Call:Lang:templates:modules/billing/default:data}</td>
+						<td align=center>{Call:Lang:templates:modules/billing/default:summa}</td>
+					</tr>
+					<tr>
+						<td align=center>{descript}</td>
+						<td align=center><? echo dates::date('d.m.Y', $date); ?></td>
+						<td align=center>{total}</td>
+					</tr>
+					<tr><td colspan=3 align=left>
+						{Call:Lang:templates:modules/billing/default:podpisplatel}
+					</td></tr>
+				</table>
+			</td>
+		</tr>
+		<tr height=220>
+			<td>{Call:Lang:templates:modules/billing/default:kvitantsiia1}</td>
+			<td>
+				<table cellpadding="0" cellspacing="0" class="blanks_bank_top">
+					<tr><td colspan="3">
+						{Call:Lang:templates:modules/billing/default:poluchatelin1:<?=Library::serialize(array($orgNameShort, $inn, $kpp, $bankAccount, $bank, $bankCorrAccount));?>} {bik}
+					</td></tr>
+					<tr><td colspan=3 align=left height=35 valign=top>
+						{Call:Lang:templates:modules/billing/default:fioadresplat} <?=$clientData['name']?>
+					</td></tr>
+					<tr>
+						<td align=center>{Call:Lang:templates:modules/billing/default:naznacheniep}</td>
+						<td align=center>{Call:Lang:templates:modules/billing/default:data}</td>
+						<td align=center>{Call:Lang:templates:modules/billing/default:summa}</td>
+					</tr>
+					<tr>
+						<td align=center>{descript}</td>
+						<td align=center><? echo dates::date('d.m.Y', $date); ?></td>
+						<td align=center>{total}</td>
+					</tr>
+					<tr><td colspan=3 align=left>
+						{Call:Lang:templates:modules/billing/default:podpisplatel}
+					</td></tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</item>
+
+<item name="act" type="cover" descript="{Call:Lang:templates:modules/billing/default:aktnavypolne}">
+	<h3>{Call:Lang:templates:modules/billing/default:aktnavypolne1:<?=Library::serialize(array($actId));?>} {actDate}</h3>
+	<p>{Call:Lang:templates:modules/billing/default:mynizhepodpi:<?=Library::serialize(array($leaderTitle, $leaderName));?>}
+
+	<table cellpadding="0" cellspacing="0" class="blanks_bank_top">
+		<tr>
+			<td>№</td>
+			<td>{Call:Lang:templates:modules/billing/default:tovar}</td>
+			<td>{Call:Lang:templates:modules/billing/default:tsena}</td>
+			<td>{Call:Lang:templates:modules/billing/default:kolvo}</td>
+			<td>{Call:Lang:templates:modules/billing/default:ed}</td>
+			<td>{Call:Lang:templates:modules/billing/default:summa}</td>
+		</tr>
+		<?
+		$j = 1;
+		foreach($calculation as $i => $e){
+			?><tr>
+				<td><?=$j?></td>
+				<td><?=$e['name']?></td>
+				<td><?=$e['price']?></td>
+				<td><?=$e['count']?></td>
+				<td><?=$e['unit']?></td>
+				<td><?=$e['total']?></td>
+			</tr><?
+			$j ++;
+		} ?>
+	</table>
+	<hr>
+	<p>{Call:Lang:templates:modules/billing/default:summandsitog:<?=Library::serialize(array($total, $nds, $ndsCount, $total2));?>}<br></p>
+	<hr>{Call:Lang:templates:modules/billing/default:summa1:<?=Library::serialize(array($printSum));?>}<br><br>
+
+	<p>{Call:Lang:templates:modules/billing/default:rabotyvypoln}<br><br><br><br>
+	<table cellpadding="0" cellspacing="0" class="sign">
+		<tr>
+			<td>{Call:Lang:templates:modules/billing/default:sdal}</td>
+			<td>{Call:Lang:templates:modules/billing/default:prinial}</td>
+		</tr>
+	</table>
+
+	<img src='<?=$GLOBALS['Core']->getParam('defaultFolder').$stampImage?>' border=0 align=left>
+</item>
+
+<item name="invoice" type="cover" descript="{Call:Lang:templates:modules/billing/default:schetfaktura}">
+	<h3>{Call:Lang:templates:modules/billing/default:schetfaktura1:<?=Library::serialize(array($actId));?>} {actDate}</h3>
+	<p>
+		{Call:Lang:templates:modules/billing/default:prodavetsadr:<?=Library::serialize(array($orgShort, $address, $inn, $kpp, $receiverAddr, $orderId, $orderDate, $receiver, $receiverAddr, $receiverInn, $receiverKpp));?>}<br/><br/><br/><br/>
+	</p>
+
+	<table cellpadding="0" cellspacing="0" class="blanks_bank_top">
+		<tr>
+			<td>№</td>
+			<td>{Call:Lang:templates:modules/billing/default:naimenovanie}</td>
+			<td>{Call:Lang:templates:modules/billing/default:ed}</td>
+			<td>{Call:Lang:templates:modules/billing/default:kolvo}</td>
+			<td>{Call:Lang:templates:modules/billing/default:tsena}</td>
+			<td>{Call:Lang:templates:modules/billing/default:summa}</td>
+			<td>{Call:Lang:templates:modules/billing/default:vtchakts}</td>
+			<td>{Call:Lang:templates:modules/billing/default:nalogovaiast}</td>
+			<td>{Call:Lang:templates:modules/billing/default:summanaloga}</td>
+			<td>{Call:Lang:templates:modules/billing/default:vsegosnalogo}</td>
+			<td>{Call:Lang:templates:modules/billing/default:strana}</td>
+			<td>{Call:Lang:templates:modules/billing/default:gtd}</td>
+		</tr>
+		<?
+		$j = 1;
+		foreach($calculation as $i => $e){
+			?><tr>
+				<td><?=$j?></td>
+				<td><?=$e['name']?></td>
+				<td><?=$e['unit']?></td>
+				<td><?=$e['count']?></td>
+				<td><?=$e['priceWoNds']?></td>
+				<td><?=$e['totalWoNds']?></td>
+				<td>-</td>
+				<td>{nds}</td>
+				<td><?=$e['ndsCount']?></td>
+				<td><?=$e['total']?></td>
+				<td>{Call:Lang:templates:modules/billing/default:rossiia}</td>
+				<td></td>
+			</tr><?
+			$j ++;
+		} ?>
+		<tr>
+			<td></td>
+			<td>{Call:Lang:templates:modules/billing/default:itogo}</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>{total}</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>{total2}</td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<hr>
+	<p>{Call:Lang:templates:modules/billing/default:summapropisi:<?=Library::serialize(array($printSum, $nds, $ndsCount));?>}</p>
+
+	<table cellpadding="0" cellspacing="0" class="sign">
+		<tr>
+			<td>{Call:Lang:templates:modules/billing/default:rukovoditelf}</td>
+			<td>{Call:Lang:templates:modules/billing/default:bukhgalterfi}</td>
+		</tr>
+		<tr>
+			<td colspan="2">{Call:Lang:templates:modules/billing/default:individualny}</td>
+		</tr>
+	</table>
+
+	<img src='<?=$GLOBALS['Core']->getParam('defaultFolder').$stampImage?>' border=0 align=left>
+</item>
+
+</template>

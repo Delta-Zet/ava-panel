@@ -1,0 +1,26 @@
+<descript>
+	<installator>ModulesCoreDefault</installator>
+	<type>templates</type>
+	<name>default</name>
+	<tmplType>modules/core</tmplType>
+	<text>Default шаблон</text>
+	<version>0.0.0.0.3</version>
+	<requirements></requirements>
+
+	<pages>
+		<url>list.tmpl</url>
+		<name>Списки</name>
+		<type>blocks</type>
+	</pages>
+
+	<pages>
+		<url>db_requests.tmpl</url>
+		<name>Вывод запроса к базе данных</name>
+		<type>blocks</type>
+	</pages>
+
+	<defaults>
+		<folder_ModulesCoreDefault>default</folder_ModulesCoreDefault>
+		<name_ModulesCoreDefault>Default шаблон</name_ModulesCoreDefault>
+	</defaults>
+</descript>

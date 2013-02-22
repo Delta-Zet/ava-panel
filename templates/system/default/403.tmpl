@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title>{title}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="{TMPL_URL}style.css" />
+</head>
+
+<body>
+	<div class="error_box login">
+		<p><strong>{Call:Lang:templates:system/default:uvasnetpravd} </strong></p>
+		<p>{msg}</p>
+		<? if($formId){ ?>
+			<form action="<?=_D?>index.php?mod=main&func=auth" method="post">
+				<input type="hidden" name="ava_form_transaction_id" value="{formId}" />
+				<input type="hidden" name="redirect" value="<?=$GLOBALS['Core']->getBackUrl();?>" />
+				<input type="text" name="login" class="t" />
+				<input type="password" name="pwd" class="t" />
+				<input type="submit" value="   Войти   " />
+			</form>
+		<? } ?>
+		<? if(Library::constVal('TEST_MODE')){ ?>
+			<p>{place}</p>
+			<p><pre>{trace}</pre></p>
+		<? } ?>
+	</div>
+</body>
+</html>

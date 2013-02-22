@@ -1,0 +1,17 @@
+<template>
+
+<item name="text" template="unlimit" type="entry" descript="{Call:Lang:templates:modules/billing/default:dvizheniiade}">
+	{pre_text}<div class="formentry"{additional_entry_style}>
+		<? if($error){ ?><p class="error">{error}</p><? } ?>
+		<p><label><? if($warn){ ?><span class="warn">*</span><? } ?> {text}<? if(!empty($comment)){ ?> <sup class="surface_comment">?<span>{comment}</span></sup><? } ?><br />
+			<input type="text" name="{name}" value="{value}" id="{id_prefix}{name}" class="t" {additional_style} /></label>
+		<label class="unlimit"><input id="unl{id_prefix}{name}" type="checkbox" onClick="var d = document.getElementById('{id_prefix}{name}'); if(d.value == 'Unlimit'){ d.value = val{id_prefix}{name}; } else{ val{id_prefix}{name} = d.value; d.value = 'Unlimit'; }" /> {Call:Lang:templates:modules/billing/default:bezograniche1}</label>
+		<script type="text/javascript">
+			val{id_prefix}{name} = '';
+			if(document.getElementById('{id_prefix}{name}').value == 'Unlimit') document.getElementById('unl{id_prefix}{name}').checked = true;
+		</script></p>
+		{additional_text}
+	</div>{post_text}
+</item>
+
+</template>

@@ -1,0 +1,6 @@
+<?
+
+if($type == 'image') $content = '<img src="'._D.$GLOBALS['Core']->getParam('partnerBannerFolder', $CURRENT_MOD).$image.'" alt="'.$text.'" />';
+$code = '<a href="'.$link.'">'.$content.'</a>';
+
+if($code_gen_type == 'js'){ ?><script type="text/javascript">	document.write('<? echo addcslashes($code, "'"); ?>');</script><? }else echo $code; ?>

@@ -1,0 +1,39 @@
+<?
+	$cur = $CURRENT_PARENT_OBJ->getMainCurrencyName();
+?>
+<div class="stat_block">
+	<? if(isset($partners)){ ?><p>
+		{Call:Lang:templates:modules/partner/default:partnerovvsi} <strong>{partners}</strong><br/>
+		<blockquote>
+			{Call:Lang:templates:modules/partner/default:rabotaet1} <strong>{partners_work}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:ozhidaetprov1} <strong>{partners_wait}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:zablokirovan1} <strong>{partners_ban}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:udaleno} <strong>{partners_del}</strong><br/>
+		</blockquote><? } ?>
+	<p>
+		{Call:Lang:templates:modules/partner/default:sajtovvsiste} <strong>{sites}</strong><br/>
+		<blockquote>
+			{Call:Lang:templates:modules/partner/default:rabotaet1} <strong>{sites_work}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:ozhidaetprov1} <strong>{sites_wait}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:zablokirovan1} <strong>{sites_ban}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:udaleno} <strong>{sites_del}</strong><br/>
+		</blockquote>
+	<p>
+		{Call:Lang:templates:modules/partner/default:baneropokazo1} <strong>{views}</strong><br/>
+		{Call:Lang:templates:modules/partner/default:klikovpobane} <strong>{clicks}</strong><br/>
+		CTR: <strong><? echo $views ? ($clicks / $views * 100) : 0; ?>%</strong>
+	<p>
+		{Call:Lang:templates:modules/partner/default:vsegozachisl} <strong>{enrolled}{cur}</strong><br/>
+		<blockquote>
+			{Call:Lang:templates:modules/partner/default:zachislenoza} <strong>{enrolled_view}{cur} {Call:Lang:templates:modules/partner/default:sht:<?=Library::serialize(array($enrolled_view_cnt));?>}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:zachislenoza1} <strong>{enrolled_click}{cur} {Call:Lang:templates:modules/partner/default:sht:<?=Library::serialize(array($enrolled_click_cnt));?>}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:zachislenoza2} <strong>{enrolled_order}{cur} {Call:Lang:templates:modules/partner/default:sht:<?=Library::serialize(array($enrolled_order_cnt));?>}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:zachislenoot} <strong>{enrolled_referals}{cur} {Call:Lang:templates:modules/partner/default:sht:<?=Library::serialize(array($enrolled_referals_cnt));?>}</strong><br/>
+			{Call:Lang:templates:modules/partner/default:zachislenoad} <strong>{enrolled_admin}{cur} {Call:Lang:templates:modules/partner/default:sht:<?=Library::serialize(array($enrolled_admin_cnt));?>}</strong><br/>
+		</blockquote>
+	<p>
+		{Call:Lang:templates:modules/partner/default:vsegovyplach} <strong>{payed}{cur} {Call:Lang:templates:modules/partner/default:zapr:<?=Library::serialize(array($payed_cnt));?>}</strong><br/>
+		{Call:Lang:templates:modules/partner/default:ozhidaetvypl} <strong>{payedWait}{cur} {Call:Lang:templates:modules/partner/default:zapr:<?=Library::serialize(array($payedWait_cnt));?>}</strong><br/>
+		{Call:Lang:templates:modules/partner/default:otkazanovvyp} <strong>{failPayed}{cur} {Call:Lang:templates:modules/partner/default:zapr:<?=Library::serialize(array($failPayed_cnt));?>}</strong>
+</div>
+

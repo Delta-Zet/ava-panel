@@ -1,0 +1,11 @@
+<script type="text/javascript">
+	function showAsHtml(){		document.getElementById('code').innerHTML = document.getElementById('result').value;	}
+</script>
+<div id="code">
+	<? if(empty($forUser)){ ?><a href="javascript:showAsHtml()">{Call:Lang:templates:modules/billing/default:smotretkakht}</a><? } ?>
+	<h4>{code}:{description}</h4><br/><br/>
+	<? if(empty($forUser)){ ?>
+		<p>{Call:Lang:templates:modules/billing/default:otvetservera}<br/>
+		<textarea style="width: 1000px; height: 500px;" id='result'><? echo regExp::html($body); ?></textarea></p>
+	<? } ?>
+</div>

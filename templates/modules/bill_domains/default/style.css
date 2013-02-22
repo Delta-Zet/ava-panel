@@ -1,0 +1,67 @@
+
+.dom_search{	float: left;
+	clear: both;
+	margin: 0 0 0 25px;}
+
+.dom_search p{	float: left;
+	clear: both;
+	width: 600px;
+	margin: 20px 0 0 0;
+	padding: 0 0 20px 0;
+	border-bottom: 1px dotted #2F3132;}
+
+.dom_search p img{	float: left;
+}
+
+.dom_search p span.domain{
+	float: left;
+	width: 300px;
+	font-size: 15px;
+	font-weight: bold;
+	margin: 0 0 0 15px;
+}
+
+.dom_search p span.domain a{	float: right;
+	font-weight: 100;
+	font-size: 13px;
+	margin: 0 0 0 20px;}
+
+.dom_search p span.domain input{	float: left;
+	margin: 3px 15px 0 0;
+	border: 1px solid;
+	width: 15px;
+	height: 15px;}
+
+.dom_search p span.status{
+	float: right;
+	color: #D00;	width: 120px;
+	text-align: right;
+	margin: 0 15px 0 0;}
+
+.dom_search p span.reg{	float: right;
+	width: 120px;
+	margin: 0 15px 0 0;
+	font-size: 12px;
+}
+
+.dom_search p span.reg select{	border: 1px solid;
+	font-size: 15px;	width: 120px;
+}
+
+.dom_search .b{	margin: 40px 0;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

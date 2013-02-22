@@ -1,0 +1,44 @@
+<template>
+
+<item name="result" type="entry" descript="Сведения о вновь созданной услуге">
+	<? if(!empty($connectData["login_host"])) echo "Точка доступа: <a href='".$connectData["login_host"]."' target='_blank'>".$connectData["login_host"].'</a><br/>'; ?>
+	Логин доступа: <?=$eData['ident']?><br/>
+	Пароль доступа: <?=$eData['extra']['params1']['pwd']?><br/>
+</item>
+
+<item name="success" type="entry" descript="Сведения о вновь созданной услуге">
+	<div class="new_service">
+		<h1>Открыт аккаунт для услуги <?=$pkgData["service_textname"]?></h1>
+		<p>Ваши данные для управления услугой: <br/>{result}</p>
+	</div>
+</item>
+
+<item name="fail" type="entry" descript="Сведения об ошибках возникших в процессе создания услуги">
+	<div class="new_service">
+		<h1>В процессе создания услуги <?=$pkgData["service_textname"]?> возникли ошибки</h1>
+		<p>{result}</p>
+	</div>
+</item>
+
+<item name="prolong_result_success" type="entry" descript="Удачное продление">
+	<div class="new_service">
+		<h1>Услуга <?=$pkgData["service_textname"]?> продлена</h1>
+	</div>
+</item>
+
+<item name="prolong_result_fail" type="entry" descript="Неудачное продление">
+	<div class="new_service">
+		<h1>Услуга <?=$pkgData["service_textname"]?> не продлена</h1>
+		<p>{result}</p>
+	</div>
+</item>
+
+<item name="global_fail" type="entry" descript="Сведения об ошибках возникших в процессе создания услуги">
+	<div class="new_service">
+		<h1>Ошибка в процессе выполнения заказа</h1>
+		<p>{result}</p>
+	</div>
+</item>
+
+</template>
+

@@ -1,0 +1,191 @@
+<template>
+
+<item name="list" type="cover" descript="{Call:Lang:templates:main/default:spisok}">
+	<div class="list">
+		<? if($caption){ ?><h3 class="block"><span>{caption}</span></h3><? } ?>
+		<? if($search){ ?>
+			<a href="javascript:switchBlock('search_{name}');" class="search_open">{Call:Lang:templates:main/default:poisk}</a>
+			<div id="search_{name}"<? if(!$errorInSearch){ ?>style="display: none;"<? } ?>>{search}</div>
+		<? } ?>
+		<p class="list_cap">{Call:Lang:templates:main/default:najdeno} <strong>{count}</strong><? if($selected > 1){ ?>{Call:Lang:templates:main/default:pokazanys} <strong>{entry_start}</strong> {Call:Lang:templates:main/default:po} <strong>{entry_end}</strong>.<? } ?><? if($select){ ?>      {Call:Lang:templates:main/default:pokazat} {select}<? } ?></p>
+		<? if($form || $sortAction){ ?><form action="{action}" method="post" {extras} name="{name}_form" id="{name}_form"><? } ?>
+		<? if($list){ ?><table class="list_entries" cellpadding="0" cellspacing="0">{list_head}{list}</table><? } ?>
+		<? if($sortAction){ ?><a class="sorter_save" href="javascript:saveSort('{name}_form', '{sortAction}');">{Call:Lang:templates:main/default:sokhranitsor}</a><? } ?>
+		<? if($form){ ?>
+			<div class="list_bot">
+				<div class="list_links">
+					<a href="javascript:selectAllEntries(true, {entry_count})">{Call:Lang:templates:main/default:otmetitvse}</a>
+					<a href="javascript:selectAllEntries(false, {entry_count})">{Call:Lang:templates:main/default:sniatotmetku}</a>
+				</div>
+				{form}<input type="submit" value="{Call:Lang:templates:main/default:vpered}" class="b" onClick="{Call:Lang:templates:main/default:returnconfir}" />
+			</div>
+		<? } ?>
+		<? if($paginate){ ?><div class="pagination"><div class="pagination2">
+			<? if(!empty($url_start)){ ?><a href="{url_start}"> |< </a><? } ?>
+			<? if(!empty($url_prev_block)){ ?>
+				<span class="block_env"><a href="{url_prev_block}"> << </a>
+				<? if(!empty($blocks_prev)){ ?><div class="hidden_links">{blocks_prev}</div></span><? } ?>
+			<? } ?>
+			<? if(!empty($url_prev)){ ?><a href="{url_prev}"> < </a><? } ?>
+			{paginate}
+			<? if(!empty($url_next)){ ?><a href="{url_next}"> > </a><? } ?>
+			<? if(!empty($url_next_block)){ ?>
+				<span class="block_env"><a href="{url_next_block}"> >> </a>
+				<? if(!empty($blocks_next)){ ?><div class="hidden_links">{blocks_next}</div><? } ?></span>
+			<? } ?>
+			<? if(!empty($url_end)){ ?><a href="{url_end}"> >| </a><? } ?>
+			<? if(!empty($url_all)){ ?>
+				<span class="block_env">
+					<a href="{url_all}"> {Call:Lang:templates:main/default:vse} </a>
+					<div class="hidden_links">
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=10&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=30&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu1}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=50&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu2}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=100&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu3}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=250&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu4}</a>
+					</div>
+				</span>
+			<? } ?>
+		</div></div><? } ?>
+	<? if($form || $sortAction){ ?></form><? } ?>
+	</div>
+</item>
+
+<item name="list" type="cover" template="big" descript="{Call:Lang:templates:main/default:spisokuvelic}">
+	<div class="list biglist">
+		<? if($caption){ ?><h3 class="block"><span>{caption}</span></h3><? } ?>
+		<? if($search){ ?>
+			<a href="javascript:switchBlock('search_{name}');" class="search_open">{Call:Lang:templates:main/default:poisk}</a>
+			<div id="search_{name}" style="display: none;">{search}</div>
+		<? } ?>
+		<p class="list_cap">{Call:Lang:templates:main/default:najdeno} <strong>{count}</strong><? if($selected > 1){ ?>{Call:Lang:templates:main/default:pokazanys} <strong>{entry_start}</strong> {Call:Lang:templates:main/default:po} <strong>{entry_end}</strong>.<? } ?><? if($select){ ?>      {Call:Lang:templates:main/default:pokazat} {select}<? } ?></p>
+		<? if($form || $sortAction){ ?><form action="{action}" method="post" {extras} name="{name}_form" id="{name}_form"><? } ?>
+		<? if($list){ ?><table class="list_entries" cellpadding="0" cellspacing="0">{list_head}{list}</table><? } ?>
+		<? if($sortAction){ ?><a class="sorter_save" href="javascript:saveSort('{name}_form', '{sortAction}');">{Call:Lang:templates:main/default:sokhranitsor}</a><? } ?>
+		<? if($form){ ?>
+			<div class="list_bot">
+				<div class="list_links">
+					<a href="javascript:selectAllEntries(true, {entry_count})">{Call:Lang:templates:main/default:otmetitvse}</a>
+					<a href="javascript:selectAllEntries(false, {entry_count})">{Call:Lang:templates:main/default:sniatotmetku}</a>
+				</div>
+				{form}<input type="submit" value="{Call:Lang:templates:main/default:vpered}" class="b" />
+			</div>
+		<? } ?>
+		<? if($paginate){ ?><div class="pagination"><div class="pagination2">
+			<? if(!empty($url_start)){ ?><a href="{url_start}"> |< </a><? } ?>
+			<? if(!empty($url_prev_block)){ ?>
+				<span class="block_env"><a href="{url_prev_block}"> << </a>
+				<? if(!empty($blocks_prev)){ ?><div class="hidden_links">{blocks_prev}</div></span><? } ?>
+			<? } ?>
+			<? if(!empty($url_prev)){ ?><a href="{url_prev}"> < </a><? } ?>
+			{paginate}
+			<? if(!empty($url_next)){ ?><a href="{url_next}"> > </a><? } ?>
+			<? if(!empty($url_next_block)){ ?>
+				<span class="block_env"><a href="{url_next_block}"> >> </a>
+				<? if(!empty($blocks_next)){ ?><div class="hidden_links">{blocks_next}</div><? } ?></span>
+			<? } ?>
+			<? if(!empty($url_end)){ ?><a href="{url_end}"> >| </a><? } ?>
+			<? if(!empty($url_all)){ ?>
+				<span class="block_env">
+					<a href="{url_all}"> {Call:Lang:templates:main/default:vse} </a>
+					<div class="hidden_links">
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=10&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=30&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu1}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=50&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu2}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=100&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu3}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=250&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu4}</a>
+					</div>
+				</span>
+			<? } ?>
+		</div></div><? } ?>
+	<? if($form || $sortAction){ ?></form><? } ?>
+	</div>
+</item>
+
+<item name="list" type="cover" template="users" descript="{Call:Lang:templates:main/default:spisokakkaun}">
+	<div class="user_acc_list">
+		<? if($caption){ ?><h3 class="block"><span>{caption}</span></h3><? } ?>
+		<? if($search){ ?>
+			<a href="javascript:switchBlock('search_{name}');" class="search_open">{Call:Lang:templates:main/default:poisk}</a>
+			<div id="search_{name}"<? if(!$errorInSearch){ ?>style="display: none;"<? } ?>>{search}</div>
+		<? } ?>
+		<? if($quickSearchBlock) echo '<ul class="quick_search">'.$quickSearchBlock.'</ul>'; ?>
+		<? if($form || $sortAction){ ?><form action="{action}" method="post" {extras} name="{name}_form" id="{name}_form"><? } ?>
+		<? if($list){ ?>{list_head}{list}<? } ?>
+		<? if($form){ ?>
+			<div class="list_bot">
+				<div class="list_links">
+					<a href="javascript:selectAllEntries(true, {entry_count})">{Call:Lang:templates:main/default:otmetitvse}</a>
+					<a href="javascript:selectAllEntries(false, {entry_count})">{Call:Lang:templates:main/default:sniatotmetku}</a>
+				</div>
+				<input type="submit" value="{Call:Lang:templates:main/default:vpered}" class="b" />{form}
+			</div>
+		<? } ?>
+		<? if($form || $sortAction){ ?></form><? } ?>
+	</div>
+</item>
+
+<item name="list" type="cover" template="usertable" descript="{Call:Lang:templates:main/default:spisoktablic}">
+	<div class="list">
+		<? if($caption){ ?><h3 class="block"><span>{caption}</span></h3><? } ?>
+		<? if($search){ ?>
+			<a href="javascript:switchBlock('search_{name}');" class="search_open">{Call:Lang:templates:main/default:poisk}</a>
+			<div id="search_{name}"<? if(!$errorInSearch){ ?>style="display: none;"<? } ?>>{search}</div>
+		<? } ?>
+		<p class="list_cap">{Call:Lang:templates:main/default:najdeno} <strong>{count}</strong><? if($selected > 1){ ?>{Call:Lang:templates:main/default:pokazanys} <strong>{entry_start}</strong> {Call:Lang:templates:main/default:po} <strong>{entry_end}</strong>.<? } ?><? if($select){ ?>      {Call:Lang:templates:main/default:pokazat} {select}<? } ?></p>
+		<? if($form || $sortAction){ ?><form action="{action}" method="post" {extras} name="{name}_form" id="{name}_form"><? } ?>
+		<? if($list){ ?><table class="usertable" cellpadding="0" cellspacing="0">{list_head}{list}</table><? } ?>
+		<? if($sortAction){ ?><a class="sorter_save" href="javascript:saveSort('{name}_form', '{sortAction}');">{Call:Lang:templates:main/default:sokhranitsor}</a><? } ?>
+		<? if($form){ ?>
+			<div class="list_bot">
+				<div class="list_links">
+					<a href="javascript:selectAllEntries(true, {entry_count})">{Call:Lang:templates:main/default:otmetitvse}</a>
+					<a href="javascript:selectAllEntries(false, {entry_count})">{Call:Lang:templates:main/default:sniatotmetku}</a>
+				</div>
+				{form}<input type="submit" value="{Call:Lang:templates:main/default:vpered}" class="b" />
+			</div>
+		<? } ?>
+		<? if($paginate){ ?><div class="pagination"><div class="pagination2">
+			<? if(!empty($url_start)){ ?><a href="{url_start}"> |< </a><? } ?>
+			<? if(!empty($url_prev_block)){ ?>
+				<span class="block_env"><a href="{url_prev_block}"> << </a>
+				<? if(!empty($blocks_prev)){ ?><div class="hidden_links">{blocks_prev}</div></span><? } ?>
+			<? } ?>
+			<? if(!empty($url_prev)){ ?><a href="{url_prev}"> < </a><? } ?>
+			{paginate}
+			<? if(!empty($url_next)){ ?><a href="{url_next}"> > </a><? } ?>
+			<? if(!empty($url_next_block)){ ?>
+				<span class="block_env"><a href="{url_next_block}"> >> </a>
+				<? if(!empty($blocks_next)){ ?><div class="hidden_links">{blocks_next}</div><? } ?></span>
+			<? } ?>
+			<? if(!empty($url_end)){ ?><a href="{url_end}"> >| </a><? } ?>
+			<? if(!empty($url_all)){ ?>
+				<span class="block_env">
+					<a href="{url_all}"> {Call:Lang:templates:main/default:vse} </a>
+					<div class="hidden_links">
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=10&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=30&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu1}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=50&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu2}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=100&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu3}</a>
+						<a href="<?=_D?>?mod=main&func=setPaginParam&show=250&back={enc_url}">{Call:Lang:templates:main/default:nastranitsu4}</a>
+					</div>
+				</span>
+			<? } ?>
+		</div></div><? } ?>
+	<? if($form || $sortAction){ ?></form><? } ?>
+	</div>
+</item>
+
+<item name="pagin_link" type="extra" descript="{Call:Lang:templates:main/default:ssylkanastra}">
+	<? if($entry_active){ ?><span> {page} </span><? }else{ ?><a href="{url}" title="{Call:Lang:templates:main/default:spo:<?=Library::serialize(array($start, $end));?>}"> {page} </a><? } ?>
+</item>
+
+<item name="pagin_block_link" type="extra" descript="{Call:Lang:templates:main/default:ssylkanablok}">
+	<a href="{url}" title="{Call:Lang:templates:main/default:spo:<?=Library::serialize(array($start_entry, $end_entry));?>}"> {start} - {end} </a><br />
+</item>
+
+<item name="quick_search_link" type="extra" descript="Ссылки быстрого поиска">
+	<li<? if($active){ echo ' class="active"'; } ?>><a href="{link}">{text}</a></li>
+</item>
+
+</template>

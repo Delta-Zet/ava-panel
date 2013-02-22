@@ -1,0 +1,33 @@
+<template>
+
+<item name="payments" type="cover" descript="{Call:Lang:templates:modules/billing/default:stranitsavyb}">
+	<div class="payments">
+		<?
+		foreach($payments as $i => $e){			$img = '';			if(file_exists($path.'images/payments/'.$i.'.gif')) $img = '<img src="'.$urlPath.'images/payments/'.$i.'.gif" />';			?><p>
+				<a href="<?=$urls[$i]?>&template=empty" target="_blank">
+					<?=$img?>
+					<span><?=$e['text']?></span>
+				</a>
+				<span class="price"><?=$price[$i]?></span>
+			</p><?		}
+		?>
+	</div>
+</item>
+
+<item name="smspayments" type="cover" descript="{Call:Lang:templates:modules/billing/default:stranitsavyb}">
+	<div class="payments">
+		<?
+		foreach($payments as $i => $e){
+			$img = '';
+			if(file_exists($path.'images/smspayments/'.$i.'.gif')) $img = '<img src="'.$urlPath.'images/smspayments/'.$i.'.gif" />';
+			?><p>
+				<?=$img?>
+				<span>SMS-сообщение на короткий номер <?=$e['number']['number']?></span>
+				<span class="price"><?=$e['number']['comment']?></span>
+			</p><?
+		}
+		?>
+	</div>
+</item>
+
+</template>

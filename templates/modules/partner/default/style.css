@@ -1,0 +1,23 @@
+
+.banner_block{	float: left;
+	clear: both;
+	width: 600px;
+	margin: 0 0 0 30px;}
+
+.banner_block h4{	padding: 0 0 10px 0;}
+
+.banner_block textarea{	width: 600px;
+	height: 100px;
+	margin: 30px 0 0 0;}
+
+.stat_block{	float: left;
+	margin: 0 0 0 100px;}
+
+.stat_block p{	white-spacing: nowrap;
+	margin: 20px 0 0 0;
+}
+
+.stat_block blockquote{	margin: 0 0 0 20px;
+	font-size: 11pt;
+}
+

@@ -1,0 +1,68 @@
+<template>
+
+<item name="domains_search" type="cover" descript="{Call:Lang:templates:modules/bill_domains/default:formaregistr}">
+	<form action="<?=_D?>index.php?mod={mod}&func=regDomains" method="post" name="search_domains_result" id="search_domains_result">
+		<?
+			$j = 0;
+			$js = '';
+			$result = '';
+
+			foreach($tld as $i => $e){				foreach($e as $i1 => $e1){
+					$dom = $domain.'.'.$i1;
+					$result .= '{Call:Lang:templates:modules/bill_domains/default:proveriaetsi:'.Library::serialize(array($i, $i1, $dom)).'}';
+					$js .= "ajax.sendUrl('"._D."index.php?mod={mod}&func=search&service=".$i."&domain=".library::encodeUrl($dom)."&id={$j}', 'entry_{$i}_{$i1}');\n";
+					$j ++;
+				}
+			}
+		?>
+		<div class="dom_search">
+		<?=$result?>
+		<input type="submit" class="b" value="{Call:Lang:templates:modules/bill_domains/default:zaregistriro}" onClick="Submit('search_domains_result'); return false;" />
+		<script type="text/javascript">
+			function runDomainSearch(){
+				<?=$js?>
+			}
+			runDomainSearch();
+		</script>
+		</div>
+	</form>
+</item>
+
+<item name="domains_search_result" type="entry" descript="{Call:Lang:templates:modules/bill_domains/default:rezultatprov}">
+	<? if(!$occupate && $registrators){ ?>
+		<input type="hidden" name="service[{id}]" value="{service}" />
+		<span class="status">{Call:Lang:templates:modules/bill_domains/default:svoboden}</span>
+		<?
+			if(count($registrators) > 1){
+				echo '<span class="reg">{Call:Lang:templates:modules/bill_domains/default:registrator}<br /><select name="pkg['.$id.']">';
+				foreach($registrators as $i => $e){
+					echo '<option value="'.$i.'">'.$e.'</option>';
+				}
+				echo '</select></span>';
+			}
+			else{				echo '<input type="hidden" name="pkg['.$id.']" value="'.Library::firstKey($registrators).'" />';			}
+		?><label><span class="domain"><input type="checkbox" checked class="ch" name="domain[{id}]" value="{domain}" /> {domain}</span></label>
+	<? } ?>
+	<? elseif($occupate == '1'){ ?>
+		<span class="status">{Call:Lang:templates:modules/bill_domains/default:zaniat}</span>
+		<span class="domain">
+			{domain}
+			<a href="http://{domain}/" target="_blank">{Call:Lang:templates:modules/bill_domains/default:smotretsajt}</a>
+			<a href="<?=_D?>index.php?mod={mod}&func=whois&domain={domain}&template=empty" target="_blank">Whois</a>
+		</span>
+	<? } ?>
+	<? elseif(!$registrators){ ?>
+		<span class="status">Домены в этой доменной зоне не регистрируются</span>
+		<span class="domain">{domain}</span>
+	<? } ?>
+	<? elseif($occupate == '2'){ ?>
+		<span class="status">{Call:Lang:templates:modules/bill_domains/default:whoisservisn}</span>
+		<span class="domain">{domain}</span>
+	<? } ?>
+	<? elseif($occupate == '3'){ ?>
+		<span class="status">{Call:Lang:templates:modules/bill_domains/default:takojdomenza}</span>
+		<span class="domain">{domain}</span>
+	<? } ?>
+</item>
+
+</template>

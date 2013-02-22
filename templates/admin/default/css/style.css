@@ -1,0 +1,1093 @@
+
+/*
+	Общее
+*/
+
+html{	min-height: 100%;}
+
+body{
+	background: #FFF;
+	min-height: 100%;
+}
+
+a{
+	color: #0171B0;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+.rig{
+	text-align: right;
+}
+
+.strong{
+	font-weight: bold;
+	color: #101010;
+}
+
+h1{	font-size: 16pt;
+}
+
+h3{
+	text-align: left;
+	margin: 0 0 25px 0;
+	font-size: 14pt;
+	font-weight: lighter;
+}
+
+.px150{
+	width: 150px;
+}
+
+
+/*
+	Шапка
+*/
+
+.top{
+	background: #090909;
+	float: left;
+	width: 100%;
+}
+
+.logo {
+	width: 229px;
+	height: 110px;
+	float: left;
+}
+
+.service_buttons, .exit, .service_buttons2{
+	font-size: 8pt;
+	color: #7B7B7B;
+}
+
+.service_buttons, .exit{
+	margin: 20px 23px 0 20px;
+}
+
+.service_buttons a, .exit a{
+	font-weight: bold;
+}
+
+.service_buttons{
+	float: left;
+}
+
+.service_buttons2{
+	float: left;
+	min-height: 50px;
+}
+
+.top form{
+	float: left;
+	clear: both;
+	width: 200px;
+	color: #FFF;
+	font-size: 12px;
+	margin: 10px 0;
+}
+
+.top form select{
+	width: 150px;
+	height: 16px;
+	font-size: 11px;
+	border: 1px solid #AAA;
+}
+
+
+.exit{
+	width: 300px;
+}
+
+.exit, .exit a{
+	float: right;
+}
+
+.info{
+	font-size: 10px;
+	float: right;
+	color: #7B7B7B;
+	clear: both;
+	text-align: right;
+	margin: 25px 0 0 0;
+}
+
+.info span, .info a{
+	color: #FFF;
+	font-size: 10px;
+	font-weight: lighter;
+}
+
+.info a{
+	display: block;
+	margin: 5px 0;
+}
+
+.empty_env{
+	width: 98%;
+	margin: 20px auto;
+}
+
+
+/*
+	Выпадающее миню
+*/
+
+.menu{
+	background: #F5F5EA;
+	float: left;
+	width: 100%;
+	height: 25px;
+	vertical-align: middle;
+	border-bottom: 1px #E8E8D6 solid;
+}
+
+.menu img, .menu a, .menu span{
+	float: left;
+	display: block;
+}
+
+.menu img{
+	margin: 8px 0 0 23px;
+}
+
+.menu a, .menu span{
+	color: #7B7B7B;
+	text-decoration: none;
+	font-size: 10pt;
+	margin: 0;
+	padding: 4px 0 10px 0;
+}
+
+.menu a:hover{
+	text-decoration: underline;
+}
+
+.path{
+	float: left;
+	margin: 7px 0 0 23px;
+	font-size: 8pt;
+	color: #0171B0;
+}
+
+.menu ul li a, .menu ul li span{
+	float: none;
+	display: inline;
+	padding: 0;
+}
+
+.menu ul{
+	position: absolute;
+	display: none;
+	z-index: 100;
+	background: #F5F5EA;
+	list-style-type: none;
+	padding: 10px 20px 20px 20px;
+	border: 1px solid #E8E8D6;
+	list-style: inside url('../images/icon_menu.gif');
+	margin: 21px 22px;
+}
+
+.menu ul.nest2{
+	margin: -35px 0 0 190px;
+}
+
+.menu li{
+	padding: 8px 0 4px 0;
+	width: 190px;
+	border-bottom: 1px dotted #1D1B1C;
+}
+
+
+/*
+	Контент
+*/
+
+.content{
+	float: left;
+	width: 96%;
+	min-height: 68%;
+	margin: 25px 0 50px 25px;
+}
+
+h3.block{
+	width: 100%;
+	height: 30px;
+	background: #F5F5EA;
+	color: #101010;
+	float: left;
+	font-size: 10pt;
+	margin: 0;
+	font-weight: bold;
+}
+
+h3.block span{
+	float: left;
+	display: block;
+	margin: 7px 0 0 20px;
+}
+
+p.top_comment{
+	float: left;
+	width: 90%;
+	padding: 10px 0 40px 0;
+	font-size: 10pt;
+}
+
+
+
+
+/*
+	Формы
+*/
+
+input, select, textarea{
+	border: 1px inset #3F3B3A;
+	background: #FFF;
+}
+
+.b{
+	border: 0 none;
+	width: 83px;
+	height: 21px;
+	text-align: center;
+	vertical-align: middle;
+	color: #FFF;
+	background: #000 url('../images/button_bg.gif') no-repeat;
+	font-size: 8pt;
+	cursor: pointer;
+	padding: 0 0 2px 0;
+}
+
+input.t, select{
+	width: 230px;
+	height: 20px;
+	font-size: 10pt;
+}
+
+textarea{
+	width: 230px;
+	height: 150px;
+	font-size: 10pt;
+}
+
+input.ch{
+	border: 0px none;
+}
+
+.form{
+	float: left;
+	clear: both;
+	font-size: 8pt;
+	width: 232px;
+	margin: 0 50px 30px 0;
+}
+
+.bigform{
+	width: 830px;
+	margin: 0 50px 70px 0;
+}
+
+.big100{
+	width: 100%;
+	border: 1px solid #E8E8D6;
+}
+
+.formentry{
+	float: left;
+	width: 232px;
+	margin: 15px 0 0 0;
+}
+
+.formentry label.unlimit{	float: left;	padding: 3px 0 0 0;
+}
+
+.formentry img.img_preview{	height: 15px;
+	margin: 0 10px 5px 0;
+	float: left;}
+
+.formentry img:hover.img_preview{	position: absolute;
+	height: 100px;}
+
+.pages_form_tech_block{
+	float: left;
+}
+
+.form p{
+	min-height: 25px;
+	float: left;
+	clear: both;
+	width: 232px;
+}
+
+.form p.error{
+	color: #D00;
+	min-height: 15px;
+	margin: 10px 0 0 0;
+}
+
+.form span.warn{
+	color: #D00;
+}
+
+.form p.submit{
+	margin: 8px 0 0 0;
+}
+
+.form p.rz{
+	margin: 0 0 4px 0;
+	min-height: 0;
+}
+
+p.rz input{	margin-right: 4px;}
+
+.form p.comment{
+	font-size: 8pt;
+	padding: 10px 0 0 0;
+	width: auto;
+}
+
+.bigform .formentry{
+	margin: 15px 40px 0 0;
+	width: 370px;
+	min-height: 40px;
+}
+
+.bigform .chb{
+	min-height: 20px;
+	margin: 5px 40px 0 0;
+}
+
+.big100 .formentry{
+	margin: 10px 8px 10px 22px;
+}
+
+.big100 .chb{
+	min-height: 20px;
+	margin: 15px 8px 0 22px;
+}
+
+.big100 .formentry textarea{
+	height: 200px;
+}
+
+.form .bigformentry{
+	width: 830px;
+}
+
+.form .bigformentry textarea{
+	width: 828px;
+}
+
+.entryline p.rz{
+	float: left;
+	width: auto;
+	margin: 0 30px 0 0;
+}
+
+.entryline p.rz_cap{
+	padding: 0 0 5px 0;
+	height: auto;
+	min-height: 0;
+}
+
+.bigform p{
+	width: 370px;
+}
+
+.bigform input.t, .bigform select, .bigform textarea{
+	width: 370px;
+}
+
+.bigform p.submit{
+	clear: both;
+	width: 100%;
+}
+
+.bigform h3{
+	width: 100%;
+}
+
+.form h4{	width: 100%;
+	float: left;
+	clear: both;
+	font-size: 12px;
+	padding: 10px 0 0 0;
+}
+
+.bigform h4, .multiblock h4, .multiblock2 h4{
+	font-size: 14px;
+}
+
+.form input.calendar{
+	width: 150px;
+	cursor: pointer;
+}
+
+.form img.calendar{
+	margin: 1px 0 0 -23px;
+	cursor: pointer;
+}
+
+.form p.calendar{
+	white-space: nowrap;
+}
+
+.form input.calendar2{	width: 230px;}
+
+.bigform input.calendar2{	width: 370px;}
+
+.big100 h4{
+	padding: 30px 0 0 20px;
+}
+
+.big100 .subcaptions{
+	background: #E8E8D6;
+	float: left;
+	width: 100%;
+}
+
+.big100 .subcaptions a, .big100 h3 a{
+	float: left;
+	text-decoration: none;
+	height: 25px;
+}
+
+.big100 .subcaptions a.active{
+	background: #FFF;
+}
+
+.big100 .subcaptions a span, .big100 h3 a, .multiblock2 h3 a{
+	float: left;
+	margin: 4px 20px 0 20px;
+	color: #000;
+	font-weight: 800;
+	font-size: 12px;
+}
+
+.big100 h3 a, .multiblock2 h3 a{
+	float: right;
+	margin-top: 6px;
+}
+
+sup.surface_comment{
+	position: absolute;
+	z-index: 10;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 8pt;
+	margin: -5px 0 0 0;
+}
+
+sup.surface_comment span{
+	display: none;
+	float: right;
+	position: absolute;
+	z-index: 100;
+	background: #FFF;
+	border: 1px solid #000;
+	width: 250px;
+	padding: 10px;
+	white-space: normal;
+}
+
+sup:hover.surface_comment span{
+	display: block;
+}
+
+.base_limits{	padding: 20px 50px;
+	float: left;
+	font-size: 11px;}
+
+.list_search_form{
+	width: 670px;
+	float: left;
+	margin: 25px 0 20px 20px;
+}
+
+.biglist .list_search_form{	width: 97%;}
+
+.list_search_form .formentry{
+	float: left;
+	margin: 0 22px 10px 0;
+	width: auto;
+	height: 35px;
+}
+
+.list_search_form .chb{	width: 100px;}
+
+.list_search_form .listsorter{
+	float: left;
+}
+
+.list_search_form .listsorter p{
+	float: left;
+	margin: 0 20px 10px 0;
+}
+
+.list_search_form .listsorterdlm{
+	float: left;
+	clear: both;
+	width: 100%;
+	height: 20px;
+	font-size: 1px;
+}
+
+.list_search_form input.t{
+	width: 110px;
+	height: 20px;
+	cursor: pointer;
+}
+
+.list_search_form input.calendar{
+	width: 142px;
+}
+
+.list_search_form img.calendar{	margin: 1px 0 0 -23px;
+	cursor: pointer;
+}
+
+.list_search_form p.calendar{	white-space: nowrap;}
+
+.list_search_form .gap input.calendar{
+	width: 54px;
+}
+
+.list_search_form p.error{
+	color: #D00;
+}
+
+a.search_open{	float: left;
+	margin: 12px 0 0 20px;}
+
+.form .contentwidget .formentry p{	width: 100%;
+	margin: 0;}
+
+.form .contentwidget .formentry.chb{	width: auto;
+	margin: 32px 0 0 20px;}
+
+
+/*
+	Календарь
+*/
+
+.calendar_block{
+	float: left;
+	width: 200px;
+	height: 190px;
+	border: 1px solid #E8E8D6;
+	background: #F5F5EA;
+	margin-left: -180px;
+}
+
+.calendar_block table{	width: 182px;
+	height: 96px;
+	margin: 0 8px 12px 8px;
+	float: left;
+	clear: both;
+}
+
+.calendar_block td{
+	width: 26px;
+	height: 16px;
+	text-align: center;
+}
+
+.calendar_block a{	text-decoration: none;
+	color: #000;
+}
+
+.calendar_caption{	float: left;
+	width: 75px;
+	margin: 0 0 7px 0;
+}
+
+.calendar_caption span, .calendar_caption a{	float: left;}
+
+.calendar_caption span{	width: 57px;
+	text-align: center;
+	font-size: 12px;
+	color: #6E394A;}
+
+.calendar_caption img{	margin: 3px 0 0 0;}
+
+.calendar_time{	width: 100px;
+	margin: 5px 0 20px 5px;
+	float: left;
+}
+
+.calendar_time span, .calendar_time a, .calendar_time input{	float: left;}
+
+.calendar_time a, .calendar_time input{	clear: both;}
+
+.calendar_time span{	width: 20px;
+	text-align: center;	font-size: 12px;
+}
+
+.calendar_time span.dlm{	margin: 5px 0 0 2px;
+	width: 8px;}
+
+.calendar_time input{	width: 20px;
+	height: 14px;
+	text-align: center;
+}
+
+.calendar_time img{	margin: 0 5px 0 6px;}
+
+.close_calendar a{	float: right;
+	margin: 3px -5px 0 0;
+	font-family: Arial;
+	font-weight: bold;
+	font-size: 10px;}
+
+
+/*
+	Поиск
+*/
+
+.list_search_form select{
+	width: 110px;
+	height: 21px;
+}
+
+.list_search_form div.list_search_form_cap{
+	font-size: 13px;
+	font-weight: bold;
+	margin: 13px 25px 0 0;
+	float: left;
+}
+
+.multiblock2{
+	width: 800px;
+	float: left;
+	margin: 0 0 50px 0;
+}
+
+.multiblock2_caption, .multiblock2_block{
+	width: 800px;
+	float: left;
+	background: #F5F5EA;
+}
+
+.multiblock2_caption{
+	margin: 20px 0 0 0;
+}
+
+.multiblock2_caption .multiblock2_intro{
+	float: left;
+	margin: 10px 20px;
+	font-weight: bold;
+}
+
+.multiblock2_block .multiblock2_intro{
+	float: left;
+	margin: 0 20px 30px 20px;
+}
+
+.multiblock2_caption {
+	font-size: 10pt;
+	cursor: pointer;
+}
+
+.multiblock2_caption span{
+	float: left;
+	width: 20px;
+}
+
+.multiblock2 .formentry{
+	float: left;
+	width: 375px;
+	min-height: 50px;
+}
+
+.multiblock2 .formentry p{
+	width: 350px;
+	min-height: 15px;
+	font-size: 8pt;
+}
+
+.multiblock2 .formentry p.rz{
+	height: 15px;
+}
+
+.multiblock2 .chb{
+	min-height: 20px;
+}
+
+.multiblock2 .chb p.error{
+	margin: 0;
+}
+
+.multiblock2 .multiblock2_content_block{
+	float: left;
+	margin: 20px 0 0 0;
+}
+
+.multiblock2 .formentry p input.t, .multiblock2 .formentry p textarea{
+	width: 350px;
+}
+
+.multiblock2 .formentry p input.calendar{	width: 150px;
+	cursor: pointer;}
+
+.multiblock2 .formentry p input.calendar2{	width: 350px;
+}
+
+.multiblock2 .formentry p select{
+	width: 353px;
+	height: 22px;
+}
+
+.multiblock2 .formentry p.error{
+	height: 12px;
+}
+
+.bigform .pages_form_content_mainentry, .multiblock .pages_form_content_mainentry, .multiblock2 .pages_form_content_mainentry{	clear: both;
+	width: 830px;
+}
+
+.bigform .pages_form_content_mainentry .maintextarea, .maintextarea{
+	width: 827px;
+	height: 400px;
+	border: 1px solid;
+}
+
+.multiblock2_mainentry{
+	float: left;
+	margin: 50px 0;
+}
+
+.width100, .big100 .width100, .bigform .width100, .multiblock .width100, .multiblock2 .width100{
+	width: 100%;
+}
+
+.width100 p.error{
+	width: 100%;
+}
+
+.width100 p.rz_cap{
+	float: left;
+	width: 100%;
+	font-weight: bold;
+}
+
+.width100 p.rz{
+	width: auto;
+	margin: 0 40px 20px 0;
+}
+
+
+
+/*
+	Списки subblocks
+*/
+
+h1.subblockcap{
+	font-size: 22px;
+	font-weight: 100;
+}
+
+.subblockentry{
+	float: left;
+	width: 250px;
+	height: 30px;
+	margin: 25px 30px 0 0;
+}
+
+.subblockentry img{
+	float: left;
+}
+
+.subblockentry a{
+	color: #000;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+.subblockentry a:hover{
+	text-decoration: underline;
+}
+
+
+
+/*
+	Списки
+*/
+
+.list{
+	float: left;
+	font-size: 8pt;
+	width: 690px;
+}
+
+.biglist{
+	float: left;
+	font-size: 8pt;
+	width: 100%;
+}
+
+.list_cap{
+	font-size: 8pt;
+	white-space: pre;
+	clear: both;
+	padding: 15px 0 16px 20px;
+}
+
+.list_entries{
+	float: left;
+	width: 100%;
+	clear: both;
+}
+
+img.thumb{
+	height: 35px;
+}
+
+img.thumb2{
+	height: 13px;
+}
+
+img.thumb:hover, img.thumb2:hover{	position: absolute;
+	height: auto;}
+
+.list_entries tr.even{
+	background: #FDFDFD
+}
+
+.list_entries tr:hover{
+	background: #FBFBFB
+}
+
+.list_entries td{
+	vertical-align: middle;
+	padding: 0 0 0 20px;
+	height: 55px;
+	border-bottom: 1px solid #F5F5EA;
+}
+
+.list_entries td.list_right{
+	text-align: right;
+	padding-right: 5px;
+}
+
+.list_entries .icons img{	margin: 0 0 0 5px;
+}
+
+.list_entries .icons{	white-space: nowrap;}
+
+.list_entries td.sorter{
+	width: 30px;
+}
+
+.list_entries td.sorter input{
+	width: 26px;
+	height: 20px;
+	font-size: 10px;
+	border: 1px solid #EEE;
+	text-align: right;
+	padding: 0 2px;
+}
+
+.list_entries select{	width: 100px;
+	height: 21px;
+	font-size: 12px;}
+
+.list_entries .hidden_block{	white-space: pre;
+	display: none;
+	position: absolute;
+	padding: 5px 10px;
+	margin: 3px 0 0 20px;
+	border: 1px solid #000;
+	background: #FFF;}
+
+.hidden_result textarea{	display: none;
+	position: absolute;
+	right: 25px;
+	width: 500px;
+	height: 250px;}
+
+.hidden_result:hover textarea{	display: block;
+}
+
+.sorter_save{
+	float: right;
+	clear: both;
+	margin: 10px 0 0 0;
+}
+
+.list_entries td.list_left{
+	width: 20px;
+}
+
+.list_bot{
+	margin: 30px 0;
+	float: left;
+	width: 100%;
+	text-align: right;
+	font-size: 10pt;
+	clear: both;
+}
+
+.list_bot select{
+	margin: 0 10px;
+}
+
+.list_bot .list_links{
+	float: left;
+}
+
+.list_bot .list_links a{
+	padding: 0 10px 0 0;
+}
+
+.db_request{
+	width: 100%;
+}
+
+.db_request .db_request_table{
+	float: left;
+	clear: both;
+	width: 100%;
+	margin: 20px 0;
+	border-left: 1px solid #AAA;
+	border-bottom: 1px solid #AAA;
+}
+
+.db_request .db_request_table .capt{
+	text-align: center;
+	font-weight: bold;
+}
+
+.db_request .db_request_table td{
+	padding: 10px;
+	font-size: 10pt;
+	border-right: 1px solid #AAA;
+	border-top: 1px solid #AAA;
+}
+
+.about{	width: 400px;
+	margin: 30px auto;}
+
+.about p{	margin: 0 0 20px 0;}
+
+.about ul{	list-style-type: none;
+	margin: -10px 0 0 30px;}
+
+
+/*
+  Сообщения
+*/
+
+.support_messages{	margin: 0 0 30px 70px;
+	width: 800px;
+}
+
+.support_messages dt{	font-size: 11px;}
+
+.support_messages dd{	font-size: 13px;
+	margin: 10px 0 0 30px;}
+
+.support_messages dd p, .support_messages dd ul{	padding: 0 0 10px 0;}
+
+.support_messages dd li{	list-style-type: none;
+	padding: 0 0 0 30px;}
+
+ul.support_messages{
+	list-style-type: none;
+}
+
+
+/*
+	pagination
+*/
+
+.pagination{
+	float: left;
+	width: 100%;
+	clear: both;
+	text-align: right;
+}
+
+.pagination2{
+	float: right;
+	clear: both;
+	text-align: right;
+	font-size: 8pt;
+	margin: 0 0 30px 0;
+}
+
+.pagination a, .pagination span{
+	display: block;
+	float: left;
+	text-decoration: none;
+	margin: 0 0 0 3px;
+	background: #101010;
+	padding: 1px 5px 2px 5px;
+	color: #FFF;
+	border: 1px solid #B5B5B5;
+}
+
+.pagination a:hover{
+	background: #F5F5EA;
+	color: #000;
+}
+
+.pagination span{
+	background: #F5F5EA;
+	color: #D00;
+}
+
+.pagination .hidden_links{
+	position: absolute;
+	display: none;
+	border: 1px solid #B5B5B5;
+	background: #101010;
+	padding: 4px 10px;
+	margin: 18px 0 0 -90px;
+	font-style: normal;
+	width: 100px;
+}
+
+.pagination .pages_list .hidden_links{	margin-left: -51px;
+	width: 60px;
+}
+
+.pagination .hidden_links a, .pagination .hidden_links span{
+	width: 100%;
+	text-align: center;
+	border: 0;
+	padding: 0;
+	margin:0;
+}
+
+.pagination span.block_env{
+	border: 0px none;
+	padding: 0;
+	margin:0;
+}
+
+.pagination span:hover.block_env .hidden_links{
+	display: block;
+}
+
+
+/*
+	Подвал
+*/
+
+.bottom{
+	float: left;
+	width: 100%;
+	padding: 20px 0;
+	background: #121212;
+	text-align: center;
+	font-size: 8pt;
+	color: #FFF;
+}
+
+.bottom a{
+	color: #FFF;
+}
+

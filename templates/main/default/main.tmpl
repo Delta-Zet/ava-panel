@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+	<title><?=$GLOBALS['Core']->Site->params['name']?>. {title}</title>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=<? echo $GLOBALS['Core']->getParam('charset'); ?>" />
+	<meta name="keywords" content="{keywords}">
+	<meta name="description" content="{description}">
+
+	<base href="<?=_D?>" />
+
+	<link rel="stylesheet" type="text/css" href="{TMPL_URL}css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="{TMPL_URL}css/style.css" />
+	<link rel="stylesheet" type="text/css" href="{TMPL_URL}css/ajax.css" />
+
+	<script type="text/javascript" src="{TMPL_URL}js/script.js"></script>
+	<script type="text/javascript" src="<?=_D?>js/common.js"></script>
+	<script type="text/javascript" src="<?=_D?>js/ajax.js"></script>
+
+	{head}
+</head>
+
+<body>
+<div class="env">
+	<div class="content">
+		<img src="{TMPL_URL}images/content_r.gif" class="r" />
+		<div class="content1">
+			<? if($caption){ ?><h1><img src="{TMPL_URL}images/icon_h1_article.gif" />{caption}</h1><p><? } ?>
+			{body}
+		</div>
+		<div class="sidebar">
+			{Call:ModuleCall:main:userAccountInfo:userAccountInfo}
+			{sidemenu}
+			<? if($GLOBALS['Core']->User->getUserId()){ ?>{usermenu}<? } ?>
+			{news}
+		</div>
+	</div>
+	<div class="header">
+		<img src="{TMPL_URL}images/bg_header_l.gif" class="l" />
+		<img src="{TMPL_URL}images/bg_header_r.gif" class="r" />
+		<a href="<?=_D?>"><img src="{TMPL_URL}images/logo.gif" class="logo"></a>
+		<div class="header1">
+			<div class="header1_r">
+				<a href="<?=_D?>index.php?mod=support&func=ticket"><img src="{TMPL_URL}images/icon_message.gif" /></a>
+				<a href="<?=_D?>"><img src="{TMPL_URL}images/icon_home.gif" /></a>
+			</div>
+			<div class="header1_l">
+			<? if(!$GLOBALS['Core']->User->getUserId()){ ?>
+				<a href="<?=_D?>index.php?mod=main&func=forgotPwd" title="{Call:Lang:templates:main/default:napomnitparo}">
+					<img src="{TMPL_URL}images/icon_button_forgot_pwd.gif" alt="{Call:Lang:templates:main/default:napomnitparo}" />
+				</a>
+				<a href="<?=_D?>index.php?mod=main&func=registration" title="{Call:Lang:templates:main/default:zaregistriro}">
+					<img src="{TMPL_URL}images/icon_button_register.gif" alt="{Call:Lang:templates:main/default:zaregistriro}" />
+				</a>
+				<form action="<?=_D?>index.php?mod=main&func=auth" method="post">
+					<input type="hidden" name="ava_form_transaction_id" value="<? echo $GLOBALS['Core']->callModAndGetFormId('main', 'login', 'login'); ?>" />
+					<input type="hidden" name="redirect" value="<?=$GLOBALS['Core']->getBackUrl();?>" />
+					<input type="text" name="login" class="t" />
+					<input type="password" name="pwd" class="t" />
+					<input type="image" src="{TMPL_URL}images/icon_button_go.gif" class="b1" />
+				</form>
+			<? }else{ ?>
+				<div class="personal">
+					<span>{Call:Lang:templates:main/default:zdravstvujte:<?=Library::serialize(array($user_name));?>} </span>
+					<? if($GLOBALS['Core']->User->getStatus()){ ?>
+						<a href="<?=_D?>index.php?mod=main&func=cabinate">{Call:Lang:templates:main/default:lichnyjkabin}</a>
+					<? }else{ ?>
+						<a href="<?=_D?>index.php?mod=main&func=regCode">{Call:Lang:templates:main/default:podtverditre}</a>
+						<a href="<?=_D?>index.php?mod=main&func=resendRegMail">{Call:Lang:templates:main/default:pereslatpism}</a>
+					<? } ?>
+					<a href="<?=_D?>index.php?mod=main&func=logout">{Call:Lang:templates:main/default:vyjti}</a>
+				</div>
+			<? } ?>
+			</div>
+		</div>
+		<div class="header2">{domains}</div>
+		<div class="header_menu"><img src="{TMPL_URL}images/bg_menu_top_start.gif" />{mainmenu}</div>
+	</div>
+	<div class="footer">
+		<img src="{TMPL_URL}images/bg_footer_l.gif" class="l">
+		<img src="{TMPL_URL}images/bg_footer_r.gif" class="r">
+		<p>Copyright, 2006-<?=date('Y')?>. Powered by <a href="http://ava-panel.ru">AVA-Panel</a></p>
+	</div>
+</div>
+</body>
+</html>
